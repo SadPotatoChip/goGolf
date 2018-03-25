@@ -10,5 +10,3 @@ https://hajimehoshi.github.io/ebiten/
 Projekat za programske paradigme (I smer)
 Jovana Pejkic 435/2016
 Nikola Ninkovic 262/2015
-  
-kjkhgu
