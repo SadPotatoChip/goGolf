@@ -1,0 +1,2 @@
+outfile: main.go physic.go
+	go run main.go physic.go
