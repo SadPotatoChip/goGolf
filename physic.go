@@ -14,8 +14,11 @@ const airFrictionStrenght float64 = 0.002
 const groundFrictionStrenght float64 = 0.05
 const inputAngleLerp float64 = math.Pi / 6
 
+const ballSize float64 = 5
+
 type ball struct {
 	position                        vector2
+	size                            float64
 	graphic                         *ebiten.Image
 	opts                            *ebiten.DrawImageOptions
 	controls                        *controler
@@ -25,7 +28,8 @@ type ball struct {
 
 func makeBall(x, y float64) *ball {
 	tmp := new(ball)
-	tmp.graphic, _ = ebiten.NewImage(5, 5, ebiten.FilterNearest)
+	tmp.size = ballSize
+	tmp.graphic, _ = ebiten.NewImage(int(ballSize), int(ballSize), ebiten.FilterNearest)
 	tmp.graphic.Fill(color.White)
 	tmp.opts = &ebiten.DrawImageOptions{}
 	tmp.position.x = x
@@ -71,28 +75,43 @@ func (b *ball) move() {
 	if b.horisonatalSpeed < 0.1 && b.horisonatalSpeed > -0.1 {
 		b.horisonatalSpeed = 0
 	}
-	//HACK
-	if b.position.y > screenHeight-10 && b.isGrounded == false {
-		b.position.y = screenHeight - 10
-		b.opts.GeoM.Reset()
-		b.opts.GeoM.Translate(b.position.x, b.position.y)
-		b.verticalBounce()
-	} else {
-		b.opts.GeoM.Translate(0, -b.verticalSpeed)
-	}
-	b.opts.GeoM.Translate(b.horisonatalSpeed, 0)
 
+	if b.isGrounded == false {
+		collisionDirection := b.checkForBallCollisions()
+		if collisionDirection != "" {
+			switch collisionDirection {
+			case "up":
+				b.upwardBounce()
+			case "down":
+				b.downwardBounce()
+			case "left":
+				fmt.Printf("left")
+			case "right":
+				fmt.Printf("right")
+			}
+		} else {
+			b.opts.GeoM.Translate(0, -b.verticalSpeed)
+		}
+	}
+
+	b.opts.GeoM.Translate(b.horisonatalSpeed, 0)
 	b.position.x += b.horisonatalSpeed
 	b.position.y -= b.verticalSpeed
 }
 
-func (b *ball) verticalBounce() {
-	fmt.Printf("%f\n", b.verticalSpeed)
-	if b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 {
-		fmt.Printf("stop\n")
-		b.isGrounded = true
-		b.verticalSpeed = 0
-	} else {
-		b.verticalSpeed = -b.verticalSpeed * 0.5
+func (b *ball) upwardBounce() {
+	if b.verticalSpeed <= 0 {
+		//fmt.Printf("%f\n", b.verticalSpeed)
+		if b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 {
+			fmt.Printf("stop\n")
+			b.isGrounded = true
+			b.verticalSpeed = 0
+		} else {
+			b.verticalSpeed = -b.verticalSpeed * 0.5
+		}
 	}
+}
+
+func (b *ball) downwardBounce() {
+	b.verticalSpeed = -b.verticalSpeed * 0.5
 }

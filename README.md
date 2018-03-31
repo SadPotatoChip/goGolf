@@ -10,3 +10,9 @@ https://hajimehoshi.github.io/ebiten/
 Projekat za programske paradigme (I smer)
 Jovana Pejkic 435/2016
 Nikola Ninkovic 262/2015
+
+controls:
+	up/down arrow adjust power
+	left right arrow adjust angle
+	space hits the ball
+
