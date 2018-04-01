@@ -1,39 +1,64 @@
 package main
 
 import (
-	"fmt"
+	"math"
 )
 
 type boxCollider struct {
-	min, max vector2
+	min, max, mid vector2
 }
 
-func (c boxCollider) isCollidingWithPoint(position vector2) string {
-	if position.x+player.size >= c.min.x && position.x <= c.max.x && position.y+player.size >= c.min.y && position.y <= c.max.y {
-		fmt.Print("collision!")
-		if player.position.y <= c.min.y {
-			//adjust for collision leaway
+//TODO swap out player size and fix argument passing
+func (c boxCollider) isCollidingWithBall(b *ball) string {
+	s := ""
+	var ledgeCandidate float64 = 0
+	if b.position.x+b.size >= c.min.x && b.position.x <= c.max.x && b.position.y+b.size >= c.min.y && b.position.y <= c.max.y {
+		if b.position.y <= c.mid.y {
+			s = "up"
+			ledgeCandidate = c.min.y
+		} else {
+			s = "down"
+			ledgeCandidate = c.max.y
+		}
+		candidateDistance := math.Abs(ledgeCandidate - b.position.y)
+		if candidateDistance > math.Abs(b.position.x-c.max.x) && b.horisonatalSpeed < 0 {
+			s = "right"
+		}
+		if candidateDistance > math.Abs(b.position.x-c.min.x) && b.horisonatalSpeed > 0 {
+			s = "left"
+		}
+
+		//Adjust for intersection
+		switch s {
+		case "up":
 			player.position.y = c.min.y - player.size
 			player.opts.GeoM.Reset()
 			player.opts.GeoM.Translate(player.position.x, player.position.y)
-			return "up"
-		}
-		if player.position.y+player.size >= c.max.y {
+		case "down":
 			player.position.y = c.max.y + player.size
 			player.opts.GeoM.Reset()
 			player.opts.GeoM.Translate(player.position.x, player.position.y)
-			return "down"
+		case "right":
+			player.position.x = c.max.x + player.size
+			player.opts.GeoM.Reset()
+			player.opts.GeoM.Translate(player.position.x, player.position.y)
+		case "left":
+			player.position.x = c.min.x - player.size
+			player.opts.GeoM.Reset()
+			player.opts.GeoM.Translate(player.position.x, player.position.y)
+
 		}
+
 	}
 
 	//ADD others
-	return ""
+	return s
 }
 
 func (b *ball) checkForBallCollisions() string {
 	for i := 0; i < lvl.nOfBoxes; i++ {
 		var dir = ""
-		dir = lvl.boxes[i].collider.isCollidingWithPoint(newV2(b.position.x, b.position.y))
+		dir = lvl.boxes[i].collider.isCollidingWithBall(b)
 		if dir != "" {
 			return dir
 		}

@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math"
+	"math/rand"
+	"time"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
@@ -39,10 +41,15 @@ func main() {
 
 func update(screen *ebiten.Image) error {
 	if levelisInstantiating {
-		player = makeBall(100, 500)
+		player = makeBall(500, 500)
 		lvl.Instantiate()
 		//test
-		lvl.addBox(newBox(newV2(100, 100), newV2(600, 200)))
+		rand.Seed(time.Now().UTC().UnixNano())
+		for i := 0; i < 10; i++ {
+			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
+			lvl.addBox(newBox(newV2(x, y), newV2(x+200, y+200)))
+
+		}
 
 		levelisInstantiating = false
 	}

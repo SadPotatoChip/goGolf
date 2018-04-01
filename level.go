@@ -23,7 +23,7 @@ type box struct {
 func (l *level) Instantiate( /* probably a json file*/ ) {
 	l.nOfBoxes = 0
 	l.boxes = new([maxLevelObjects]*box)
-	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight))
+	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
 	l.addBox(ground)
 }
 
@@ -40,6 +40,7 @@ func newBox(min, max vector2) *box {
 	tmp := new(box)
 	tmp.collider.min = min
 	tmp.collider.max = max
+	tmp.collider.mid = newV2((min.x+max.y)/2, (min.y+max.y)/2)
 	tmp.graphic, _ = ebiten.NewImage(int(max.x-min.x), int(max.y-min.y), ebiten.FilterNearest)
 	tmp.graphic.Fill(color.White)
 	tmp.opts = &ebiten.DrawImageOptions{}

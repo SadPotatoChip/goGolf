@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"math"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten"
 )
@@ -77,17 +78,19 @@ func (b *ball) move() {
 	}
 
 	if b.isGrounded == false {
+		//there is no need for contains in current version
 		collisionDirection := b.checkForBallCollisions()
 		if collisionDirection != "" {
-			switch collisionDirection {
-			case "up":
+			fmt.Printf("%s\n", collisionDirection)
+			if strings.Contains(collisionDirection, "up") {
 				b.upwardBounce()
-			case "down":
+			}
+			if strings.Contains(collisionDirection, "down") {
 				b.downwardBounce()
-			case "left":
-				fmt.Printf("left")
-			case "right":
-				fmt.Printf("right")
+			}
+			if strings.Contains(collisionDirection, "left") || strings.Contains(collisionDirection, "right") || strings.Contains(collisionDirection, "horisontal") {
+
+				b.horizontalBounce()
 			}
 		} else {
 			b.opts.GeoM.Translate(0, -b.verticalSpeed)
@@ -114,4 +117,8 @@ func (b *ball) upwardBounce() {
 
 func (b *ball) downwardBounce() {
 	b.verticalSpeed = -b.verticalSpeed * 0.5
+}
+
+func (b *ball) horizontalBounce() {
+	b.horisonatalSpeed = -b.horisonatalSpeed * 0.5
 }
