@@ -9,9 +9,14 @@ import (
 
 const maxLevelObjects int = 50
 
+
+///Keeping arrays for clarity, each represents the boxes in the level sorted by their
+///min-max x coordinate, a different array is used for collision detection depending on
+///the balls horizontal direction for element elimination
 type level struct {
-	boxes    *[maxLevelObjects]*box
-	nOfBoxes int
+	maxSortedBoxes *[maxLevelObjects]*box
+	minSortedBoxes *[maxLevelObjects]*box
+	nOfBoxes       int
 }
 
 type box struct {
@@ -22,14 +27,49 @@ type box struct {
 
 func (l *level) Instantiate( /* probably a json file*/ ) {
 	l.nOfBoxes = 0
-	l.boxes = new([maxLevelObjects]*box)
+	l.maxSortedBoxes = new([maxLevelObjects]*box)
+	l.minSortedBoxes = new([maxLevelObjects]*box)
 	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
 	l.addBox(ground)
 }
 
 func (l *level) addBox(b *box) {
-	l.boxes[l.nOfBoxes] = b
+	//manually realocate arrays so that it is sorted
+	if l.maxSortedBoxes[0] != nil {
+		//maxSorted
+		var i int
+		tmp := *l.maxSortedBoxes
+		for i < l.nOfBoxes && b.collider.max.x > l.maxSortedBoxes[i].collider.max.x {
+			i++
+		}
+		l.maxSortedBoxes[i] = b
+		for i < l.nOfBoxes {
+			l.maxSortedBoxes[i+1] = tmp[i]
+			i++
+		}
+
+		//minSorted
+		i=0
+		tmp = *l.minSortedBoxes
+		for i < l.nOfBoxes && b.collider.min.x > l.minSortedBoxes[i].collider.min.x {
+			i++
+		}
+		l.minSortedBoxes[i] = b
+		for i < l.nOfBoxes {
+			l.minSortedBoxes[i+1] = tmp[i]
+			i++
+		}
+	} else {
+		l.maxSortedBoxes[0] = b
+		l.minSortedBoxes[0] = b
+	}
 	l.nOfBoxes++
+	//debug
+	/*for i:=0;i< l.nOfBoxes;i++{
+		fmt.Printf("%f ",l.min[i].collider.min.x )
+	}
+	fmt.Printf("\n")*/
+
 }
 
 func newBox(min, max vector2) *box {

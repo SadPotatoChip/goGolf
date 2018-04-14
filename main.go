@@ -69,7 +69,7 @@ func update(screen *ebiten.Image) error {
 
 func drawLevel(screen *ebiten.Image) {
 	for i := 0; i < lvl.nOfBoxes; i++ {
-		screen.DrawImage(lvl.boxes[i].graphic, lvl.boxes[i].opts)
+		screen.DrawImage(lvl.maxSortedBoxes[i].graphic, lvl.maxSortedBoxes[i].opts)
 	}
 }
 
