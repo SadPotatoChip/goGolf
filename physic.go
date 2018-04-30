@@ -25,25 +25,47 @@ type ball struct {
 	controls                        *controler
 	verticalSpeed, horisonatalSpeed float64
 	isGrounded                      bool
+	isGhost							bool
+	collisonGhost					*ball
 }
 
-func makeBall(x, y float64) *ball {
+func makeBall(x, y float64,isGhost bool) *ball {
 	tmp := new(ball)
 	tmp.size = ballSize
-	tmp.graphic, _ = ebiten.NewImage(int(ballSize), int(ballSize), ebiten.FilterNearest)
-	tmp.graphic.Fill(color.White)
-	tmp.opts = &ebiten.DrawImageOptions{}
 	tmp.position.x = x
 	tmp.position.y = y
+	tmp.graphic, _ = ebiten.NewImage(int(ballSize), int(ballSize), ebiten.FilterNearest)
+	tmp.isGhost=isGhost
+	if isGhost==false {
+		tmp.graphic.Fill(color.White)
+		tmp.collisonGhost = makeBall(x,y,true)
+		tmp.controls = makeControler(tmp)
+	}else{
+		tmp.graphic.Fill(color.RGBA{0, 0, 255, 255})
+	}
+	tmp.opts = &ebiten.DrawImageOptions{}
 	tmp.opts.GeoM.Translate(x, y)
 	tmp.verticalSpeed, tmp.horisonatalSpeed = 0, 0
-	tmp.controls = makeControler(tmp)
 	tmp.isGrounded = true
+
 
 	return tmp
 }
 
+func (b *ball) resetGhostPosition(){
+	b.collisonGhost.position.x = b.position.x
+	b.collisonGhost.position.y = b.position.y
+	b.collisonGhost.opts=&ebiten.DrawImageOptions{}
+	b.collisonGhost.opts.GeoM.Translate(b.position.x, b.position.y)
+	b.collisonGhost.isGrounded = b.isGrounded
+	b.collisonGhost.move()
+}
+
+
 func (b *ball) applyNaturalForces() {
+	if b.isGhost==false {
+		player.collisonGhost.applyNaturalForces()
+	}
 	if b.isGrounded == false {
 		if b.verticalSpeed > -maxSpeed {
 			b.verticalSpeed -= gravityStrenght
@@ -67,6 +89,9 @@ func (b *ball) applyNaturalForces() {
 }
 
 func (b *ball) hit(angle, power float64) {
+	if b.isGhost==false {
+		player.collisonGhost.hit(angle, power)
+	}
 	b.isGrounded = false
 	b.horisonatalSpeed += power * math.Cos(angle)
 	b.verticalSpeed += power * math.Sin(angle)
@@ -77,23 +102,13 @@ func (b *ball) move() {
 		b.horisonatalSpeed = 0
 	}
 
-	if b.isGrounded == false {
-		//there is no need for contains in current version
-		collisionDirection := b.checkForBallCollisions()
-		if collisionDirection != "" {
-			fmt.Printf("%s\n", collisionDirection)
-			if strings.Contains(collisionDirection, "up") {
-				b.upwardBounce()
-			}
-			if strings.Contains(collisionDirection, "down") {
-				b.downwardBounce()
-			}
-			if strings.Contains(collisionDirection, "left") || strings.Contains(collisionDirection, "right") || strings.Contains(collisionDirection, "horisontal") {
+	if b.isGhost==false {
+		player.collisonGhost.move()
+		if b.isGrounded == false {
+			collisionDirection := b.checkForBallCollisions()
+			processBounces(collisionDirection,b.collisonGhost)
+			processBounces(collisionDirection,b)
 
-				b.horizontalBounce()
-			}
-		} else {
-			b.opts.GeoM.Translate(0, -b.verticalSpeed)
 		}
 	}
 
@@ -101,6 +116,27 @@ func (b *ball) move() {
 	b.position.x += b.horisonatalSpeed
 	b.position.y -= b.verticalSpeed
 }
+
+func processBounces(collisionDirection string, b *ball){
+	if collisionDirection != "" {
+		if strings.Contains(collisionDirection, "up") {
+			b.upwardBounce()
+		}
+		if strings.Contains(collisionDirection, "down") {
+			b.downwardBounce()
+		}
+		if strings.Contains(collisionDirection, "left") || strings.Contains(collisionDirection, "right") || strings.Contains(collisionDirection, "horisontal") {
+
+			b.horizontalBounce()
+		}
+		if b.isGhost==false{
+			b.resetGhostPosition()
+		}
+	} else {
+		b.opts.GeoM.Translate(0, -b.verticalSpeed)
+	}
+}
+
 
 func (b *ball) upwardBounce() {
 	if b.verticalSpeed <= 0 {

@@ -24,13 +24,13 @@ func newV2(x, y float64) vector2 {
 const screenWidth float64 = 1200
 const screenHeight float64 = 600
 
-const testBallsN = 50
+const testBallsLen = 50
 
-var levelisInstantiating = true
+var levelIsInstantiating = true
 var lvl level
 var player *ball
 
-var testBalls [testBallsN]*ball
+var testBalls [testBallsLen]*ball
 
 func main() {
 	var w, h int = int(screenWidth), int(screenHeight)
@@ -40,18 +40,19 @@ func main() {
 }
 
 func update(screen *ebiten.Image) error {
-	if levelisInstantiating {
-		player = makeBall(500, 500)
+	if levelIsInstantiating {
+		player = makeBall(500, 500,false)
 		lvl.Instantiate()
+
 		//test
 		rand.Seed(time.Now().UTC().UnixNano())
-		for i := 0; i < 10; i++ {
+		for i := 0; i < 35; i++ {
 			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
-			lvl.addBox(newBox(newV2(x, y), newV2(x+200, y+200)))
+			lvl.addBox(newBox(newV2(x, y), newV2(x+10, y+10)))
 
 		}
 
-		levelisInstantiating = false
+		levelIsInstantiating = false
 	}
 	handleInput()
 
@@ -76,7 +77,8 @@ func drawLevel(screen *ebiten.Image) {
 func drawPlayer(screen *ebiten.Image) {
 	screen.DrawImage(player.graphic, player.opts)
 
-	//screen.DrawImage(player.controls.indicator.graphic, player.controls.indicator.opts)
+	//debug
+	screen.DrawImage(player.collisonGhost.graphic, player.collisonGhost.opts)
 }
 
 func handleInput() {

@@ -9,7 +9,7 @@ import (
 
 const controlerStartAngle, controlerStartPower float64 = 0, 1
 const defaultAngleLerp, defaultpowerLerp float64 = math.Pi / 48, 0.1
-const defaultMaxPower float64 = 10
+const defaultMaxPower float64 = 20
 const defaultIndicatorDistanceFromBall float64 = 10
 
 var hitKeyIsDown = false

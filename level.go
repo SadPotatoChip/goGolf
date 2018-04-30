@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 )
 
-const maxLevelObjects int = 50
+const maxLevelObjects int = 2000
 
 
 ///Keeping arrays for clarity, each represents the boxes in the level sorted by their
@@ -30,7 +30,13 @@ func (l *level) Instantiate( /* probably a json file*/ ) {
 	l.maxSortedBoxes = new([maxLevelObjects]*box)
 	l.minSortedBoxes = new([maxLevelObjects]*box)
 	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
+	ceiling:= newBox(newV2(0,-80), newV2(screenWidth, 10))
+	wallLeft:= newBox(newV2(0,-80), newV2(10, screenHeight))
+	wallRight:= newBox(newV2(screenWidth-10,0), newV2(screenWidth+90, screenHeight))
 	l.addBox(ground)
+	l.addBox(ceiling)
+	l.addBox(wallLeft)
+	l.addBox(wallRight)
 }
 
 func (l *level) addBox(b *box) {
