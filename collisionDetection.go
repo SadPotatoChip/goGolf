@@ -8,8 +8,17 @@ type boxCollider struct {
 	min, max, mid vector2
 }
 
-//HACK garbage implementation
-func (c boxCollider) isCollidingWithBall(b *ball) string {
+
+type triangleCollider struct {
+    min, max, mid vector2
+    missing_part string // moze da bude left, right...
+}
+
+func (c triangleCollider) isTriangleCollidingWithBall(b *ball) string{
+    return ""
+}
+
+func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 	s := ""
 
 	if b.position.x+b.size > c.min.x && b.position.x < c.max.x{
@@ -68,46 +77,55 @@ func (b *ball) checkForBallCollisions() string {
 	candidates = filterVetcial(b,candidates)
 
 	//debug - shows in red the boxes that are being checked for collision
-	for i := 0; i < lvl.nOfBoxes; i++ {
-		lvl.maxSortedBoxes[i].graphic.Fill(color.White)
+/*	for i := 0; i < lvl.nOfShapes; i++ {
+		lvl.maxSortedShapes[i].graphic.Fill(color.White)
 	}
 	for i := 0; i < len(candidates); i++ {
 		candidates[i].graphic.Fill(color.RGBA{255, 0, 0, 255})
 	}
-
+*/
 
 	s:=""
 
 	for _, boxy := range candidates {
-		s+=boxy.collider.isCollidingWithBall(b)
+                tmp := *boxy
+                switch tmp.(type) {
+                    case triangle: s+=tmp.(triangle).collider.isTriangleCollidingWithBall(b)
+                    case box: s+=tmp.(box).collider.isBoxCollidingWithBall(b)
+                }
 	}
 
 
 	return s
 }
 
-func getCandidateCollidersHorizontal(b *ball) []*box {
+func getCandidateCollidersHorizontal(b *ball) []*shape {
 	var collisionCandidateStartIndex int
-	candidates := make([]*box, 0)
+	candidates := make([]*shape, 0)
 	if b.horisonatalSpeed>=0 {
-		for i := 0; i < lvl.nOfBoxes; i++ {
-			if b.position.x < lvl.maxSortedBoxes[i].collider.max.x {
+
+		for i := 0; i < lvl.nOfShapes; i++ {
+                        tmp := *lvl.maxSortedShapes[i]
+			if b.position.x < tmp.getMax().x {
 				collisionCandidateStartIndex = i
 				break
 			}
 		}
-		for i := collisionCandidateStartIndex; i < lvl.nOfBoxes; i++ {
-			candidates = append(candidates, lvl.maxSortedBoxes[i])
+		for i := collisionCandidateStartIndex; i < lvl.nOfShapes; i++ {
+                        tmp := *lvl.maxSortedShapes[i]
+			candidates = append(candidates, &tmp)
 		}
 	}else{
-		for i := 0; i < lvl.nOfBoxes; i++ {
-			if b.position.x+b.size < lvl.minSortedBoxes[i].collider.min.x {
+		for i := 0; i < lvl.nOfShapes; i++ {
+                        tmp := *lvl.maxSortedShapes[i]
+			if b.position.x+b.size < tmp.getMin().x {
 				collisionCandidateStartIndex = i
 				break
 			}
 		}
 		for i := 0; i < collisionCandidateStartIndex; i++ {
-			candidates = append(candidates, lvl.minSortedBoxes[i])
+                        tmp := *lvl.maxSortedShapes[i]
+			candidates = append(candidates, &tmp)
 		}
 	}
 
@@ -115,11 +133,18 @@ func getCandidateCollidersHorizontal(b *ball) []*box {
 }
 
 
-func filterVetcial(b *ball,candidates []*box)[]*box {
+func filterVetcial(b *ball,candidates []*shape)[]*shape {
 	l:= len(candidates)
 	if b.verticalSpeed>0{
 		for i:=0;i< l;i++ {
-			if b.position.y+b.size < candidates[i].collider.min.y {
+                        tmp := *(candidates[i]).collider
+                        
+                        /*
+                         *          switch tmp.(type) {
+                                        case triangle: 
+                                        case box: 
+                        */
+			if b.position.y+b.size < tmp.min.y {
 				copy(candidates[i:], candidates[i+1:])
 				candidates[len(candidates)-1] = nil // or the zero value of T
 				candidates = candidates[:len(candidates)-1]
@@ -128,7 +153,8 @@ func filterVetcial(b *ball,candidates []*box)[]*box {
 		}
 	}else{
 		for i:=0;i< len(candidates);i++ {
-			if b.position.y > candidates[i].collider.max.y {
+                        tmp := *candidates[i].collider
+			if b.position.y > tmp.max.y {
 				copy(candidates[i:], candidates[i+1:])
 				candidates[len(candidates)-1] = nil // or the zero value of T
 				candidates = candidates[:len(candidates)-1]

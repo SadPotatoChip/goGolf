@@ -25,7 +25,7 @@ const maxLevelObjects int = 50
 
 type level struct {
 	boxes    *list.List
-	nOfBoxes int
+	nOfShapes int
 }
 
 type box struct {
@@ -35,7 +35,7 @@ type box struct {
 }
 
 func (l *level) Instantiate(  ) {
-	l.nOfBoxes = 0
+	l.nOfShapes = 0
 	l.boxes = list.New()
 	l.boxes.Init()
 	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
@@ -44,7 +44,7 @@ func (l *level) Instantiate(  ) {
 
 func (l *level) addBox(b *box) {
 	var mark *list.Element = lvl.boxes.Front()
-	if lvl.nOfBoxes>1{
+	if lvl.nOfShapes>1{
 		for ; mark.Value.(*box).collider.min.x < b.collider.min.x && mark.Next()!=nil;
 		mark = mark.Next(){
 		}
@@ -61,7 +61,7 @@ func (l *level) addBox(b *box) {
 	fmt.Printf("\n")
 
 
-	l.nOfBoxes++
+	l.nOfShapes++
 }
 
 

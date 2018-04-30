@@ -5,7 +5,8 @@ import (
 	"math"
 	"math/rand"
 	"time"
-
+        "os"
+        "image"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -32,7 +33,16 @@ var player *ball
 
 var testBalls [testBallsLen]*ball
 
+var triangle_graphic image.Image
+
+var test_triangle *triangle
+var test_triangle2 *triangle
+
 func main() {
+    
+        reader, _ := os.Open("triangle.png")
+        triangle_graphic,_, _ = image.Decode(reader)
+        
 	var w, h int = int(screenWidth), int(screenHeight)
 	if err := ebiten.Run(update, w, h, 1, "puff puff"); err != nil {
 		panic(err)
@@ -51,11 +61,17 @@ func update(screen *ebiten.Image) error {
 			lvl.addBox(newBox(newV2(x, y), newV2(x+10, y+10)))
 
 		}
-
+                test_triangle = newTriangle(vector2{screenWidth/2,screenHeight/2}, vector2{screenWidth/2+50,screenHeight/2+50}, "top-left")
+                test_triangle2 = newTriangle(vector2{200,200}, vector2{300,300}, "bottom-left")
+              //  lvl.addBox(test_triangle)
+                //lvl.addBox(test_triangle2)
+                
 		levelIsInstantiating = false
 	}
 	handleInput()
-
+        screen.DrawImage(test_triangle.graphic, test_triangle.opts)
+        screen.DrawImage(test_triangle2.graphic, test_triangle2.opts)
+        
 	player.applyNaturalForces()
 	player.move()
 
@@ -69,8 +85,14 @@ func update(screen *ebiten.Image) error {
 }
 
 func drawLevel(screen *ebiten.Image) {
-	for i := 0; i < lvl.nOfBoxes; i++ {
-		screen.DrawImage(lvl.maxSortedBoxes[i].graphic, lvl.maxSortedBoxes[i].opts)
+	for i := 0; i < lvl.nOfShapes; i++ {
+                tmp := *lvl.maxSortedShapes[i]
+                switch (tmp.(type)) {
+                    case triangle: temp := tmp.(triangle)
+                                        screen.DrawImage(temp.getGraphic(), temp.getOpts())
+                    case box: temp := tmp.(box)
+                                        screen.DrawImage(temp.getGraphic(), temp.getOpts())
+                }
 	}
 }
 
