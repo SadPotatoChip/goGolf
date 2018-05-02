@@ -7,13 +7,14 @@ import (
         "math"
 	//"image"
 	"image/color"
+	"encoding/json"
+	"io/ioutil"
 )
 
-const maxLevelObjects int = 2000
+const maxLevelObjects int = 200
 
 type shape interface{
-    
-    getMin() vector2
+	getMin() vector2
     getMax() vector2
   	getGraphic() *ebiten.Image
     getOpts() *ebiten.DrawImageOptions
@@ -23,70 +24,108 @@ type shape interface{
 ///min-max x coordinate, a different array is used for collision detection depending on
 ///the balls horizontal direction for element elimination
 type level struct {
-	maxSortedShapes *[maxLevelObjects]*shape
-	minSortedShapes *[maxLevelObjects]*shape
-	nOfShapes       int
+	MaxSortedShapes [maxLevelObjects]shape `json:"MaxSortedShapes"`
+	MinSortedShapes [maxLevelObjects]shape `json:"MinSortedShapes"`
+	NumOfShapes     int
+	ShapeTypes		string
 }
 
 type box struct {
-	collider boxCollider
-	graphic  *ebiten.Image
-	opts     *ebiten.DrawImageOptions
+	Collider boxCollider
+	Graphic  *ebiten.Image
+	Opts     *ebiten.DrawImageOptions
 }
 
 type triangle struct {
-	collider triangleCollider
-	graphic  *ebiten.Image
-	opts     *ebiten.DrawImageOptions
+	Collider triangleCollider
+	Graphic  *ebiten.Image
+	Opts     *ebiten.DrawImageOptions
 }
 
 type uninteractableImage struct {
-	graphic *ebiten.Image
-	opts    *ebiten.DrawImageOptions
+	Graphic *ebiten.Image
+	Opts    *ebiten.DrawImageOptions
 }
 
 func (img *uninteractableImage)draw(screen *ebiten.Image){
-	screen.DrawImage(img.graphic, img.opts)
+	screen.DrawImage(img.Graphic, img.Opts)
 }
 
-
 func (t triangle)getMin() vector2{
-    return t.collider.min;
+    return t.Collider.Min;
 }
 
 func (t triangle)getMax() vector2{
-    return t.collider.max;
+    return t.Collider.Max;
 }
 
 func (b box)getMin() vector2{
-    return b.collider.min;
+    return b.Collider.Min;
 }
 
 func (b box)getMax() vector2{
-    return b.collider.max;
+    return b.Collider.Max;
 }
 
 func (t triangle)getGraphic() *ebiten.Image{
-    return t.graphic
+    return t.Graphic
 }
 
 func (b box)getGraphic() *ebiten.Image{
     
-    return b.graphic
+    return b.Graphic
 }
 
 func (t triangle)getOpts() *ebiten.DrawImageOptions{
-    return t.opts
+    return t.Opts
 }
 
 func (b box)getOpts() *ebiten.DrawImageOptions{
-    return b.opts
+    return b.Opts
 }
 
-func (l *level) Instantiate( /* probably a json file*/ ) {
-	l.nOfShapes = 0
-	l.maxSortedShapes = new([maxLevelObjects]*shape)
-	l.minSortedShapes = new([maxLevelObjects]*shape)
+func (l *level) Instantiate(filePath string) {
+	l.ShapeTypes=""
+	rawData, err := ioutil.ReadFile("levels/"+filePath)
+	if err != nil {
+		fmt.Println("failed to load data from json")
+		panic("rip")
+	}
+	jsonData :=level{[maxLevelObjects]shape{},
+						[maxLevelObjects]shape{},
+						0,""}
+	if err = json.Unmarshal(rawData, jsonData); err==nil{
+		fmt.Println("failed to unmarshal")
+		panic("rip")
+	}
+
+
+	//shapes:=jsonData.MaxSortedShapes
+	fmt.Println(jsonData)
+
+	/*types:= []rune(jsonData.ShapeTypes)
+	for i:=0;i<jsonData.NumOfShapes;i++{
+		min:=jsonData.MaxSortedShapes[i].(box).Collider.Min
+		max:=jsonData.MaxSortedShapes[i].getMax()
+		graphic:=jsonData.MaxSortedShapes[i].getGraphic()
+		opts:=jsonData.MaxSortedShapes[i].getOpts()
+		switch types[i] {
+		case 'B':
+			tmp:=newBox(min,max)
+			tmp.Opts=opts
+			tmp.Graphic=graphic
+			tmp.Graphic.Fill(color.White)
+			l.addBox(tmp)
+		}
+
+	}*/
+
+
+	//empty level
+
+	l.NumOfShapes = 0
+	l.MaxSortedShapes = [maxLevelObjects]shape{}
+	l.MinSortedShapes =	[maxLevelObjects]shape{}
 	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
 	ceiling:= newBox(newV2(0,-80), newV2(screenWidth-1, 10))
 	wallLeft:= newBox(newV2(0,-80), newV2(10, screenHeight))
@@ -95,152 +134,147 @@ func (l *level) Instantiate( /* probably a json file*/ ) {
 	l.addBox(ceiling)
 	l.addBox(wallLeft)
 	l.addBox(wallRight)
-}
 
+
+}
 
 func (l *level) addBox(b *box) {
 	//manually realocate arrays so that it is sorted
-	if l.maxSortedShapes[0] != nil {
+	if l.MaxSortedShapes[0] != nil {
 		//maxSorted
-		i:=1
-		originalArray:=*l.maxSortedShapes
-		tmp := *l.maxSortedShapes[0]
-		for ;i < l.nOfShapes && b.collider.max.x > tmp.getMax().x; i++ {
-			tmp = *l.maxSortedShapes[i]
+		i:=0
+		var originalArray []shape
+		for _,s := range l.MaxSortedShapes{
+			originalArray=append(originalArray,s)
 		}
-
-		if i>0 && i<l.nOfShapes{
-			i--
+		for i<l.NumOfShapes && b.getMax().X>=l.MaxSortedShapes[i].getMax().X {
+			i++
 		}
-
-		var interfacedBox shape= b
-		l.maxSortedShapes[i] = &interfacedBox
-		for i < l.nOfShapes {
-			l.maxSortedShapes[i+1] = originalArray[i]
+		l.MaxSortedShapes[i]=b
+		for i<l.NumOfShapes {
+			l.MaxSortedShapes[i+1]=originalArray[i]
 			i++
 		}
 
-		//minSorted
-		i=1
-		originalArray=*l.minSortedShapes
-		tmp = *l.minSortedShapes[0]
-		for ;i < l.nOfShapes && b.collider.min.x > tmp.getMin().x; i++ {
-			tmp = *l.minSortedShapes[i]
+		i=0
+		var originalArray2 []shape
+		for _,s := range l.MinSortedShapes{
+			originalArray2=append(originalArray2,s)
 		}
-
-		if i>0 && i<l.nOfShapes{
-			i--
-		}
-
-		interfacedBox= b
-		l.minSortedShapes[i] = &interfacedBox
-		for i < l.nOfShapes {
-			l.minSortedShapes[i+1] = originalArray[i]
+		for i<l.NumOfShapes && b.getMin().X>=l.MinSortedShapes[i].getMin().X {
 			i++
 		}
+		l.MinSortedShapes[i]=b
+		for i<l.NumOfShapes {
+			l.MinSortedShapes[i+1]=originalArray2[i]
+			i++
+		}
+
+
+
 	} else {
 		var interfacedBox shape= b
-		l.maxSortedShapes[0] = &interfacedBox
-		l.minSortedShapes[0] = &interfacedBox
+		l.MaxSortedShapes[0] = interfacedBox
+		l.MinSortedShapes[0] = interfacedBox
 	}
-	l.nOfShapes++
-	//debug
-	for j:=0;j<l.nOfShapes;j++{
-		switch (*l.maxSortedShapes[j]).(type) {
-			case *box: fmt.Printf("B")
-			case *triangle: fmt.Printf("T")
+	l.NumOfShapes++
+
+	l.ShapeTypes=""
+	for j:=0;j<l.NumOfShapes;j++{
+		switch (l.MaxSortedShapes[j]).(type) {
+			case *box: l.ShapeTypes+="B"
+			case *triangle: l.ShapeTypes+="T"
 		}
 	}
-	fmt.Printf("\n")
-
 }
 
 func (l *level) addTriangle(t *triangle){
-	if l.maxSortedShapes[0] != nil {
+	if l.MaxSortedShapes[0] != nil {
 		//maxSorted
-		i:=1
-		originalArray:=*l.maxSortedShapes
-		tmp := *l.maxSortedShapes[0]
-			for ;i < l.nOfShapes && t.collider.max.x > tmp.getMax().x; i++ {
-			tmp = *l.maxSortedShapes[i]
+		i:=0
+		var originalArray []shape
+		for _,s := range l.MaxSortedShapes{
+			originalArray=append(originalArray,s)
 		}
-	
-		if i>0 && i<l.nOfShapes{
-			i--
-		}
-	
-		var interfacedBox shape= t
-		l.maxSortedShapes[i] = &interfacedBox
-		for i < l.nOfShapes {
-			l.maxSortedShapes[i+1] = originalArray[i]
+		for i<l.NumOfShapes && t.getMax().X>=l.MaxSortedShapes[i].getMax().X {
 			i++
 		}
-	
-		//minSorted
-		i=1
-		originalArray=*l.minSortedShapes
-		tmp = *l.minSortedShapes[0]
-		for ;i < l.nOfShapes && t.collider.min.x > tmp.getMin().x; i++ {
-			tmp = *l.minSortedShapes[i]
-		}
-	
-		if i>0 && i<l.nOfShapes{
-			i--
+		l.MaxSortedShapes[i]=t
+		for i<l.NumOfShapes {
+			l.MaxSortedShapes[i+1]=originalArray[i]
+			i++
 		}
 
-		interfacedBox= t
-		l.minSortedShapes[i] = &interfacedBox
-		for i < l.nOfShapes {
-			l.minSortedShapes[i+1] = originalArray[i]
+		i=0
+		var originalArray2 []shape
+		for _,s := range l.MinSortedShapes{
+			originalArray2=append(originalArray2,s)
+		}
+		for i<l.NumOfShapes && t.getMin().X>=l.MinSortedShapes[i].getMin().X {
 			i++
 		}
+		l.MinSortedShapes[i]=t
+		for i<l.NumOfShapes {
+			l.MinSortedShapes[i+1]=originalArray2[i]
+			i++
+		}
+
+
+
 	} else {
-		var interfacedBox shape = t
-		l.maxSortedShapes[0] = &interfacedBox
-		l.minSortedShapes[0] = &interfacedBox
+		var interfacedBox shape= t
+		l.MaxSortedShapes[0] = interfacedBox
+		l.MinSortedShapes[0] = interfacedBox
 	}
-	
-	l.nOfShapes++
+	l.NumOfShapes++
+
+	l.ShapeTypes=""
+	for j:=0;j<l.NumOfShapes;j++{
+		switch (l.MaxSortedShapes[j]).(type) {
+		case *box: l.ShapeTypes+="B"
+		case *triangle: l.ShapeTypes+="T"
+		}
+	}
 }
 
 func newBox(min, max vector2) *box {
-	if min.x > max.x || min.y > max.y {
-		fmt.Printf("Invalid box: (%f,%f)(%f,%f)", min.x, min.y, max.x, max.y)
+	if min.X > max.X || min.Y > max.Y {
+		fmt.Printf("Invalid box: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)
 		return nil
 	}
 	tmp := new(box)
-	tmp.collider.min = min
-	tmp.collider.max = max
-	tmp.collider.mid = newV2((min.x+max.y)/2, (min.y+max.y)/2)
-	tmp.graphic, _ = ebiten.NewImage(int(max.x-min.x), int(max.y-min.y), ebiten.FilterNearest)
-	tmp.graphic.Fill(color.White)
-	tmp.opts = &ebiten.DrawImageOptions{}
-	tmp.opts.GeoM.Translate(min.x, min.y)
+	tmp.Collider.Min = min
+	tmp.Collider.Max = max
+	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
+	tmp.Graphic, _ = ebiten.NewImage(int(max.X-min.X), int(max.Y-min.Y), ebiten.FilterNearest)
+	tmp.Graphic.Fill(color.White)
+	tmp.Opts = &ebiten.DrawImageOptions{}
+	tmp.Opts.GeoM.Translate(min.X, min.Y)
 	return tmp
 }
 
 func newTriangle(min, max vector2, side string) *triangle {
-	if min.x > max.x || min.y > max.y {
-		fmt.Printf("Invalid triangle: (%f,%f)(%f,%f)", min.x, min.y, max.x, max.y)
+	if min.X > max.X || min.Y > max.Y {
+		fmt.Printf("Invalid triangle: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)
 		return nil
 	}
 	tmp := new(triangle)
-	tmp.collider.min = min
-	tmp.collider.max = max
-	tmp.collider.mid = newV2((min.x+max.y)/2, (min.y+max.y)/2)
- 	tmp.graphic, _ = ebiten.NewImageFromImage(triangle_graphic, ebiten.FilterNearest)
-	tmp.opts = &ebiten.DrawImageOptions{}
+	tmp.Collider.Min = min
+	tmp.Collider.Max = max
+	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
+ 	tmp.Graphic, _ = ebiten.NewImageFromImage(triangleGraphic, ebiten.FilterNearest)
+	tmp.Opts = &ebiten.DrawImageOptions{}
 	
-        tmp.opts.GeoM.Scale(0.001*(max.x-min.x), 0.001*(max.y-min.y))
+        tmp.Opts.GeoM.Scale(0.001*(max.X-min.X), 0.001*(max.Y-min.Y))
         
         switch side{
-            case "top-left": tmp.opts.GeoM.Rotate(-math.Pi/2)
+            case "top-left": tmp.Opts.GeoM.Rotate(-math.Pi/2)
             case "top-right": 
-            case "bottom-left": tmp.opts.GeoM.Rotate(math.Pi)
-            case "bottom-right": tmp.opts.GeoM.Rotate(math.Pi/2)
+            case "bottom-left": tmp.Opts.GeoM.Rotate(math.Pi)
+            case "bottom-right": tmp.Opts.GeoM.Rotate(math.Pi/2)
         }
 
-        tmp.opts.GeoM.Translate(min.x, min.y)
+        tmp.Opts.GeoM.Translate(min.X, min.Y)
 
 	return tmp
 }

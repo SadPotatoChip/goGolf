@@ -6,13 +6,13 @@ import (
 )
 
 type boxCollider struct {
-	min, max, mid vector2
+	Min, Max, Mid vector2
 }
 
 
 type triangleCollider struct {
-    min, max, mid vector2
-    missing_part string // moze da bude left, right...
+    Min, Max, Mid vector2
+    Missing_part string // moze da bude left, right...
 }
 
 func (c triangleCollider) isTriangleCollidingWithBall(b *ball) string{
@@ -22,24 +22,24 @@ func (c triangleCollider) isTriangleCollidingWithBall(b *ball) string{
 func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 	s := ""
 
-	if b.position.x+b.size > c.min.x && b.position.x < c.max.x{
+	if b.position.X+b.size > c.Min.X && b.position.X < c.Max.X{
 		if b.verticalSpeed < 0 {
-			if b.position.y < c.min.y && b.collisonGhost.position.y+b.size > c.min.y {
+			if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
 				s = "up"
 			}
 		} else {
-			if b.position.y+b.size > c.max.y && b.collisonGhost.position.y < c.max.y {
+			if b.position.Y+b.size > c.Max.Y && b.collisonGhost.position.Y < c.Max.Y {
 				s = "down"
 			}
 		}
 	}
-	if b.position.y+b.size> c.min.y && b.position.y < c.max.y {
+	if b.position.Y+b.size> c.Min.Y && b.position.Y < c.Max.Y {
 		if b.horisonatalSpeed>0{
-			if b.position.x< c.min.x && b.collisonGhost.position.x+b.size>c.min.x{
+			if b.position.X< c.Min.X && b.collisonGhost.position.X+b.size>c.Min.X{
 				s="left"
 			}
 		}else{
-			if b.position.x+ b.size > c.max.x && b.collisonGhost.position.x < c.max.x{
+			if b.position.X+ b.size > c.Min.X && b.collisonGhost.position.X < c.Max.X{
 				s="right"
 			}
 		}
@@ -49,21 +49,21 @@ func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 	//Adjust for intersection
 	switch s {
 		case "up":
-			b.position.y = c.min.y - player.size
+			b.position.Y = c.Min.Y - player.size
 			b.opts.GeoM.Reset()
-			b.opts.GeoM.Translate(player.position.x, player.position.y)
+			b.opts.GeoM.Translate(player.position.X, player.position.Y)
 		case "down":
-			b.position.y = c.max.y
+			b.position.Y = c.Max.Y
 			b.opts.GeoM.Reset()
-			b.opts.GeoM.Translate(player.position.x, player.position.y)
+			b.opts.GeoM.Translate(player.position.X, player.position.Y)
 		case "right":
-			b.position.x = c.max.x
+			b.position.X = c.Max.X
 			b.opts.GeoM.Reset()
-			b.opts.GeoM.Translate(player.position.x, player.position.y)
+			b.opts.GeoM.Translate(player.position.X, player.position.Y)
 		case "left":
-			b.position.x = c.min.x - player.size
+			b.position.X = c.Min.X - player.size
 			b.opts.GeoM.Reset()
-			b.opts.GeoM.Translate(player.position.x, player.position.y)
+			b.opts.GeoM.Translate(player.position.X, player.position.Y)
 			}
 
 
@@ -87,8 +87,8 @@ func (b *ball) checkForBallCollisions() string {
 	for _, boxy := range candidates {
                 tmp := *boxy
                 switch tmp.(type) {
-                    case *triangle: s+=tmp.(*triangle).collider.isTriangleCollidingWithBall(b)
-                    case *box: s+=tmp.(*box).collider.isBoxCollidingWithBall(b)
+                    case *triangle: s+=tmp.(*triangle).Collider.isTriangleCollidingWithBall(b)
+                    case *box: s+=tmp.(*box).Collider.isBoxCollidingWithBall(b)
                 }
 	}
 
@@ -100,27 +100,27 @@ func getCandidateCollidersHorizontal(b *ball) []*shape {
 	var collisionCandidateStartIndex int
 	candidates := make([]*shape, 0)
 	if b.horisonatalSpeed>=0 {
-		for i := 0; i < lvl.nOfShapes; i++ {
-			tmp := *lvl.maxSortedShapes[i]
-			if b.position.x < tmp.getMax().x {
+		for i := 0; i < lvl.NumOfShapes; i++ {
+			tmp := lvl.MaxSortedShapes[i]
+			if b.position.X < tmp.getMax().X {
 				collisionCandidateStartIndex = i
 				break
 			}
 		}
-		for i := collisionCandidateStartIndex; i < lvl.nOfShapes; i++ {
-			tmp := *lvl.maxSortedShapes[i]
+		for i := collisionCandidateStartIndex; i < lvl.NumOfShapes; i++ {
+			tmp := lvl.MaxSortedShapes[i]
 			candidates = append(candidates, &tmp)
 		}
 	}else{
-		for i := 0; i < lvl.nOfShapes; i++ {
-			tmp := *lvl.minSortedShapes[i]
-			if b.position.x+b.size < tmp.getMin().x {
+		for i := 0; i < lvl.NumOfShapes; i++ {
+			tmp := lvl.MinSortedShapes[i]
+			if b.position.X+b.size < tmp.getMin().X {
 				collisionCandidateStartIndex = i
 				break
 			}
 		}
 		for i := 0; i < collisionCandidateStartIndex; i++ {
-			tmp := *lvl.minSortedShapes[i]
+			tmp := lvl.MinSortedShapes[i]
 			candidates = append(candidates, &tmp)
 		}
 	}
@@ -135,7 +135,7 @@ func filterVetcial(b *ball,candidates []*shape)[]*shape {
 		for i:=0;i< l;i++ {
 			tmp := *(candidates[i])
 			var tmpMin =tmp.getMin()
-			if b.position.y+b.size < tmpMin.y {
+			if b.position.Y+b.size < tmpMin.Y {
 				copy(candidates[i:], candidates[i+1:])
 				candidates[len(candidates)-1] = nil // or the zero value of T
 				candidates = candidates[:len(candidates)-1]
@@ -146,7 +146,7 @@ func filterVetcial(b *ball,candidates []*shape)[]*shape {
 		for i:=0;i < l;i++ {
 			tmp := *(candidates[i])
 			var tmpMax =tmp.getMax()
-			if b.position.y > tmpMax.y {
+			if b.position.Y > tmpMax.Y {
 				copy(candidates[i:], candidates[i+1:])
 				candidates[len(candidates)-1] = nil // or the zero value of T
 				candidates = candidates[:len(candidates)-1]
@@ -160,8 +160,8 @@ func filterVetcial(b *ball,candidates []*shape)[]*shape {
 }
 
 func debugCollisionFilter(candidates []*shape){
-	for i := 0; i < lvl.nOfShapes; i++ {
-		tmp:=*lvl.maxSortedShapes[i]
+	for i := 0; i < lvl.NumOfShapes; i++ {
+		tmp:=lvl.MaxSortedShapes[i]
 		tmp.getGraphic().Fill(color.White)
 	}
 	for i := 0; i < len(candidates); i++ {

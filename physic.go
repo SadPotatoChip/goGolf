@@ -32,8 +32,8 @@ type ball struct {
 func makeBall(x, y float64,isGhost bool) *ball {
 	tmp := new(ball)
 	tmp.size = ballSize
-	tmp.position.x = x
-	tmp.position.y = y
+	tmp.position.X = x
+	tmp.position.Y = y
 	tmp.graphic, _ = ebiten.NewImage(int(ballSize), int(ballSize), ebiten.FilterNearest)
 	tmp.isGhost=isGhost
 	if isGhost==false {
@@ -53,10 +53,10 @@ func makeBall(x, y float64,isGhost bool) *ball {
 }
 
 func (b *ball) resetGhostPosition(){
-	b.collisonGhost.position.x = b.position.x
-	b.collisonGhost.position.y = b.position.y
+	b.collisonGhost.position.X = b.position.X
+	b.collisonGhost.position.Y = b.position.Y
 	b.collisonGhost.opts=&ebiten.DrawImageOptions{}
-	b.collisonGhost.opts.GeoM.Translate(b.position.x, b.position.y)
+	b.collisonGhost.opts.GeoM.Translate(b.position.X, b.position.Y)
 	b.collisonGhost.isGrounded = b.isGrounded
 	b.collisonGhost.move()
 }
@@ -113,8 +113,8 @@ func (b *ball) move() {
 	}
 
 	b.opts.GeoM.Translate(b.horisonatalSpeed, 0)
-	b.position.x += b.horisonatalSpeed
-	b.position.y -= b.verticalSpeed
+	b.position.X += b.horisonatalSpeed
+	b.position.Y -= b.verticalSpeed
 }
 
 func processBounces(collisionDirection string, b *ball){

@@ -3,22 +3,22 @@ package main
 import (
 	"fmt"
 	"math"
-	"math/rand"
-	"time"
         "os"
         "image"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"math/rand"
+	"time"
 )
 
 type vector2 struct {
-	x, y float64
+	X, Y float64
 }
 
 func newV2(x, y float64) vector2 {
 	tmp := new(vector2)
-	tmp.x = x
-	tmp.y = y
+	tmp.X = x
+	tmp.Y = y
 	return *tmp
 }
 
@@ -26,29 +26,21 @@ func newV2(x, y float64) vector2 {
 const screenWidth float64 = 1200
 const screenHeight float64 = 600
 
-const testBallsLen = 50
-
 var levelIsInstantiating = true
 var lvl level
 var player *ball
-
-var testBalls [testBallsLen]*ball
 
 var backgroundImage uninteractableImage
 
 
 //debug
-var triangle_graphic image.Image
+var triangleGraphic image.Image
 
-var test_triangle *triangle
-var test_triangle2 *triangle
 
 func main() {
-
-
 	//preprocess testing textures import
 	reader, _ := os.Open("triangle.png")
-	triangle_graphic,_, _ = image.Decode(reader)
+	triangleGraphic,_, _ = image.Decode(reader)
 	reader2, _ := os.Open("1.png")
 	tmp,_, _ := image.Decode(reader2)
 	testBackground,_:=ebiten.NewImageFromImage(tmp,ebiten.FilterDefault)
@@ -66,21 +58,16 @@ func update(screen *ebiten.Image) error {
 
 	if levelIsInstantiating {
 		player = makeBall(500, 500,false)
-		lvl.Instantiate()
-
-		//test
-		test_triangle = newTriangle(vector2{screenWidth/2,screenHeight/2}, vector2{screenWidth/2+50,screenHeight/2+50}, "top-left")
-		test_triangle2 = newTriangle(vector2{200,200}, vector2{300,300}, "bottom-left")
-		lvl.addTriangle(test_triangle)
-		lvl.addTriangle(test_triangle2)
+		lvl.Instantiate("testlvl1.json")
 
 		rand.Seed(time.Now().UTC().UnixNano())
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 0; i++ {
 			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
-			lvl.addBox(newBox(newV2(x, y), newV2(x+200, y+100)))
+			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
 		}
-                
+		//save level
+		lvl.makeJson("testlvl1")
 		levelIsInstantiating = false
 	}
 	handleInput()
@@ -92,22 +79,15 @@ func update(screen *ebiten.Image) error {
 	drawPlayer(screen)
 
 	//DEBUG
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t", ebiten.CurrentFPS(), player.position.x, player.position.y, player.horisonatalSpeed, player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t", ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
 
 	return nil
 }
 
 func drawLevel(screen *ebiten.Image) {
-	for i := 0; i < lvl.nOfShapes; i++ {
-                tmp := *lvl.maxSortedShapes[i]
-                switch tmp.(type) {
-					case *box:
-						temp := tmp.(*box)
-						screen.DrawImage(temp.getGraphic(), temp.getOpts())
-                    case *triangle: temp := tmp.(*triangle)
-                    	screen.DrawImage(temp.getGraphic(), temp.getOpts())
-
-                }
+	for i := 0; i < lvl.NumOfShapes; i++ {
+			screen.DrawImage(lvl.MaxSortedShapes[i].getGraphic(),
+				lvl.MaxSortedShapes[i].getOpts())
 	}
 }
 

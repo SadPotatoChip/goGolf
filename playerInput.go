@@ -66,9 +66,9 @@ func (c *controler) makeIndicator() {
 	tmp.distanceFromBall = defaultIndicatorDistanceFromBall
 
 	//HACK - not bound to starting angle (assumes it is 0)
-	tmp.position.x = c.parent.position.x - tmp.distanceFromBall
-	tmp.position.y = c.parent.position.y + 1
-	tmp.opts.GeoM.Translate(tmp.position.x, tmp.position.y)
+	tmp.position.X = c.parent.position.X - tmp.distanceFromBall
+	tmp.position.Y = c.parent.position.Y + 1
+	tmp.opts.GeoM.Translate(tmp.position.X, tmp.position.Y)
 
 	c.indicator = tmp
 }
@@ -78,8 +78,8 @@ func (c *controler) changeAngle(dir float64) {
 
 	//indicator orbit
 	/*	x, y := math.Cos(c._angleLerp*dir), math.Sin(c._angleLerp*dir)
-		c.indicator.position.x += x
-		c.indicator.position.y += y
+		c.indicator.position.X += x
+		c.indicator.position.Y += y
 		c.indicator.opts.GeoM.Translate(x, y)*/
 
 	if c.angle == 2*math.Pi {
