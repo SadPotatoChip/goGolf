@@ -7,8 +7,8 @@ import (
         "image"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
-	"math/rand"
-	"time"
+	//"math/rand"
+	//"time"
 )
 
 type vector2 struct {
@@ -35,13 +35,18 @@ var backgroundImage uninteractableImage
 
 //debug
 var triangleGraphic image.Image
+var boxGraphic image.Image
 
 
 func main() {
 	//preprocess testing textures import
 	reader, _ := os.Open("triangle.png")
 	triangleGraphic,_, _ = image.Decode(reader)
-	reader2, _ := os.Open("1.png")
+	
+        reader3, _ := os.Open("box.png")
+	boxGraphic,_, _ = image.Decode(reader3)
+        
+        reader2, _ := os.Open("1.png")
 	tmp,_, _ := image.Decode(reader2)
 	testBackground,_:=ebiten.NewImageFromImage(tmp,ebiten.FilterDefault)
 
@@ -58,16 +63,39 @@ func update(screen *ebiten.Image) error {
 
 	if levelIsInstantiating {
 		player = makeBall(500, 500,false)
-		lvl.Instantiate("testlvl1.json")
-
+		//lvl.Instantiate("testlvl1.json")
+/*
 		rand.Seed(time.Now().UTC().UnixNano())
 		for i := 0; i < 0; i++ {
 			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
 			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
-		}
+		}*/
+		// levo
+                lvl.addTriangle(newTriangle(vector2{400,500}, vector2{700,700}, "top-right"))
+                lvl.addTriangle(newTriangle(vector2{200,400}, vector2{700,700}, "top-right"))
+                
+                lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
+                lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
+                lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))                
+                lvl.addBox(newBox(newV2(300, 500), newV2(400, 600)))
+                
+                lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
+                lvl.addBox(newBox(newV2(100, 400), newV2(200, 500)))
+                
+                
+                // desno
+                lvl.addTriangle(newTriangle(vector2{900,500}, vector2{1200,700}, "top-left"))
+                lvl.addTriangle(newTriangle(vector2{700,600}, vector2{1200,900}, "top-left"))
+                
+                lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
+                lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
+                lvl.addBox(newBox(newV2(1000, 500), newV2(1100, 600)))
+                lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
+                lvl.addBox(newBox(newV2(1000, 400), newV2(1100, 500)))
+                lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))                
 		//save level
-		lvl.makeJson("testlvl1")
+		//lvl.makeJson("testlvl1")
 		levelIsInstantiating = false
 	}
 	handleInput()

@@ -6,7 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
         "math"
 	//"image"
-	"image/color"
+	// "image/color"
 	"encoding/json"
 	"io/ioutil"
 )
@@ -246,8 +246,8 @@ func newBox(min, max vector2) *box {
 	tmp.Collider.Min = min
 	tmp.Collider.Max = max
 	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
-	tmp.Graphic, _ = ebiten.NewImage(int(max.X-min.X), int(max.Y-min.Y), ebiten.FilterNearest)
-	tmp.Graphic.Fill(color.White)
+	tmp.Graphic, _ = ebiten.NewImageFromImage(boxGraphic, ebiten.FilterNearest)
+	//tmp.Graphic.Fill(color.White)
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	tmp.Opts.GeoM.Translate(min.X, min.Y)
 	return tmp
@@ -265,7 +265,7 @@ func newTriangle(min, max vector2, side string) *triangle {
  	tmp.Graphic, _ = ebiten.NewImageFromImage(triangleGraphic, ebiten.FilterNearest)
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	
-        tmp.Opts.GeoM.Scale(0.001*(max.X-min.X), 0.001*(max.Y-min.Y))
+        //tmp.Opts.GeoM.Scale(0.001*(max.X-min.X), 0.001*(max.Y-min.Y))
         
         switch side{
             case "top-left": tmp.Opts.GeoM.Rotate(-math.Pi/2)
