@@ -24,7 +24,7 @@ type controler struct {
 
 	powerUpKey, powerDownKey ebiten.Key
 	angleUpKey, angleDownKey ebiten.Key
-	hitKey                   ebiten.Key
+	//hitKey                   ebiten.Key
 	indicator                *angleIndicator
 
 	//makes fentching position of ball cleaner in some places
@@ -49,7 +49,7 @@ func makeControler(b *ball) *controler {
 	c.powerDownKey = ebiten.KeyDown
 	c.angleUpKey = ebiten.KeyLeft
 	c.angleDownKey = ebiten.KeyRight
-	c.hitKey = ebiten.KeySpace
+	//c.hitKey = ebiten.KeySpace
 
 	c.parent = b
 

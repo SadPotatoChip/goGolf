@@ -7,8 +7,8 @@ import (
         "math"
 	//"image"
 	// "image/color"
-	"encoding/json"
-	"io/ioutil"
+	//"encoding/json"
+	//"io/ioutil"
 )
 
 const maxLevelObjects int = 200
@@ -86,11 +86,14 @@ func (b box)getOpts() *ebiten.DrawImageOptions{
 
 func (l *level) Instantiate(filePath string) {
 	l.ShapeTypes=""
-	rawData, err := ioutil.ReadFile("levels/"+filePath)
+
+	/*
+        rawData, err := ioutil.ReadFile("levels/"+filePath)
 	if err != nil {
 		fmt.Println("failed to load data from json")
 		panic("rip")
 	}
+	
 	jsonData :=level{[maxLevelObjects]shape{},
 						[maxLevelObjects]shape{},
 						0,""}
@@ -99,9 +102,9 @@ func (l *level) Instantiate(filePath string) {
 		panic("rip")
 	}
 
-
+*/
 	//shapes:=jsonData.MaxSortedShapes
-	fmt.Println(jsonData)
+	//fmt.Println(jsonData)
 
 	/*types:= []rune(jsonData.ShapeTypes)
 	for i:=0;i<jsonData.NumOfShapes;i++{
@@ -119,7 +122,6 @@ func (l *level) Instantiate(filePath string) {
 		}
 
 	}*/
-
 
 	//empty level
 
