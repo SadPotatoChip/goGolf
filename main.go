@@ -3,12 +3,10 @@ package main
 import (
 	"fmt"
 	"math"
-        "os"
-        "image"
+	"os"
+	"image"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
-	//"math/rand"
-	//"time"
 )
 
 type vector2 struct {
@@ -48,29 +46,32 @@ var backgroung_str = "1.png"
 
 func main() {
 	//preprocess testing textures import
-    
-    if current_level == 1 {
-        triangle_str = "triangle1000x1000.png"
-        box_str = "triangle1000x1000.png"
-        backgroung_str = "1.png"
-    }
-    
-	reader, _ := os.Open(triangle_str)
-	triangleGraphic,_, _ = image.Decode(reader)
-	
-        reader3, _ := os.Open(box_str)
-	boxGraphic,_, _ = image.Decode(reader3)
-        
-        reader2, _ := os.Open(backgroung_str)
-	tmp,_, _ := image.Decode(reader2)
-	testBackground,_:=ebiten.NewImageFromImage(tmp,ebiten.FilterDefault)
 
-	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
-        
+	if current_level == 1 {
+		triangle_str = "triangle1000x1000.png"
+		box_str = "triangle1000x1000.png"
+		backgroung_str = "1.png"
+	}
+	// Kad hoces da promenis koji se graphic koriste u nivou promeni ova 3 stringa iznad na ono sto hoces i pozovi funckiju ispod
+	prefetchGraphics()
+
 	var w, h int = int(screenWidth), int(screenHeight)
 	if err := ebiten.Run(update, w, h, 1, "puff puff"); err != nil {
 		panic(err)
 	}
+}
+func prefetchGraphics() {
+	reader, _ := os.Open(triangle_str)
+	triangleGraphic, _, _ = image.Decode(reader)
+
+	reader3, _ := os.Open(box_str)
+	boxGraphic, _, _ = image.Decode(reader3)
+
+	reader2, _ := os.Open(backgroung_str)
+	tmp, _, _ := image.Decode(reader2)
+	testBackground, _ := ebiten.NewImageFromImage(tmp, ebiten.FilterDefault)
+	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
+
 }
 
 func update(screen *ebiten.Image) error {
@@ -80,19 +81,18 @@ func update(screen *ebiten.Image) error {
 		player = makeBall(500, 500,false)
 		lvl.Instantiate("testlvl1.json")
 
-                set_first_level()
-                current_level = 1
+		set_first_level()
+		current_level = 1
                 
                 /* don't touch this!
+                you're a potato :p
+
 		rand.Seed(time.Now().UTC().UnixNano())
 		for i := 0; i < 0; i++ {
 			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
 			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
 		}*/
-
-        
-
 		//save level
 		//lvl.makeJson("testlvl1")
 		levelIsInstantiating = false
@@ -100,15 +100,15 @@ func update(screen *ebiten.Image) error {
         
   // TODO Izdvojicu sve fje u vezi pravljenja nivoa u poseban fajl, samo hocu prvo da mi sve proradi!
         
-        if ebiten.IsKeyPressed(ebiten.KeySpace) && current_level == 1 {
-            fmt.Println("da")
-            set_second_level()
-            current_level++
-        }
+  	if ebiten.IsKeyPressed(ebiten.Key1) && current_level == 1 {
+  		fmt.Println("da")
+  		set_second_level()
+  		current_level++
+	}
    
    // TODO ako stavim dva if-a ukljucuje se samo nivo u poslednjem if-u
   /*
-    if ebiten.IsKeyPressed(ebiten.KeySpace) && current_level == 1 {
+    if ebiten.IsKeyPressed(ebiten.Key1) && current_level == 1 {
             fmt.Println("daa")
             set_third_level()
             current_level++
@@ -186,9 +186,6 @@ func drawLevel(screen *ebiten.Image) {
 
 func drawPlayer(screen *ebiten.Image) {
 	screen.DrawImage(player.graphic, player.opts)
-
-	//debug
-	screen.DrawImage(player.collisonGhost.graphic, player.collisonGhost.opts)
 }
 
 func handleInput() {
@@ -205,10 +202,9 @@ func handleInput() {
 		if ebiten.IsKeyPressed(player.controls.powerDownKey) {
 			player.controls.changePower(-1)
 		}
-		/*if hitKeyDown(player.controls.hitKey) {
-			fmt.Printf("hit\n")
+		if hitKeyDown(player.controls.hitKey) {
 			player.hit(player.controls.angle, player.controls.power)
 
-		}*/
+		}
 	}
 }

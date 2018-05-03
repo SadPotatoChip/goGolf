@@ -9,16 +9,11 @@ import (
 	// "image/color"
 	//"encoding/json"
 	//"io/ioutil"
+	"io/ioutil"
+	"encoding/json"
 )
 
 const maxLevelObjects int = 200
-
-type shape interface{
-	getMin() vector2
-    getMax() vector2
-  	getGraphic() *ebiten.Image
-    getOpts() *ebiten.DrawImageOptions
-}
 
 ///Keeping arrays for clarity, each represents the boxes in the level sorted by their
 ///min-max x coordinate, a different array is used for collision detection depending on
@@ -30,101 +25,14 @@ type level struct {
 	ShapeTypes		string
 }
 
-type box struct {
-	Collider boxCollider
-	Graphic  *ebiten.Image
-	Opts     *ebiten.DrawImageOptions
-}
-
-type triangle struct {
-	Collider triangleCollider
-	Graphic  *ebiten.Image
-	Opts     *ebiten.DrawImageOptions
-}
-
-type uninteractableImage struct {
-	Graphic *ebiten.Image
-	Opts    *ebiten.DrawImageOptions
-}
-
-func (img *uninteractableImage)draw(screen *ebiten.Image){
-	screen.DrawImage(img.Graphic, img.Opts)
-}
-
-func (t triangle)getMin() vector2{
-    return t.Collider.Min;
-}
-
-func (t triangle)getMax() vector2{
-    return t.Collider.Max;
-}
-
-func (b box)getMin() vector2{
-    return b.Collider.Min;
-}
-
-func (b box)getMax() vector2{
-    return b.Collider.Max;
-}
-
-func (t triangle)getGraphic() *ebiten.Image{
-    return t.Graphic
-}
-
-func (b box)getGraphic() *ebiten.Image{
-    
-    return b.Graphic
-}
-
-func (t triangle)getOpts() *ebiten.DrawImageOptions{
-    return t.Opts
-}
-
-func (b box)getOpts() *ebiten.DrawImageOptions{
-    return b.Opts
-}
-
 func (l *level) Instantiate(filePath string) {
 	l.ShapeTypes=""
 
-	/*
-        rawData, err := ioutil.ReadFile("levels/"+filePath)
-	if err != nil {
-		fmt.Println("failed to load data from json")
-		panic("rip")
-	}
-	
-	jsonData :=level{[maxLevelObjects]shape{},
-						[maxLevelObjects]shape{},
-						0,""}
-	if err = json.Unmarshal(rawData, jsonData); err==nil{
-		fmt.Println("failed to unmarshal")
-		panic("rip")
-	}
 
-*/
-	//shapes:=jsonData.MaxSortedShapes
 	//fmt.Println(jsonData)
 
-	/*types:= []rune(jsonData.ShapeTypes)
-	for i:=0;i<jsonData.NumOfShapes;i++{
-		min:=jsonData.MaxSortedShapes[i].(box).Collider.Min
-		max:=jsonData.MaxSortedShapes[i].getMax()
-		graphic:=jsonData.MaxSortedShapes[i].getGraphic()
-		opts:=jsonData.MaxSortedShapes[i].getOpts()
-		switch types[i] {
-		case 'B':
-			tmp:=newBox(min,max)
-			tmp.Opts=opts
-			tmp.Graphic=graphic
-			tmp.Graphic.Fill(color.White)
-			l.addBox(tmp)
-		}
 
-	}*/
-
-	//empty level
-
+	//clear level
 	l.NumOfShapes = 0
 	l.MaxSortedShapes = [maxLevelObjects]shape{}
 	l.MinSortedShapes =	[maxLevelObjects]shape{}
@@ -138,6 +46,22 @@ func (l *level) Instantiate(filePath string) {
 	l.addBox(wallRight)
 
 
+}
+
+func parseJsonFromPath(filePath string) level{
+	rawData, err := ioutil.ReadFile("levels/"+filePath)
+	if err != nil {
+		fmt.Println("failed to load data from json")
+		panic("rip")
+	}
+	jsonData :=level{[maxLevelObjects]shape{},
+	[maxLevelObjects]shape{},
+	0,""}
+	if err = json.Unmarshal(rawData, jsonData); err==nil{
+		fmt.Println("failed to unmarshal")
+		panic("rip")
+	}
+	return jsonData
 }
 
 func (l *level) addBox(b *box) {

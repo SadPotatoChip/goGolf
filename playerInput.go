@@ -8,7 +8,7 @@ import (
 )
 
 const controlerStartAngle, controlerStartPower float64 = 0, 1
-const defaultAngleLerp, defaultpowerLerp float64 = math.Pi / 48, 0.1
+const defaultAngleLerp, defaultPowerLerp float64 = math.Pi / 48, 0.1
 const defaultMaxPower float64 = 20
 const defaultIndicatorDistanceFromBall float64 = 10
 
@@ -24,7 +24,7 @@ type controler struct {
 
 	powerUpKey, powerDownKey ebiten.Key
 	angleUpKey, angleDownKey ebiten.Key
-	//hitKey                   ebiten.Key
+	hitKey                   ebiten.Key
 	indicator                *angleIndicator
 
 	//makes fentching position of ball cleaner in some places
@@ -44,12 +44,12 @@ func makeControler(b *ball) *controler {
 	c.power = controlerStartPower
 	c._maxPower = defaultMaxPower
 	c._angleLerp = defaultAngleLerp
-	c._powerLerp = defaultpowerLerp
+	c._powerLerp = defaultPowerLerp
 	c.powerUpKey = ebiten.KeyUp
 	c.powerDownKey = ebiten.KeyDown
 	c.angleUpKey = ebiten.KeyLeft
 	c.angleDownKey = ebiten.KeyRight
-	//c.hitKey = ebiten.KeySpace
+	c.hitKey = ebiten.KeySpace
 
 	c.parent = b
 
@@ -58,6 +58,8 @@ func makeControler(b *ball) *controler {
 	return c
 }
 
+
+//obsolete
 func (c *controler) makeIndicator() {
 	tmp := new(angleIndicator)
 	tmp.graphic, _ = ebiten.NewImage(2, 2, ebiten.FilterNearest)
@@ -76,16 +78,7 @@ func (c *controler) makeIndicator() {
 func (c *controler) changeAngle(dir float64) {
 	c.angle += c._angleLerp * dir
 
-	//indicator orbit
-	/*	x, y := math.Cos(c._angleLerp*dir), math.Sin(c._angleLerp*dir)
-		c.indicator.position.X += x
-		c.indicator.position.Y += y
-		c.indicator.opts.GeoM.Translate(x, y)*/
-
-	if c.angle == 2*math.Pi {
-		c.angle = 0
-	}
-	if c.angle == -2*math.Pi {
+	if c.angle == 2*math.Pi || c.angle == -2*math.Pi{
 		c.angle = 0
 	}
 }
@@ -94,7 +87,7 @@ func (c *controler) changePower(dir float64) {
 	if c.power < c._maxPower && dir > 0 {
 		c.power += c._powerLerp
 	}
-	if c.power > defaultpowerLerp && dir < 0 {
+	if c.power > defaultPowerLerp && dir < 0 {
 		c.power -= c._powerLerp
 	}
 }

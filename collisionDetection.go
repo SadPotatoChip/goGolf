@@ -75,12 +75,10 @@ func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 ///check all possible collisions
 func (b *ball) checkForBallCollisions() string {
 	candidates := getCandidateCollidersHorizontal(b)
-	candidates = filterVetcial(b,candidates)
+	candidates = filterVertcial(b,candidates)
 
 	//shows in red the boxes that are being checked for collision (replaces triangles with filled squares)
 	//debugCollisionFilter(candidates)
-
-
 
 	s:=""
 
@@ -91,8 +89,6 @@ func (b *ball) checkForBallCollisions() string {
                     case *box: s+=tmp.(*box).Collider.isBoxCollidingWithBall(b)
                 }
 	}
-
-
 	return s
 }
 
@@ -129,7 +125,7 @@ func getCandidateCollidersHorizontal(b *ball) []*shape {
 }
 
 
-func filterVetcial(b *ball,candidates []*shape)[]*shape {
+func filterVertcial(b *ball,candidates []*shape)[]*shape {
 	l:= len(candidates)
 	if b.verticalSpeed>0{
 		for i:=0;i< l;i++ {

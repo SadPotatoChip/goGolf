@@ -37,11 +37,11 @@ func makeBall(x, y float64,isGhost bool) *ball {
 	tmp.graphic, _ = ebiten.NewImage(int(ballSize), int(ballSize), ebiten.FilterNearest)
 	tmp.isGhost=isGhost
 	if isGhost==false {
-		tmp.graphic.Fill(color.White)
+		tmp.graphic.Fill(color.RGBA{255,165,0, 255})
 		tmp.collisonGhost = makeBall(x,y,true)
 		tmp.controls = makeControler(tmp)
 	}else{
-		tmp.graphic.Fill(color.RGBA{0, 0, 255, 255})
+		tmp.graphic.Fill(color.RGBA{0, 0, 255, 0})
 	}
 	tmp.opts = &ebiten.DrawImageOptions{}
 	tmp.opts.GeoM.Translate(x, y)
@@ -60,7 +60,6 @@ func (b *ball) resetGhostPosition(){
 	b.collisonGhost.isGrounded = b.isGrounded
 	b.collisonGhost.move()
 }
-
 
 func (b *ball) applyNaturalForces() {
 	if b.isGhost==false {
