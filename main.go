@@ -20,39 +20,14 @@ func newV2(x, y float64) vector2 {
 	return *tmp
 }
 
-
 const screenWidth float64 = 1200
 const screenHeight float64 = 600
 
-var current_level = 0
-
-var levelIsInstantiating = true
 var lvl level
 var player *ball
 
-var backgroundImage uninteractableImage
-
-
-//debug
-var triangleGraphic image.Image
-var boxGraphic image.Image
-
-var triangle_str = "triangle.png"
-var box_str = "box.png"
-var backgroung_str = "1.png"
-
-// textures
-//var texture_array
-
 func main() {
 	//preprocess testing textures import
-
-	if current_level == 1 {
-		triangle_str = "triangle1000x1000.png"
-		box_str = "triangle1000x1000.png"
-		backgroung_str = "1.png"
-	}
-	// Kad hoces da promenis koji se graphic koriste u nivou promeni ova 3 stringa iznad na ono sto hoces i pozovi funckiju ispod
 	prefetchGraphics()
 
 	var w, h int = int(screenWidth), int(screenHeight)
@@ -60,6 +35,7 @@ func main() {
 		panic(err)
 	}
 }
+
 func prefetchGraphics() {
 	reader, _ := os.Open(triangle_str)
 	triangleGraphic, _, _ = image.Decode(reader)
@@ -71,7 +47,6 @@ func prefetchGraphics() {
 	tmp, _, _ := image.Decode(reader2)
 	testBackground, _ := ebiten.NewImageFromImage(tmp, ebiten.FilterDefault)
 	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
-
 }
 
 func update(screen *ebiten.Image) error {
@@ -98,24 +73,11 @@ func update(screen *ebiten.Image) error {
 		levelIsInstantiating = false
 	}
         
-  // TODO Izdvojicu sve fje u vezi pravljenja nivoa u poseban fajl, samo hocu prvo da mi sve proradi!
-        
   	if ebiten.IsKeyPressed(ebiten.Key1) && current_level == 1 {
   		fmt.Println("da")
   		set_second_level()
   		current_level++
 	}
-   
-   // TODO ako stavim dva if-a ukljucuje se samo nivo u poslednjem if-u
-  /*
-    if ebiten.IsKeyPressed(ebiten.Key1) && current_level == 1 {
-            fmt.Println("daa")
-            set_third_level()
-            current_level++
-        }
-        
-    */    
-  // TODO ne mogu da promenim background i slicice za trougao i kvadrat
 
 	handleInput()
         
@@ -126,55 +88,10 @@ func update(screen *ebiten.Image) error {
 	drawPlayer(screen)
 
 	//DEBUG
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t", ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t",
+				ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, 					player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
 
 	return nil
-}
-
-func set_first_level() {
-    
-//                triangle_str = "triangle.png"
- //               box_str = "box.str"
-   //             backgroung_str = "1.png"
-                
-    		// levo
-                lvl.addTriangle(newTriangle(vector2{400,500}, vector2{700,700}, "top-right"))
-                lvl.addTriangle(newTriangle(vector2{200,400}, vector2{700,700}, "top-right"))
-                
-                lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-                lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
-                lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))                
-                lvl.addBox(newBox(newV2(300, 500), newV2(400, 600)))
-                lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
-                lvl.addBox(newBox(newV2(100, 400), newV2(200, 500)))
-                
-                // desno
-                lvl.addTriangle(newTriangle(vector2{900,500}, vector2{1200,700}, "top-left"))
-                lvl.addTriangle(newTriangle(vector2{700,600}, vector2{1200,900}, "top-left"))
-                
-                lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
-                lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
-                lvl.addBox(newBox(newV2(1000, 500), newV2(1100, 600)))
-                lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
-                lvl.addBox(newBox(newV2(1000, 400), newV2(1100, 500)))
-                lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
-}
-
-func set_second_level() {
-    
-        lvl.Instantiate("lala")
-        lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
-        
-}
-
-func set_third_level() {
-    
-        lvl.Instantiate("lalaa")
-
-                lvl.addBox(newBox(newV2(1000, 500), newV2(1100, 600)))
-                lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
-
-        
 }
 
 func drawLevel(screen *ebiten.Image) {
