@@ -124,7 +124,6 @@ func getCandidateCollidersHorizontal(b *ball) []*shape {
 	return candidates
 }
 
-
 func filterVertcial(b *ball,candidates []*shape)[]*shape {
 	l:= len(candidates)
 	if b.verticalSpeed>0{

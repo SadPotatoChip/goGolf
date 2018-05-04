@@ -15,7 +15,9 @@ const airFrictionStrenght float64 = 0.002
 const groundFrictionStrenght float64 = 0.05
 const inputAngleLerp float64 = math.Pi / 6
 
-const ballSize float64 = 5
+const bounceSpeedReductionFactor float64=0.5
+
+const ballSize float64 = 10
 
 type ball struct {
 	position                        vector2
@@ -136,7 +138,6 @@ func processBounces(collisionDirection string, b *ball){
 	}
 }
 
-
 func (b *ball) upwardBounce() {
 	if b.verticalSpeed <= 0 {
 		//fmt.Printf("%f\n", b.verticalSpeed)
@@ -145,15 +146,15 @@ func (b *ball) upwardBounce() {
 			b.isGrounded = true
 			b.verticalSpeed = 0
 		} else {
-			b.verticalSpeed = -b.verticalSpeed * 0.5
+			b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
 		}
 	}
 }
 
 func (b *ball) downwardBounce() {
-	b.verticalSpeed = -b.verticalSpeed * 0.5
+	b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
 }
 
 func (b *ball) horizontalBounce() {
-	b.horisonatalSpeed = -b.horisonatalSpeed * 0.5
+	b.horisonatalSpeed = -b.horisonatalSpeed * bounceSpeedReductionFactor
 }

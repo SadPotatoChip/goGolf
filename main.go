@@ -60,7 +60,6 @@ func update(screen *ebiten.Image) error {
 	backgroundImage.draw(screen)
 
 	x_pos, y_pos = ebiten.CursorPosition()
-	// fmt.Println("%d    %d\n", x_pos, y_pos)
 
 	if levelIsInstantiating {
 		player = makeBall(500, 500,false)
@@ -83,19 +82,9 @@ func update(screen *ebiten.Image) error {
 		levelIsInstantiating = false
 	}
 	
-	// Prebacicu ovo u posebnu fju...
+	// Prebacico
 
-	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
-
-		fmt.Println("pointer is on the first button")
-		set_second_level()
-	}
-
-	if x_pos > 500 && x_pos < 720 && y_pos > 300 && y_pos < 360 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
-
-		fmt.Println("pointer is on the second button")
-		set_all_levels()
-	}
+	checkButtonClicks()
 
 
   	if ebiten.IsKeyPressed(ebiten.Key1) && all_levels {
@@ -152,5 +141,19 @@ func handleInput() {
 			player.hit(player.controls.angle, player.controls.power)
 
 		}
+	}
+}
+
+func checkButtonClicks(){
+	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
+
+		fmt.Println("pointer is on the first button")
+		set_second_level()
+	}
+
+	if x_pos > 500 && x_pos < 720 && y_pos > 300 && y_pos < 360 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
+
+		fmt.Println("pointer is on the second button")
+		set_all_levels()
 	}
 }
