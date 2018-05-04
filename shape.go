@@ -10,54 +10,54 @@ type shape interface{
 }
 
 type box struct {
-Collider boxCollider
-Graphic  *ebiten.Image
-Opts     *ebiten.DrawImageOptions
+	Collider boxCollider
+	Graphic  *ebiten.Image
+	Opts     *ebiten.DrawImageOptions
 }
 
 type triangle struct {
-Collider triangleCollider
-Graphic  *ebiten.Image
-Opts     *ebiten.DrawImageOptions
+	Collider triangleCollider
+	Graphic  *ebiten.Image
+	Opts     *ebiten.DrawImageOptions
 }
 
 type uninteractableImage struct {
-Graphic *ebiten.Image
-Opts    *ebiten.DrawImageOptions
+	Graphic *ebiten.Image
+	Opts    *ebiten.DrawImageOptions
 }
 
 func (img *uninteractableImage)draw(screen *ebiten.Image){
-screen.DrawImage(img.Graphic, img.Opts)
+	screen.DrawImage(img.Graphic, img.Opts)
 }
 
 func (t triangle)getMin() vector2{
-return t.Collider.Min;
+	return t.Collider.Min;
 }
 
 func (t triangle)getMax() vector2{
-return t.Collider.Max;
+	return t.Collider.Max;
 }
 
 func (b box)getMin() vector2{
-return b.Collider.Min;
+	return b.Collider.Min;
 }
 
 func (b box)getMax() vector2{
-return b.Collider.Max;
+	return b.Collider.Max;
 }
 
 func (t triangle)getGraphic() *ebiten.Image{
-return t.Graphic
+	return t.Graphic
 }
 
 func (b box)getGraphic() *ebiten.Image{
-return b.Graphic
+	return b.Graphic
 }
 
 func (t triangle)getOpts() *ebiten.DrawImageOptions{
-return t.Opts
+	return t.Opts
 }
 
 func (b box)getOpts() *ebiten.DrawImageOptions{
-return b.Opts
+	return b.Opts
 }

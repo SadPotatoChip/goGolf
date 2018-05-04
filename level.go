@@ -179,6 +179,22 @@ func newBox(min, max vector2) *box {
 	return tmp
 }
 
+/*
+	u ovoj funkciji se pravi samo kvadrat bez postavljanja collider...
+*/
+
+func newSpecialBox(min, max vector2) *box {
+	if min.X > max.X || min.Y > max.Y {
+		fmt.Printf("Invalid box: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)
+		return nil
+	}
+	tmp := new(box)
+	tmp.Graphic, _ = ebiten.NewImageFromImage(special_box_graphic, ebiten.FilterNearest)
+	tmp.Opts = &ebiten.DrawImageOptions{}
+	tmp.Opts.GeoM.Translate(min.X, min.Y)
+	return tmp
+}
+
 func newTriangle(min, max vector2, side string) *triangle {
 	if min.X > max.X || min.Y > max.Y {
 		fmt.Printf("Invalid triangle: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)

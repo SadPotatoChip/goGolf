@@ -26,6 +26,8 @@ const screenHeight float64 = 600
 var lvl level
 var player *ball
 
+var x_pos, y_pos int
+
 func main() {
 	//preprocess testing textures import
 	prefetchGraphics()
@@ -43,6 +45,11 @@ func prefetchGraphics() {
 	reader3, _ := os.Open(box_str)
 	boxGraphic, _, _ = image.Decode(reader3)
 
+
+	reader4, _ := os.Open(box_str)
+	special_box_graphic, _, _ = image.Decode(reader4)
+
+
 	reader2, _ := os.Open(backgroung_str)
 	tmp, _, _ := image.Decode(reader2)
 	testBackground, _ := ebiten.NewImageFromImage(tmp, ebiten.FilterDefault)
@@ -51,6 +58,9 @@ func prefetchGraphics() {
 
 func update(screen *ebiten.Image) error {
 	backgroundImage.draw(screen)
+
+	x_pos, y_pos = ebiten.CursorPosition()
+	// fmt.Println("%d    %d\n", x_pos, y_pos)
 
 	if levelIsInstantiating {
 		player = makeBall(500, 500,false)
@@ -72,11 +82,30 @@ func update(screen *ebiten.Image) error {
 		//lvl.makeJson("testlvl1")
 		levelIsInstantiating = false
 	}
-        
-  	if ebiten.IsKeyPressed(ebiten.Key1) && current_level == 1 {
-  		fmt.Println("da")
-  		set_second_level()
-  		current_level++
+	
+	// Prebacicu ovo u posebnu fju...
+
+	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
+
+		fmt.Println("pointer is on the first button")
+		set_second_level()
+	}
+
+	if x_pos > 500 && x_pos < 720 && y_pos > 300 && y_pos < 360 && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && is_main_menu {
+
+		fmt.Println("pointer is on the second button")
+		set_all_levels()
+	}
+
+
+  	if ebiten.IsKeyPressed(ebiten.Key1) && all_levels {
+		fmt.Println("go back")
+		set_first_level()
+	}
+
+  	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
+		fmt.Println("exiting...")
+		os.Exit(0)
 	}
 
 	handleInput()
