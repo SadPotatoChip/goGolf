@@ -15,6 +15,7 @@ Nikola Ninkovic 262/2015
 
 | Button        | Action          |
 | ---           | ---             |
+| 1             | go back         |
 | :arrow_up:    | adjust power    |
 | :arrow_down:  | adjust power    |
 | :arrow_right: | adjust angle    |
