@@ -1,5 +1,5 @@
 # goGolf
-2D golf game made in go using the ebiten game creation library.
+2D golf game made in go using the ebiten game creation library
 
 what we are going for:
 https://www.youtube.com/watch?v=ihP5IYbp3fU
