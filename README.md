@@ -11,8 +11,19 @@ Projekat za programske paradigme (I smer)
 Jovana Pejkic 435/2016
 Nikola Ninkovic 262/2015
 
-controls:
-	up/down arrow adjust power
-	left right arrow adjust angle
-	space hits the ball
+:o: Controls:
 
+| Button        | Action          |
+| ---           | ---             |
+| :arrow_up:    | adjust power    |
+| :arrow_down:  | adjust power    |
+| :arrow_right: | adjust angle    |
+| :arrow_left:  | adjust angle    |
+| space         | hit the ball    |
+| esc           | exit            |
+
+
+:o: Compile and run:
+
+| make       | 
+| ---        |
