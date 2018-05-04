@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image/color"
 	"math"
 
 	"github.com/hajimehoshi/ebiten"
@@ -53,27 +52,10 @@ func makeControler(b *ball) *controler {
 
 	c.parent = b
 
-	c.makeIndicator()
 
 	return c
 }
 
-
-//obsolete
-func (c *controler) makeIndicator() {
-	tmp := new(angleIndicator)
-	tmp.graphic, _ = ebiten.NewImage(2, 2, ebiten.FilterNearest)
-	tmp.graphic.Fill(color.White)
-	tmp.opts = &ebiten.DrawImageOptions{}
-	tmp.distanceFromBall = defaultIndicatorDistanceFromBall
-
-	//HACK - not bound to starting angle (assumes it is 0)
-	tmp.position.X = c.parent.position.X - tmp.distanceFromBall
-	tmp.position.Y = c.parent.position.Y + 1
-	tmp.opts.GeoM.Translate(tmp.position.X, tmp.position.Y)
-
-	c.indicator = tmp
-}
 
 func (c *controler) changeAngle(dir float64) {
 	c.angle += c._angleLerp * dir

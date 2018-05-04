@@ -36,10 +36,10 @@ func (l *level) Instantiate(filePath string) {
 	l.NumOfShapes = 0
 	l.MaxSortedShapes = [maxLevelObjects]shape{}
 	l.MinSortedShapes =	[maxLevelObjects]shape{}
-	ground := newBox(newV2(0, screenHeight-10), newV2(screenWidth, screenHeight+90))
-	ceiling:= newBox(newV2(0,-80), newV2(screenWidth-1, 10))
-	wallLeft:= newBox(newV2(0,-80), newV2(10, screenHeight))
-	wallRight:= newBox(newV2(screenWidth-10,0), newV2(screenWidth+90, screenHeight))
+	ground := newBox(newV2(0, screenHeight), newV2(screenWidth, screenHeight+90))
+	ceiling:= newBox(newV2(0,-80), newV2(screenWidth-1, 0))
+	wallLeft:= newBox(newV2(0,-80), newV2(0, screenHeight))
+	wallRight:= newBox(newV2(screenWidth,0), newV2(screenWidth+90, screenHeight))
 	l.addBox(ground)
 	l.addBox(ceiling)
 	l.addBox(wallLeft)

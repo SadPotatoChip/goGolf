@@ -45,13 +45,12 @@ func prefetchGraphics() {
 	reader3, _ := os.Open(box_str)
 	boxGraphic, _, _ = image.Decode(reader3)
 
-
 	reader4, _ := os.Open(box_str)
 	special_box_graphic, _, _ = image.Decode(reader4)
 
-
 	reader2, _ := os.Open(backgroung_str)
 	tmp, _, _ := image.Decode(reader2)
+
 	testBackground, _ := ebiten.NewImageFromImage(tmp, ebiten.FilterDefault)
 	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
 }
@@ -62,7 +61,7 @@ func update(screen *ebiten.Image) error {
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
-		player = makeBall(500, 500,false)
+		player = makeBall(300, 300,false)
 		lvl.Instantiate("testlvl1.json")
 
 		set_first_level()
@@ -83,9 +82,7 @@ func update(screen *ebiten.Image) error {
 	}
 	
 	// Prebacico
-
 	checkButtonClicks()
-
 
   	if ebiten.IsKeyPressed(ebiten.Key1) && all_levels {
 		fmt.Println("go back")
@@ -121,21 +118,30 @@ func drawLevel(screen *ebiten.Image) {
 
 func drawPlayer(screen *ebiten.Image) {
 	screen.DrawImage(player.graphic, player.opts)
+	if player.isGrounded && player.horisonatalSpeed==0{
+		for i := 0; i < len(player.indicatorGhost); i++ {
+			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
+		}
+	}
 }
 
 func handleInput() {
-	if player.isGrounded {
+	if player.isGrounded && player.horisonatalSpeed==0{
 		if ebiten.IsKeyPressed(player.controls.angleUpKey) {
 			player.controls.changeAngle(+1)
+			player.setIndicators()
 		}
 		if ebiten.IsKeyPressed(player.controls.angleDownKey) {
 			player.controls.changeAngle(-1)
+			player.setIndicators()
 		}
 		if ebiten.IsKeyPressed(player.controls.powerUpKey) {
 			player.controls.changePower(+1)
+			player.setIndicators()
 		}
 		if ebiten.IsKeyPressed(player.controls.powerDownKey) {
 			player.controls.changePower(-1)
+			player.setIndicators()
 		}
 		if hitKeyDown(player.controls.hitKey) {
 			player.hit(player.controls.angle, player.controls.power)

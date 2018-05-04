@@ -17,6 +17,9 @@ const inputAngleLerp float64 = math.Pi / 6
 
 const bounceSpeedReductionFactor float64=0.5
 
+const numOfIndicatorGhosts=4
+const ghostDistance=10
+
 const ballSize float64 = 10
 
 type ball struct {
@@ -29,6 +32,7 @@ type ball struct {
 	isGrounded                      bool
 	isGhost							bool
 	collisonGhost					*ball
+	indicatorGhost					[numOfIndicatorGhosts]*ball
 }
 
 func makeBall(x, y float64,isGhost bool) *ball {
@@ -42,8 +46,9 @@ func makeBall(x, y float64,isGhost bool) *ball {
 		tmp.graphic.Fill(color.RGBA{255,165,0, 255})
 		tmp.collisonGhost = makeBall(x,y,true)
 		tmp.controls = makeControler(tmp)
+		tmp.setIndicators()
 	}else{
-		tmp.graphic.Fill(color.RGBA{0, 0, 255, 0})
+		tmp.graphic.Fill(color.RGBA{0, 0, 255, 120})
 	}
 	tmp.opts = &ebiten.DrawImageOptions{}
 	tmp.opts.GeoM.Translate(x, y)
@@ -101,15 +106,17 @@ func (b *ball) hit(angle, power float64) {
 func (b *ball) move() {
 	if b.horisonatalSpeed < 0.1 && b.horisonatalSpeed > -0.1 {
 		b.horisonatalSpeed = 0
+		if b.isGrounded && b.isGhost==false{
+			b.setIndicators()
+		}
 	}
 
 	if b.isGhost==false {
 		player.collisonGhost.move()
-		if b.isGrounded == false {
+		if b.verticalSpeed!=0 || b.horisonatalSpeed!=0 {
 			collisionDirection := b.checkForBallCollisions()
 			processBounces(collisionDirection,b.collisonGhost)
 			processBounces(collisionDirection,b)
-
 		}
 	}
 
@@ -121,10 +128,10 @@ func (b *ball) move() {
 func processBounces(collisionDirection string, b *ball){
 	if collisionDirection != "" {
 		if strings.Contains(collisionDirection, "up") {
-			b.upwardBounce()
+			b.verticalBounce()
 		}
 		if strings.Contains(collisionDirection, "down") {
-			b.downwardBounce()
+			b.verticalBounce()
 		}
 		if strings.Contains(collisionDirection, "left") || strings.Contains(collisionDirection, "right") || strings.Contains(collisionDirection, "horisontal") {
 
@@ -138,23 +145,45 @@ func processBounces(collisionDirection string, b *ball){
 	}
 }
 
-func (b *ball) upwardBounce() {
-	if b.verticalSpeed <= 0 {
-		//fmt.Printf("%f\n", b.verticalSpeed)
-		if b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 {
-			fmt.Printf("stop\n")
+func (b *ball) verticalBounce() {
+		if b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 && b.isGhost==false{
 			b.isGrounded = true
 			b.verticalSpeed = 0
+			if b.horisonatalSpeed==0 && b.isGhost==false{
+				b.setIndicators()
+			}
 		} else {
 			b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
 		}
-	}
-}
-
-func (b *ball) downwardBounce() {
-	b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
 }
 
 func (b *ball) horizontalBounce() {
 	b.horisonatalSpeed = -b.horisonatalSpeed * bounceSpeedReductionFactor
+}
+
+func (b *ball) setIndicators() {
+	if b.isGhost {
+		fmt.Println("tried to set indicators for ghost")
+	}else{
+		x,y:=b.position.X,b.position.Y
+		b.indicatorGhost[0]=makeBall(x,y,true)
+		b.indicatorGhost[0].hit(b.controls.angle, b.controls.power)
+		for i:=0;i< len(b.indicatorGhost);i++ {
+			for j := 0; j < ghostDistance; j++ {
+				b.indicatorGhost[i].applyNaturalForces()
+				b.indicatorGhost[i].move()
+				processBounces("", b.indicatorGhost[i])
+			}
+			if i<len(b.indicatorGhost)-1{
+				x, y = b.indicatorGhost[i].position.X, b.indicatorGhost[i].position.Y
+				b.indicatorGhost[i+1] = makeBall(x, y, true)
+				b.indicatorGhost[i+1].isGrounded=false
+				b.indicatorGhost[i+1].verticalSpeed = b.indicatorGhost[i].verticalSpeed
+				b.indicatorGhost[i+1].horisonatalSpeed = b.indicatorGhost[i].horisonatalSpeed
+			}
+
+		}
+
+
+	}
 }
