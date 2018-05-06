@@ -11,6 +11,7 @@ import (
 	//"io/ioutil"
 	"io/ioutil"
 	"encoding/json"
+	"image/color"
 )
 
 const maxLevelObjects int = 200
@@ -172,8 +173,21 @@ func newBox(min, max vector2) *box {
 	tmp.Collider.Min = min
 	tmp.Collider.Max = max
 	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
-	tmp.Graphic, _ = ebiten.NewImageFromImage(boxGraphic, ebiten.FilterNearest)
-	//tmp.Graphic.Fill(color.White)
+	if boxGraphic!=nil {
+		graphicTmp, err := ebiten.NewImageFromImage(boxGraphic, ebiten.FilterNearest)
+		if err!=nil {
+			fmt.Println("failed to load graphic for box, using white instead")
+			tmp.Graphic.Fill(color.White)
+		}else {
+			tmp.Graphic = graphicTmp
+		}
+	}else{
+		fmt.Println("boxGraphic not set, using white instead")
+		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
+			int(math.Abs(max.Y-min.Y))+1,
+			ebiten.FilterDefault)
+		tmp.Graphic.Fill(color.White)
+	}
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	tmp.Opts.GeoM.Translate(min.X, min.Y)
 	return tmp
@@ -189,7 +203,21 @@ func newSpecialBox(min, max vector2) *box {
 		return nil
 	}
 	tmp := new(box)
-	tmp.Graphic, _ = ebiten.NewImageFromImage(special_box_graphic, ebiten.FilterNearest)
+	if special_box_graphic!=nil {
+		graphicTmp, err := ebiten.NewImageFromImage(special_box_graphic, ebiten.FilterNearest)
+		if err!=nil {
+			fmt.Println("failed to load graphic for box, using white instead")
+			tmp.Graphic.Fill(color.White)
+		}else {
+			tmp.Graphic = graphicTmp
+		}
+	}else{
+		fmt.Println("boxGraphic not set, using white instead")
+		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
+			int(math.Abs(max.Y-min.Y))+1,
+			ebiten.FilterDefault)
+		tmp.Graphic.Fill(color.White)
+	}
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	tmp.Opts.GeoM.Translate(min.X, min.Y)
 	return tmp
@@ -204,7 +232,21 @@ func newTriangle(min, max vector2, side string) *triangle {
 	tmp.Collider.Min = min
 	tmp.Collider.Max = max
 	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
- 	tmp.Graphic, _ = ebiten.NewImageFromImage(triangleGraphic, ebiten.FilterNearest)
+	if triangleGraphic!=nil {
+		graphicTmp, err := ebiten.NewImageFromImage(triangleGraphic, ebiten.FilterNearest)
+		if err!=nil {
+			fmt.Println("failed to load graphic for box, using white instead")
+			tmp.Graphic.Fill(color.White)
+		}else {
+			tmp.Graphic = graphicTmp
+		}
+	}else{
+		fmt.Println("boxGraphic not set, using white instead")
+		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
+			int(math.Abs(max.Y-min.Y))+1,
+			ebiten.FilterDefault)
+		tmp.Graphic.Fill(color.White)
+	}
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	
         //tmp.Opts.GeoM.Scale(0.001*(max.X-min.X), 0.001*(max.Y-min.Y))

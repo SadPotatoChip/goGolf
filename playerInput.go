@@ -85,3 +85,15 @@ func hitKeyDown(hitKey ebiten.Key) bool {
 	hitKeyIsDown = false
 	return false
 }
+
+func mouseButtonDown(button ebiten.MouseButton) bool {
+	if ebiten.IsMouseButtonPressed(button) {
+		if hitKeyIsDown == false {
+			hitKeyIsDown = true
+			return true
+		}
+		return false
+	}
+	hitKeyIsDown = false
+	return false
+}

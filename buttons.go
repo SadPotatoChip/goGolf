@@ -15,8 +15,7 @@ var radius = 50
 func checkButtonClicks(){
 	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && is_main_menu {
 		play_button_is_sellected()
-		if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-			fmt.Println("pointer is on the first button")
+		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_first_level()
 		}
 	} else {	// else mora ovako } else { inace ne radi
@@ -25,16 +24,14 @@ func checkButtonClicks(){
 
 	if x_pos > 500 && x_pos < 720 && y_pos > 300 && y_pos < 360 && is_main_menu {
 		levels_button_is_sellected()
-		if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-			fmt.Println("pointer is on the second button")
+		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_all_levels()
 		}
 	} else {
 		clear_levels_button()
 	}
 
-	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		fmt.Println("pointer is on the NEXT button")
+	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		switch (level_num){
 			case 0:	// kad je u meniju ne reaguje na next dugme (i ne postoji u meniju)
 			case 1: set_second_level()

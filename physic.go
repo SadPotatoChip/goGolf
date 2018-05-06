@@ -145,8 +145,8 @@ func processBounces(collisionDirection string, b *ball){
 	}
 }
 
-func (b *ball) verticalBounce() {
-		if b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 && b.isGhost==false{
+func (b *ball) verticalBounce(){
+		if b.isGhost==false && b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 && b.horisonatalSpeed==0{
 			b.isGrounded = true
 			b.verticalSpeed = 0
 			if b.horisonatalSpeed==0 && b.isGhost==false{

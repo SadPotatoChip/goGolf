@@ -81,6 +81,7 @@ func update(screen *ebiten.Image) error {
 	
 	checkButtonClicks()
 
+	fmt.Println(hitKeyIsDown)
 	check_pressed_keys()
 
 	handleInput()
