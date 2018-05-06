@@ -21,6 +21,8 @@ TODO
 
 */
 
+var photo_num = 1
+
 var level_num = 0	// menu
 
 var all_levels = false
@@ -48,7 +50,7 @@ var backgroung_str = "images/main_menu/menu_background.png"
 	ispreturano je sta je prvi nivo, sta meni...
 	na primer set_first_level() je ustvari meni
 */
-
+/*
 func levels_button_is_sellected() {
 	if is_main_menu {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
 		box_str = "images/main_menu/levels_light.png"
@@ -77,9 +79,190 @@ func clear_play_button() {
 	if is_main_menu {
 		box_str = "images/main_menu/play.png"
 		prefetchGraphics()
-		lvl.addBox(newSpecialBox(newV2(500, 200), newV2(750, 270)))
+		lvl.addBox(newSpecialBox(newV2(565, 190), newV2(650, 250)))
 	}
 }
+*/
+
+func create_play_button() {
+	if is_main_menu {
+		box_str = "images/main_menu/play.png"
+		prefetchGraphics()
+		// TODO Zasto mora lvl.addBox()? Ne radi bez toga!
+		lvl.addBox(newSpecialBox(newV2(565, 190), newV2(650, 250)))
+	}
+}
+
+func create_menu_button() {
+	if is_main_menu {
+		box_str = "images/main_menu/menu.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1140, 10), newV2(1200, 100)))
+	}
+}
+
+func create_first_menu_button() {
+	if is_main_menu {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		if is_1_menu_button_sellected {
+			box_str = "images/buttons/buttons_selected/controls.png"
+		} else {
+			box_str = "images/buttons/buttons_unselected/controls.png"
+		}
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1000, 60), newV2(1190, 120)))
+	}
+}
+
+func create_second_menu_button() {
+	if is_main_menu {
+		if is_menu_button_2_sellected && is_menu_oppened{
+			box_str = "images/buttons/buttons_unselected/levels.png"
+		} else {
+			box_str = "images/buttons/buttons_selected/levels.png"
+		}
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1000, 120), newV2(1190, 180)))
+	}
+}
+
+func create_third_menu_button() {
+	if is_main_menu {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		if is_menu_button_3_sellected && is_menu_oppened{
+			box_str = "images/buttons/buttons_unselected/options.png"
+		} else {
+			box_str = "images/buttons/buttons_selected/options.png"
+		}
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1000, 180), newV2(1190, 240)))
+	}
+}
+
+func create_forth_menu_button() {
+	if is_main_menu {
+		if is_menu_button_4_sellected && is_menu_oppened{
+			box_str = "images/buttons/buttons_unselected/quit.png"
+		} else {
+			box_str = "images/buttons/buttons_selected/quit.png"
+		}
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1000, 240), newV2(1190, 300)))
+	}
+}
+
+func clear_first_menu_button() {
+
+}
+
+func clear_second_menu_button() {
+
+}
+
+func clear_third_menu_button() {
+
+}
+
+func clear_forth_menu_button() {
+
+}
+
+func set_first_page() {
+	lvl.Instantiate("lala")
+	all_levels = true
+	is_main_menu = false
+	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
+
+	backgroung_str = "images/main_menu/purple.png"
+	prefetchGraphics()
+
+	if is_main_menu == false {
+		box_str = "images/main_menu/grid.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
+
+
+		first_photo()
+		previous_photo()
+		next_photo()
+
+	}
+}
+
+func set_second_page() {
+	lvl.Instantiate("lala")
+	all_levels = true
+	is_main_menu = false
+	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
+
+	backgroung_str = "images/main_menu/purple.png"
+	prefetchGraphics()
+
+	if is_main_menu == false {
+		box_str = "images/main_menu/grid.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
+	}
+}
+
+func set_third_page() {
+	lvl.Instantiate("lala")
+	all_levels = true
+	is_main_menu = false
+	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
+
+	backgroung_str = "images/main_menu/purple.png"
+	prefetchGraphics()
+
+	if is_main_menu == false {
+		box_str = "images/main_menu/grid.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
+	}
+}
+
+func first_photo() {
+	photo_num = 1
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/main_menu/1.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+	}
+}
+
+func second_photo() {
+	photo_num = 2
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/main_menu/2.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+	}
+}
+
+
+func third_photo() {
+	photo_num = 3
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/main_menu/3.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+	}
+}
+
+func previous_photo() {
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/main_menu/back.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(530, 400), newV2(630, 500)))
+	}
+}
+
+func next_photo() {
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/main_menu/next.png"
+		prefetchGraphics()
+		lvl.addBox(newSpecialBox(newV2(630, 400), newV2(730, 500)))
+	}
+}
+
 
 func set_main_menu() {
 	lvl.Instantiate("lala")
@@ -87,13 +270,11 @@ func set_main_menu() {
 	is_main_menu = true		// nepotrebno, moze preko level_num
 	level_num = 0
 
-	box_str = "images/main_menu/play.png"
 	backgroung_str = "images/main_menu/menu_background.png"
 	prefetchGraphics()
 
-	// TODO Zasto mora lvl.addBox()? Ne radi bez toga!
-	lvl.addBox(newSpecialBox(newV2(500, 200), newV2(750, 270)))
-	clear_levels_button()
+	create_menu_button()
+	create_play_button()
 }
 
 func set_all_levels() {
@@ -144,9 +325,9 @@ func set_first_level() {
         lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
 
 	// next level
-	box_str = "images/level_3/next.png"
+	box_str = "images/main_menu/next.png"
 	prefetchGraphics()
-	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
+	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1120, 110)))
 
 }
 
@@ -188,7 +369,7 @@ func set_second_level() {
 	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
 
 	// next level
-	box_str = "images/level_3/next.png"
+	box_str = "images/main_menu/next.png"
 	prefetchGraphics()
 	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 
@@ -242,7 +423,7 @@ func set_third_level() {
 	lvl.addBox(newSpecialBox(newV2(1000, 580), newV2(1010, 600)))
 
 	// next level
-	box_str = "images/level_3/next.png"
+	box_str = "images/main_menu/next.png"
 	prefetchGraphics()
 	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 }
@@ -286,7 +467,7 @@ func set_forth_level() {
 	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
 
 	// next level
-	box_str = "images/level_3/next.png"
+	box_str = "images/main_menu/next.png"
 	prefetchGraphics()
 	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 
@@ -331,7 +512,7 @@ func set_fifth_level() {
 	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
 
 	// next level
-	box_str = "images/level_3/next.png"
+	box_str = "images/main_menu/next.png"
 	prefetchGraphics()
 	lvl.addBox(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 
