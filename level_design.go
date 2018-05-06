@@ -31,6 +31,7 @@ var backgroundImage uninteractableImage
 var triangleGraphic image.Image
 var boxGraphic image.Image
 var special_box_graphic image.Image
+var holeGraphic image.Image
 
 
 var levelIsInstantiating = true

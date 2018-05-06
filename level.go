@@ -20,6 +20,7 @@ const maxLevelObjects int = 200
 ///min-max x coordinate, a different array is used for collision detection depending on
 ///the balls horizontal direction for element elimination
 type level struct {
+	hole	*hole
 	MaxSortedShapes [maxLevelObjects]shape `json:"MaxSortedShapes"`
 	MinSortedShapes [maxLevelObjects]shape `json:"MinSortedShapes"`
 	NumOfShapes     int
@@ -45,6 +46,7 @@ func (l *level) Instantiate(filePath string) {
 	l.addBox(ceiling)
 	l.addBox(wallLeft)
 	l.addBox(wallRight)
+	//l.hole=newHole(vector2{340,260},vector2{600,600})
 
 
 }
@@ -55,7 +57,7 @@ func parseJsonFromPath(filePath string) level{
 		fmt.Println("failed to load data from json")
 		panic("rip")
 	}
-	jsonData :=level{[maxLevelObjects]shape{},
+	jsonData :=level{nil,[maxLevelObjects]shape{},
 	[maxLevelObjects]shape{},
 	0,""}
 	if err = json.Unmarshal(rawData, jsonData); err==nil{
@@ -193,10 +195,7 @@ func newBox(min, max vector2) *box {
 	return tmp
 }
 
-/*
-	u ovoj funkciji se pravi samo kvadrat bez postavljanja collider...
-*/
-
+//u ovoj funkciji se pravi samo kvadrat bez postavljanja collider...
 func newSpecialBox(min, max vector2) *box {
 	if min.X > max.X || min.Y > max.Y {
 		fmt.Printf("Invalid box: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)
@@ -260,5 +259,34 @@ func newTriangle(min, max vector2, side string) *triangle {
 
         tmp.Opts.GeoM.Translate(min.X, min.Y)
 
+	return tmp
+}
+
+func newHole(min, max vector2) *hole{
+	if min.X > max.X || min.Y > max.Y {
+		fmt.Printf("Invalid box: (%f,%f)(%f,%f)", min.X, min.Y, max.X, max.Y)
+		return nil
+	}
+	tmp := new(hole)
+	tmp.Collider.Min = min
+	tmp.Collider.Max = max
+	tmp.Collider.Mid = newV2((min.X+max.Y)/2, (min.Y+max.Y)/2)
+	if holeGraphic!=nil {
+		graphicTmp, err := ebiten.NewImageFromImage(holeGraphic, ebiten.FilterNearest)
+		if err!=nil {
+			fmt.Println("failed to load graphic for hole, using white instead")
+			tmp.Graphic.Fill(color.White)
+		}else {
+			tmp.Graphic = graphicTmp
+		}
+	}else{
+		fmt.Println("HoleGraphic not set, using white instead")
+		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
+			int(math.Abs(max.Y-min.Y))+1,
+			ebiten.FilterDefault)
+		tmp.Graphic.Fill(color.White)
+	}
+	tmp.Opts = &ebiten.DrawImageOptions{}
+	tmp.Opts.GeoM.Translate(min.X, min.Y)
 	return tmp
 }

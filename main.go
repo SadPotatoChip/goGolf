@@ -80,14 +80,16 @@ func update(screen *ebiten.Image) error {
 	}
 	
 	checkButtonClicks()
-
-	fmt.Println(hitKeyIsDown)
 	check_pressed_keys()
 
 	handleInput()
         
 	player.applyNaturalForces()
 	player.move()
+
+	if checkIfBallIsInHole(){
+		fmt.Println("GG")
+	}
 
 	drawLevel(screen)
 	drawPlayer(screen)
@@ -104,7 +106,11 @@ func drawLevel(screen *ebiten.Image) {
 			screen.DrawImage(lvl.MaxSortedShapes[i].getGraphic(),
 				lvl.MaxSortedShapes[i].getOpts())
 	}
+	if lvl.hole!=nil {
+		screen.DrawImage(lvl.hole.Graphic, lvl.hole.Opts)
+	}
 }
+
 
 func drawPlayer(screen *ebiten.Image) {
 	screen.DrawImage(player.graphic, player.opts)
@@ -138,4 +144,15 @@ func handleInput() {
 
 		}
 	}
+}
+
+func checkIfBallIsInHole() bool{
+	if lvl.hole!=nil{
+		if player.position.X+player.size > lvl.hole.Collider.Min.X && player.position.X < lvl.hole.Collider.Max.X &&
+			player.position.Y+player.size > lvl.hole.Collider.Min.Y && player.position.Y < lvl.hole.Collider.Max.Y {
+			return true
+		}
+		return false
+	}
+	return false
 }

@@ -2,12 +2,19 @@ package main
 
 import "github.com/hajimehoshi/ebiten"
 
+type hole struct{
+	Collider boxCollider
+	Graphic  *ebiten.Image
+	Opts     *ebiten.DrawImageOptions
+}
+
 type shape interface{
 	getMin() vector2
 	getMax() vector2
 	getGraphic() *ebiten.Image
 	getOpts() *ebiten.DrawImageOptions
 }
+
 
 type box struct {
 	Collider boxCollider
