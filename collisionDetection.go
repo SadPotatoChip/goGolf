@@ -16,58 +16,12 @@ type triangleCollider struct {
 }
 
 func (c triangleCollider) isTriangleCollidingWithBall(b *ball) string{
-	s := ""
-	if (b.position.X+b.size > c.Min.X && b.position.X < c.Max.X) && (b.position.Y+b.size> c.Min.Y && b.position.Y < c.Max.Y){
-		switch c.Missing_part {
-		case "bottom-left":
-			switch b.getMoveDirection() {
-			case "downleft":
-				if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
-					s = "up"
-				}else{
-					s = "right"
-				}
-			case "downright":
-				if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
-					s = "up"
-				}else{
-					d1 := calcSide(vector2{b.position.X + ballSize, b.position.Y}, c.Min, c.Max)
-					d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-					if d1!=d2 {
-						b.angledBounce(c)
-						s+="angled"
-					}
-				}
-			case "upleft": //problematic
-				/*
-				if b.position.X+ b.size > c.Min.X && b.collisonGhost.position.X < c.Max.X{
-					s="right"
-				}else{
-					d1 := calcSide(vector2{b.position.X , b.position.Y+ballSize}, c.Min, c.Max)
-					d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-					if d1!=d2 {
-						b.angledBounce(c)
-						s+="angled"
-					}
-				}
-				*/
-			case "upright":
-				d1 := calcSide(vector2{b.position.X , b.position.Y+ballSize}, c.Min, c.Max)
-				d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-				if d1!=d2 {
-					b.angledBounce(c)
-					s+="angled"
-				}
-			}
-		}
-	}
-
-
-	return s
+    return ""
 }
 
 func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 	s := ""
+
 	if b.position.X+b.size > c.Min.X && b.position.X < c.Max.X{
 		if b.verticalSpeed < 0 {
 			if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
@@ -121,7 +75,7 @@ func (c boxCollider) isBoxCollidingWithBall(b *ball) string {
 ///check all possible collisions
 func (b *ball) checkForBallCollisions() string {
 	candidates := getCandidateCollidersHorizontal(b)
-	candidates = filterVertical(b,candidates)
+	candidates = filterVertcial(b,candidates)
 
 	//shows in red the boxes that are being checked for collision (replaces triangles with filled squares)
 	//debugCollisionFilter(candidates)
@@ -135,7 +89,6 @@ func (b *ball) checkForBallCollisions() string {
                     case *box: s+=tmp.(*box).Collider.isBoxCollidingWithBall(b)
                 }
 	}
-
 	return s
 }
 
@@ -171,7 +124,7 @@ func getCandidateCollidersHorizontal(b *ball) []*shape {
 	return candidates
 }
 
-func filterVertical(b *ball,candidates []*shape)[]*shape {
+func filterVertcial(b *ball,candidates []*shape)[]*shape {
 	l:= len(candidates)
 	if b.verticalSpeed>0{
 		for i:=0;i< l;i++ {
@@ -209,14 +162,5 @@ func debugCollisionFilter(candidates []*shape){
 	for i := 0; i < len(candidates); i++ {
 		tmp:=*candidates[i]
 		tmp.getGraphic().Fill(color.RGBA{255, 0, 0, 255})
-	}
-}
-
-func calcSide(p,a,b vector2) bool{
-	d:=(p.X-a.X)*(b.Y-a.Y)-(p.Y-a.Y)*(b.X-a.X)
-	if d>0{
-		return true
-	}else{
-		return false
 	}
 }
