@@ -12,6 +12,8 @@ var x_center = 1150
 var y_center = 60
 var radius = 50
 
+var main_menu_already_set = false
+
 var is_1_menu_button_sellected = false
 var is_menu_button_2_sellected = false
 var is_menu_button_3_sellected = false
@@ -19,24 +21,16 @@ var is_menu_button_4_sellected = false
 var is_menu_oppened = false
 
 func checkButtonClicks(){
+
+	// PLAY button
 	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && is_main_menu {
 		//play_button_is_sellected()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_first_level()
 		}
-	} else {	// else mora ovako } else { inace ne radi
-		//clear_play_button()
 	}
-/*
-	if x_pos > 500 && x_pos < 720 && y_pos > 300 && y_pos < 360 && is_main_menu {
-		levels_button_is_sellected()
-		if mouseButtonDown(ebiten.MouseButtonLeft) {
-			set_all_levels()
-		}
-	} else {
-		clear_levels_button()
-	}
-*/
+
+	// MENU button
 	if x_pos > 1140 && x_pos < 1170 && y_pos > 10 && y_pos < 40 && is_main_menu {
 		//if mouseButtonDown(ebiten.MouseButtonLeft) {
 			is_menu_oppened = true
@@ -44,13 +38,14 @@ func checkButtonClicks(){
 			create_second_menu_button()
 			create_third_menu_button()
 			create_forth_menu_button()
+			main_menu_already_set = false
 		//}
 	} else {
+		if main_menu_already_set == false && !(x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 300) {
+			set_main_menu()
 			is_menu_oppened = false
-			clear_first_menu_button()
-			clear_second_menu_button()
-			clear_third_menu_button()
-			clear_forth_menu_button()
+			main_menu_already_set = true
+		}
 	}
 
 // (1000, 60), (1190, 120)))
@@ -71,6 +66,7 @@ func checkButtonClicks(){
 	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu {
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_second_page()
+			is_main_menu = false
 		}
 	}
 
@@ -78,6 +74,7 @@ func checkButtonClicks(){
 	if x_pos > 1000 && x_pos < 1190 && y_pos > 180 && y_pos < 240 && is_main_menu {
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_third_page()
+			is_main_menu = false
 		}
 	}
 
@@ -119,25 +116,34 @@ func checkButtonClicks(){
 			case 3: 
 		}
 	}
-
+/*
 	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		switch (level_num){
-			case 0:	// kad je u meniju ne reaguje na next dugme (i ne postoji u meniju)
+			case 0:
 			case 1: set_second_level()
-			/*case 2: set_third_level()
+			case 2: set_third_level()
 			case 3: set_forth_level()
 			case 4: set_fifth_level()
-			case 5: set_main_menu()*/
+			case 5: set_main_menu()
 		}
 	}
+*/
+
+// (newV2(1000, 60), newV2(1190, 120))) controls button clicked?
+	if x_pos >= 1000 && x_pos <= 1200 && y_pos >= 60 && y_pos <= 120 && mouseButtonDown(ebiten.MouseButtonLeft) {
+		set_second_page()
+		is_main_menu = false
+	}
+
 }
 
 func check_pressed_keys() {
+/*
   	if ebiten.IsKeyPressed(ebiten.Key1) && all_levels {
 		fmt.Println("go back")
 		set_main_menu()
 	}
-
+*/
   	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
 		fmt.Println("exiting...")
 		os.Exit(0)

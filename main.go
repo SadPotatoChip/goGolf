@@ -50,6 +50,9 @@ func prefetchGraphics() {
 	reader2, _ := os.Open(backgroung_str)
 	tmp, _, _ := image.Decode(reader2)
 
+	reader6, _ := os.Open(hole_str)
+	holeGraphic, _, _ = image.Decode(reader6)
+
 	testBackground, _ := ebiten.NewImageFromImage(tmp, ebiten.FilterDefault)
 	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
 }
@@ -60,7 +63,6 @@ func update(screen *ebiten.Image) error {
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
-		player = makeBall(300, 300,false)
 		lvl.Instantiate("testlvl1.json")
 
 		set_main_menu()
@@ -74,13 +76,15 @@ func update(screen *ebiten.Image) error {
 			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
 		}*/
-		//save level
-		//lvl.makeJson("testlvl1")
+
+
 		levelIsInstantiating = false
 	}
 	
 	checkButtonClicks()
 	check_pressed_keys()
+
+
 
 	handleInput()
         
@@ -88,9 +92,16 @@ func update(screen *ebiten.Image) error {
 	player.move()
 
 	if checkIfBallIsInHole(){
-		fmt.Println("GG")
-	}
-
+		switch (level_num){
+			case 1: set_second_level()
+			case 2: set_third_level()
+			case 3: set_forth_level()
+			case 4: set_fifth_level()
+			case 5: set_main_menu()
+		}
+		fmt.Println("GG")		// kad loptica upadne u rupu
+	}	// player.horizontalSpeed = 0 da stane
+		// ....verticalSpeed = 0
 	drawLevel(screen)
 	drawPlayer(screen)
 
@@ -106,6 +117,12 @@ func drawLevel(screen *ebiten.Image) {
 			screen.DrawImage(lvl.MaxSortedShapes[i].getGraphic(),
 				lvl.MaxSortedShapes[i].getOpts())
 	}
+	
+	for i := 0; i < lvl.num_of_uninteractable_image; i++ {
+			screen.DrawImage(lvl.uninteractable_image_array[i].Graphic,
+				lvl.uninteractable_image_array[i].Opts)
+	}
+	
 	if lvl.hole!=nil {
 		screen.DrawImage(lvl.hole.Graphic, lvl.hole.Opts)
 	}
@@ -119,7 +136,9 @@ func drawPlayer(screen *ebiten.Image) {
 			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
 		}
 	}
+	//screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
+
 
 func handleInput() {
 	if player.isGrounded && player.horisonatalSpeed==0{
