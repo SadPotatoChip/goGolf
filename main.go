@@ -60,7 +60,6 @@ func update(screen *ebiten.Image) error {
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
-		player = makeBall(300, 300,false)
 		lvl.Instantiate("testlvl1.json")
 
 		set_main_menu()
@@ -74,13 +73,15 @@ func update(screen *ebiten.Image) error {
 			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
 		}*/
-		//save level
-		//lvl.makeJson("testlvl1")
+
+
 		levelIsInstantiating = false
 	}
 	
 	checkButtonClicks()
 	check_pressed_keys()
+
+
 
 	handleInput()
         
@@ -119,7 +120,9 @@ func drawPlayer(screen *ebiten.Image) {
 			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
 		}
 	}
+	screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
+
 
 func handleInput() {
 	if player.isGrounded && player.horisonatalSpeed==0{

@@ -295,10 +295,17 @@ func set_first_level() {
 	is_main_menu = false
 	level_num = 1
 
+
 	//triangle_str = "images/level_1/snow_triangle.png"
 	box_str = "images/level_1/ice.png"
 	backgroung_str = "images/level_1/first_level_background.png"
+	triangle_str = "images/level_1/snow_triangle.png"
 	prefetchGraphics()
+
+
+	lvl.addTriangle(newTriangle(vector2{screenWidth/2,screenHeight/3},
+		vector2{screenWidth/2+200,screenHeight/3+200},
+		"bottom-left"))
                 
     	// levo
         //lvl.addTriangle(newTriangle(vector2{400,500}, vector2{700,700}, "top-right"))

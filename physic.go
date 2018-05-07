@@ -22,6 +22,8 @@ const ghostDistance=10
 
 const ballSize float64 = 10
 
+var useGroundFriction=false
+
 type ball struct {
 	position                        vector2
 	size                            float64
@@ -65,6 +67,8 @@ func (b *ball) resetGhostPosition(){
 	b.collisonGhost.opts=&ebiten.DrawImageOptions{}
 	b.collisonGhost.opts.GeoM.Translate(b.position.X, b.position.Y)
 	b.collisonGhost.isGrounded = b.isGrounded
+	b.collisonGhost.verticalSpeed=b.verticalSpeed
+	b.collisonGhost.horisonatalSpeed=b.horisonatalSpeed
 	b.collisonGhost.move()
 }
 
@@ -72,10 +76,15 @@ func (b *ball) applyNaturalForces() {
 	if b.isGhost==false {
 		player.collisonGhost.applyNaturalForces()
 	}
-	if b.isGrounded == false {
+	if b.isGrounded ==false{
 		if b.verticalSpeed > -maxSpeed {
 			b.verticalSpeed -= gravityStrenght
 		}
+	}else{
+		b.verticalSpeed = 0
+	}
+
+	if useGroundFriction == false {
 		if b.horisonatalSpeed > 0 {
 			b.horisonatalSpeed -= airFrictionStrenght
 		}
@@ -83,7 +92,7 @@ func (b *ball) applyNaturalForces() {
 			b.horisonatalSpeed += airFrictionStrenght
 		}
 	} else {
-		b.verticalSpeed = 0
+
 		if b.horisonatalSpeed > 0 {
 			b.horisonatalSpeed -= groundFrictionStrenght
 		}
@@ -95,6 +104,7 @@ func (b *ball) applyNaturalForces() {
 }
 
 func (b *ball) hit(angle, power float64) {
+	useGroundFriction=false
 	if b.isGhost==false {
 		player.collisonGhost.hit(angle, power)
 	}
@@ -138,6 +148,7 @@ func processBounces(collisionDirection string, b *ball){
 			b.horizontalBounce()
 		}
 		if b.isGhost==false{
+			fmt.Println(collisionDirection)
 			b.resetGhostPosition()
 		}
 	} else {
@@ -146,11 +157,16 @@ func processBounces(collisionDirection string, b *ball){
 }
 
 func (b *ball) verticalBounce(){
-		if b.isGhost==false && b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 && b.horisonatalSpeed==0{
-			b.isGrounded = true
-			b.verticalSpeed = 0
-			if b.horisonatalSpeed==0 && b.isGhost==false{
-				b.setIndicators()
+		if b.isGhost==false && b.verticalSpeed < 0.3 && b.verticalSpeed > -0.3 {
+			useGroundFriction=true
+			if b.horisonatalSpeed==0 {
+				b.isGrounded = true
+				b.verticalSpeed = 0
+				if b.isGhost == false {
+					b.setIndicators()
+				}
+			}else{
+				b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
 			}
 		} else {
 			b.verticalSpeed = -b.verticalSpeed * bounceSpeedReductionFactor
@@ -159,6 +175,24 @@ func (b *ball) verticalBounce(){
 
 func (b *ball) horizontalBounce() {
 	b.horisonatalSpeed = -b.horisonatalSpeed * bounceSpeedReductionFactor
+}
+
+func (b *ball) angledBounce(c triangleCollider){
+	totalSpeed:=b.horisonatalSpeed+b.verticalSpeed
+	var c1 float64=(c.Max.Y-c.Min.Y)/(c.Max.X-c.Min.X)
+	var c2 float64=b.verticalSpeed/b.horisonatalSpeed
+
+	relativeDeflectionAngle:=math.Atan2(c1-c2 , 1+(c1*c2))
+	surfaceAngle:=math.Tan(c1)
+	absoluteReflectionAngle:=-(relativeDeflectionAngle+surfaceAngle)
+
+	b.horisonatalSpeed =  math.Cos(absoluteReflectionAngle)
+	b.verticalSpeed =  math.Sin(absoluteReflectionAngle)
+	fmt.Println(b.horisonatalSpeed)
+	fmt.Println(b.verticalSpeed)
+
+	b.horisonatalSpeed *=totalSpeed
+	b.verticalSpeed *=totalSpeed
 }
 
 func (b *ball) setIndicators() {
@@ -187,3 +221,31 @@ func (b *ball) setIndicators() {
 
 	}
 }
+
+func (b *ball) getMoveDirection() string{
+	s:=""
+	if b.verticalSpeed>0{
+		s+="up"
+	}else{
+		s+="down"
+	}
+	if b.horisonatalSpeed>0{
+		s+="right"
+	}else{
+		s+="left"
+	}
+	return s
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
