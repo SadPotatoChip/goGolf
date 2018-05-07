@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="341b8c86-9fcc-4752-9406-68710da57325" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collisionDetection.go" beforeDir="false" afterPath="$PROJECT_DIR$/collisionDetection.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/goGolf-master_may_5.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/goGolf-master_may_6.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level.go" beforeDir="false" afterPath="$PROJECT_DIR$/level.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level_design.go" beforeDir="false" afterPath="$PROJECT_DIR$/level_design.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/physic.go" beforeDir="false" afterPath="$PROJECT_DIR$/physic.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
