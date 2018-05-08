@@ -31,7 +31,7 @@ func checkButtonClicks(){
 	}
 
 	// MENU button
-	if x_pos > 1140 && x_pos < 1170 && y_pos > 10 && y_pos < 40 && is_main_menu {
+	if x_pos > 1140 && x_pos < 1170 && y_pos > 10 && y_pos < 50 && is_main_menu {
 		//if mouseButtonDown(ebiten.MouseButtonLeft) {
 			is_menu_oppened = true
 			create_first_menu_button()
@@ -48,54 +48,85 @@ func checkButtonClicks(){
 		}
 	}
 
+// 1 MENU OPTION
 // (1000, 60), (1190, 120)))
-	if x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 120 && is_main_menu && is_menu_oppened{
+	if x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 120 && is_main_menu && is_menu_oppened && !(page_num == 1){
 		is_1_menu_button_sellected = true
 		create_first_menu_button()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_first_page()
+			is_main_menu = false
 		}
 	} else {
-		if is_menu_oppened {
-			is_1_menu_button_sellected = true
+		if is_menu_oppened && !(x_pos > 1000 && x_pos < 1190 && y_pos > 10 && y_pos < 120 && is_main_menu && is_menu_oppened) && (x_pos > 1000 && x_pos < 1190 && y_pos > 10 && y_pos < 300 && is_main_menu){
+			is_1_menu_button_sellected = false
 			create_first_menu_button()
+			is_main_menu = true
 		}
 	}
-
+	//}
+// 2 MENU OPTION
 // (1000, 120), (1190, 180)
-	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu {
+
+	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu && is_menu_oppened{
+		is_menu_button_2_sellected = true
+		create_second_menu_button()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_second_page()
 			is_main_menu = false
 		}
+	} else {
+		if is_menu_oppened && !(x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu && is_menu_oppened) && (x_pos > 1000 && x_pos < 1190 && y_pos > 10 && y_pos < 300 && is_main_menu){
+			is_menu_button_2_sellected = false
+			create_second_menu_button()
+		}
 	}
 
+// 3 MENU OPTION
 // (1000, 180), (1190, 240)
+
 	if x_pos > 1000 && x_pos < 1190 && y_pos > 180 && y_pos < 240 && is_main_menu {
+		is_menu_button_3_sellected = true
+		create_third_menu_button()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_third_page()
 			is_main_menu = false
 		}
-	}
-
-// (1000, 240), (1190, 300)
-	if x_pos > 1000 && x_pos < 1190 && y_pos > 240 && y_pos < 300 && is_main_menu {
-		if mouseButtonDown(ebiten.MouseButtonLeft) {
-			os.Exit(0)
+	} else {
+		if is_menu_oppened && !(x_pos > 1000 && x_pos < 1190 && y_pos > 180 && y_pos < 240 && is_main_menu && is_menu_oppened) && (x_pos > 1000 && x_pos < 1190 && y_pos > 10 && y_pos < 300 && is_main_menu){
+			is_menu_button_3_sellected = false
+			create_third_menu_button()
 		}
 	}
 
+// 4 MENU OPTION
+// (1000, 240), (1190, 300)
+
+	if x_pos > 1000 && x_pos < 1190 && y_pos > 240 && y_pos < 300 && is_main_menu {
+		is_menu_button_4_sellected = true
+		create_forth_menu_button()
+		if mouseButtonDown(ebiten.MouseButtonLeft) {
+			os.Exit(0)
+		}
+	} else {
+		if is_menu_oppened && !(x_pos > 1000 && x_pos < 1190 && y_pos > 240 && y_pos < 300 && is_main_menu && is_menu_oppened) && (x_pos > 1000 && x_pos < 1190 && y_pos > 10 && y_pos < 300 && is_main_menu){
+			is_menu_button_4_sellected = false
+			create_forth_menu_button()
+		}
+	}
+}
 // kad se klikne na grid treba da se vrati u meni
 // (1150, 20), (1180, 50)
-
+/*
 	if x_pos > 1150 && x_pos < 1180 && y_pos > 20 && y_pos < 50 && (is_main_menu == false) {
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
 			set_main_menu()
 		}
 	}
-
+*/
 // next
 // (530, 400), (630, 500)
+/*
 	if x_pos > 530 && x_pos < 630 && y_pos > 400 && y_pos < 500 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		fmt.Println("dadada")
 		switch (photo_num){
@@ -104,9 +135,10 @@ func checkButtonClicks(){
 			case 3: second_photo()
 		}
 	}
-
+*/
 // previous
 // (630, 400), (730, 500)
+/*
 	if x_pos > 630 && x_pos < 730 && y_pos > 400 && y_pos < 500 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		fmt.Println("dadada")
 		switch (photo_num){
@@ -116,6 +148,7 @@ func checkButtonClicks(){
 			case 3: 
 		}
 	}
+*/
 /*
 	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		switch (level_num){
@@ -129,23 +162,11 @@ func checkButtonClicks(){
 	}
 */
 
-// (newV2(1000, 60), newV2(1190, 120))) controls button clicked?
-	if x_pos >= 1000 && x_pos <= 1200 && y_pos >= 60 && y_pos <= 120 && mouseButtonDown(ebiten.MouseButtonLeft) {
-		set_second_page()
-		is_main_menu = false
-	}
-
-}
-
 func check_pressed_keys() {
-/*
-  	if ebiten.IsKeyPressed(ebiten.Key1) && all_levels {
-		fmt.Println("go back")
-		set_main_menu()
-	}
-*/
+
   	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
 		fmt.Println("exiting...")
 		os.Exit(0)
 	}
 }
+
