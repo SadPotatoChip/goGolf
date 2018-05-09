@@ -115,7 +115,7 @@ func set_second_page() {
 	backgroung_str = "images/main_menu/purple.png"
 	prefetchGraphics()
 
-	//if is_main_menu == false {	TODO
+	if is_main_menu == false {	// TODO
 		box_str = "images/main_menu/grid.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
@@ -125,7 +125,7 @@ func set_second_page() {
 		previous_photo()
 		next_photo()
 
-	//}
+	}
 }
 
 func set_first_page() {
@@ -200,18 +200,18 @@ func ball_pick() {
 func first_photo() {
 	photo_num = 1
 	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
-		box_str = "images/main_menu/1.png"
+		box_str = "images/pick_the_level/lev_1.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
 	}
 }
 
 func second_photo() {
 	photo_num = 2
 	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
-		box_str = "images/main_menu/2.png"
+		box_str = "images/pick_the_level/lev_2.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
 	}
 }
 
@@ -219,25 +219,43 @@ func second_photo() {
 func third_photo() {
 	photo_num = 3
 	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
-		box_str = "images/main_menu/3.png"
+		box_str = "images/pick_the_level/lev_3.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(500, 100), newV2(600, 200)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
+	}
+}
+
+func forth_photo() {
+	photo_num = 4
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/pick_the_level/lev_4.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
+	}
+}
+
+func fifth_photo() {
+	photo_num = 5
+	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/pick_the_level/lev_5.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
 	}
 }
 
 func previous_photo() {
 	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
-		box_str = "images/main_menu/back.png"
+		box_str = "images/pick_the_level/back.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(530, 400), newV2(630, 500)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(505, 420), newV2(630, 500)))
 	}
 }
 
 func next_photo() {
 	if is_main_menu == false {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
-		box_str = "images/main_menu/next.png"
+		box_str = "images/pick_the_level/next.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(630, 400), newV2(730, 500)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(605, 420), newV2(730, 600)))
 	}
 }
 

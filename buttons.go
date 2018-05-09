@@ -41,7 +41,7 @@ func checkButtonClicks(){
 			main_menu_already_set = false
 		//}
 	} else {
-		if main_menu_already_set == false && !(x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 300) {
+		if main_menu_already_set == false && !(x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 300) && is_main_menu == true {
 			set_main_menu()
 			is_menu_oppened = false
 			main_menu_already_set = true
@@ -68,7 +68,7 @@ func checkButtonClicks(){
 // 2 MENU OPTION
 // (1000, 120), (1190, 180)
 
-	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 {//&& is_main_menu && is_menu_oppened{	TODO
+	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu && is_menu_oppened{	//TODO
 		is_menu_button_2_sellected = true
 		create_second_menu_button()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
@@ -114,7 +114,7 @@ func checkButtonClicks(){
 			create_forth_menu_button()
 		}
 	}
-}
+
 // kad se klikne na grid treba da se vrati u meni
 // (1150, 20), (1180, 50)
 /*
@@ -125,17 +125,19 @@ func checkButtonClicks(){
 	}
 */
 // next
-// (530, 400), (630, 500)
-/*
-	if x_pos > 530 && x_pos < 630 && y_pos > 400 && y_pos < 500 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
+// (605, 420), (730, 600)
+
+	if x_pos > 605 && x_pos < 730 && y_pos > 420 && y_pos < 600 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		fmt.Println("dadada")
 		switch (photo_num){
-			case 1:	
-			case 2: first_photo()
-			case 3: second_photo()
+			case 1:	second_photo()
+			case 2: third_photo()
+			case 3: forth_photo()
+			case 4: fifth_photo()
+			case 5:
 		}
 	}
-*/
+}
 // previous
 // (630, 400), (730, 500)
 /*
