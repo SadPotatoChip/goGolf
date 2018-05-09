@@ -10,6 +10,8 @@ import (
 	2. dodaj pocetak i kraj u svakom nivou
 */
 
+var mute = false
+
 var page_num = 0
 
 var photo_num = 1
@@ -103,18 +105,17 @@ func create_forth_menu_button() {
 }
 
 
-func set_first_page() {
+func set_second_page() {
 	lvl.Instantiate("lala")
 	all_levels = true
 	is_main_menu = false
-	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
 
 	page_num = 1
 
 	backgroung_str = "images/main_menu/purple.png"
 	prefetchGraphics()
 
-	if is_main_menu == false {
+	//if is_main_menu == false {	TODO
 		box_str = "images/main_menu/grid.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
@@ -124,14 +125,12 @@ func set_first_page() {
 		previous_photo()
 		next_photo()
 
-	}
+	//}
 }
 
-func set_second_page() {
+func set_first_page() {
 	lvl.Instantiate("lala")
-	all_levels = true
 	is_main_menu = false
-	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
 
 	backgroung_str = "images/main_menu/controls.png"
 	prefetchGraphics()
@@ -145,9 +144,7 @@ func set_second_page() {
 
 func set_third_page() {
 	lvl.Instantiate("lala")
-	all_levels = true
 	is_main_menu = false
-	level_num = 6	// jer ima 5 nivoa, a meni je 0-ti
 
 	backgroung_str = "images/main_menu/purple.png"
 	prefetchGraphics()
@@ -156,6 +153,47 @@ func set_third_page() {
 		box_str = "images/main_menu/grid.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
+	}
+
+	ball_pick()
+	full_screen()
+	speaker_on()
+	speaker_off()
+}
+
+func speaker_on() {
+	if is_main_menu == false {
+		mute = false
+		box_str = "images/main_menu/speaker_on.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(570, 200), newV2(600, 400)))
+	}
+}
+
+func speaker_off() {
+	if is_main_menu == false {
+		mute = true
+		box_str = "images/main_menu/speaker_off.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(570, 200), newV2(600, 400)))
+	}
+}
+
+func full_screen() {
+	if is_main_menu == false {
+		mute = true
+		box_str = "images/main_menu/full-screen.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(770, 200), newV2(800, 400)))
+	}
+}
+
+func ball_pick() {
+	if is_main_menu == false {
+		mute = true
+		box_str = "images/main_menu/golf.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(370, 200), newV2(400, 400)))
 	}
 }
 

@@ -68,7 +68,7 @@ func checkButtonClicks(){
 // 2 MENU OPTION
 // (1000, 120), (1190, 180)
 
-	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 && is_main_menu && is_menu_oppened{
+	if x_pos > 1000 && x_pos < 1190 && y_pos > 120 && y_pos < 180 {//&& is_main_menu && is_menu_oppened{	TODO
 		is_menu_button_2_sellected = true
 		create_second_menu_button()
 		if mouseButtonDown(ebiten.MouseButtonLeft) {
