@@ -10,6 +10,9 @@ import (
 	2. dodaj pocetak i kraj u svakom nivou
 */
 
+var no_more_levels_next = false
+var no_more_levels_back = false
+
 var mute = false
 
 var page_num = 0
@@ -259,6 +262,23 @@ func next_photo() {
 	}
 }
 
+func change_previous_button() {
+	if is_main_menu == false && no_more_levels_back == true {
+	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/pick_the_level/back_grey.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(505, 420), newV2(630, 500)))
+	}
+}
+
+func change_next_button() {
+	if is_main_menu == false && no_more_levels_next == true {
+	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+		box_str = "images/pick_the_level/next_grey.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(605, 420), newV2(730, 600)))
+	}
+}
 
 func set_main_menu() {
 	lvl.Instantiate("lala")

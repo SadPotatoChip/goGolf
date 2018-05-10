@@ -134,23 +134,32 @@ func checkButtonClicks(){
 			case 2: third_photo()
 			case 3: forth_photo()
 			case 4: fifth_photo()
-			case 5:
+				no_more_levels_next = true
+				change_next_button()
+			case 5: 
+		}
+	}
+// previous
+// (505, 420), newV2(630, 500)
+	if x_pos > 505 && x_pos < 630 && y_pos > 420 && y_pos < 500 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
+		fmt.Println("dadada")
+		switch (photo_num){
+			case 1:	
+			case 2: first_photo()
+				no_more_levels_back = true
+				change_previous_button()
+			case 3: second_photo()
+				no_more_levels_back = false
+				previous_photo()
+			case 4: third_photo()
+				no_more_levels_back = false
+				previous_photo()
+			case 5: forth_photo()
+				no_more_levels_back = false
+				previous_photo()
 		}
 	}
 }
-// previous
-// (630, 400), (730, 500)
-/*
-	if x_pos > 630 && x_pos < 730 && y_pos > 400 && y_pos < 500 && (is_main_menu == false) && mouseButtonDown(ebiten.MouseButtonLeft) {
-		fmt.Println("dadada")
-		switch (photo_num){
-			case 1:	second_photo()
-				fmt.Println("1")
-			case 2: third_photo()
-			case 3: 
-		}
-	}
-*/
 /*
 	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && mouseButtonDown(ebiten.MouseButtonLeft) {
 		switch (level_num){
