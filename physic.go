@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"time"
 	"fmt"
 	"image/color"
 	"math"
@@ -38,6 +39,7 @@ type ball struct {
 	indicatorGhost			[numOfIndicatorGhosts]*ball
 }
 
+
 func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 	tmp := new(ball)
 	tmp.size = ballSize
@@ -58,6 +60,41 @@ func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 		tmp.graphic.Fill(color.RGBA{0, 0, 255, 120})
 	}
 	tmp.opts = &ebiten.DrawImageOptions{}
+	//fmt.Println("%d", time.Now().Second())
+	//tmp.opts.GeoM.Rotate(float64(time.Now().Second()) * float64(math.Pi/6.0))
+
+	/*
+
+	ne moze ovako, jer okrece lopticu, ali ne i sliku koja prekriva lopticu
+
+	+ okrece i indikator!!!
+
+package main
+ 
+import (    
+    "os"
+    "math" 
+    "image"
+    "image/jpeg"
+    "code.google.com/p/graphics-go/graphics"				// ne znam kako da skinem ovu biblio?!
+)
+ 
+func main() {
+    imagePath, _ := os.Open("jellyfish.jpg")
+    defer imagePath.Close()
+    srcImage, _, _ := image.Decode(imagePath)
+ 
+    srcDim := srcImage.Bounds()
+    dstImage := image.NewRGBA(image.Rect(0, 0, srcDim.Dy(), srcDim.Dx()))
+    graphics.Rotate(dstImage, srcImage, &graphics.RotateOptions{math.Pi / 2.0})
+     
+    newImage, _ := os.Create("newjellyfish.jpg")
+    defer newImage.Close()
+    jpeg.Encode(newImage, dstImage, &jpeg.Options{jpeg.DefaultQuality}) 
+}
+
+	*/
+
 	tmp.opts.GeoM.Translate(x, y)
 	tmp.verticalSpeed, tmp.horisonatalSpeed = 0, 0
 	tmp.isGrounded = true
@@ -205,7 +242,11 @@ func (b *ball) setIndicators() {
 		fmt.Println("tried to set indicators for ghost")
 	}else{
 		x,y:=b.position.X,b.position.Y
-		b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/golf-ball.png")
+		//if other_ball == false {
+			b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
+		//} else {
+		//	b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
+			//}
 		b.indicatorGhost[0].hit(b.controls.angle, b.controls.power)
 		for i:=0;i< len(b.indicatorGhost);i++ {
 			for j := 0; j < ghostDistance; j++ {
@@ -215,7 +256,11 @@ func (b *ball) setIndicators() {
 			}
 			if i<len(b.indicatorGhost)-1{
 				x, y = b.indicatorGhost[i].position.X, b.indicatorGhost[i].position.Y
-				b.indicatorGhost[i+1] = makeBall(x, y, true, "images/main_menu/golf-ball.png")
+				//if other_ball == false {
+					b.indicatorGhost[i+1] = makeBall(x, y, true, "images/main_menu/tennis-ball.png")
+				/*} else {
+					b.indicatorGhost[i+1] = makeBall(x,y,true, "images/main_menu/tennis-ball.png")
+				}*/
 				b.indicatorGhost[i+1].isGrounded=false
 				b.indicatorGhost[i+1].verticalSpeed = b.indicatorGhost[i].verticalSpeed
 				b.indicatorGhost[i+1].horisonatalSpeed = b.indicatorGhost[i].horisonatalSpeed

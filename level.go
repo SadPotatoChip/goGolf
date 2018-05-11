@@ -14,6 +14,8 @@ import (
 	"image/color"
 )
 
+var str_2 = "images/main_menu/golf-ball.png"
+
 const maxLevelObjects int = 200
 
 ///Keeping arrays for clarity, each represents the boxes in the level sorted by their
@@ -32,9 +34,9 @@ type level struct {
 func (l *level) Instantiate(filePath string) {
 	l.ShapeTypes=""
 	if levelIsInstantiating==false {
-		player = makeBall(300, 300, false, "images/main_menu/golf-ball.png")
+		player = makeBall(300, 300, false, str_2)
 	}else{
-		player = makeBall(-1000, -1000, false, "images/main_menu/golf-ball.png")
+		player = makeBall(-1000, -1000, false, str_2)
 	}
 
 	//fmt.Println(jsonData)

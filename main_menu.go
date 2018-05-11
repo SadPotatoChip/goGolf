@@ -66,110 +66,124 @@ func create_second_menu_button() {
 		} else {
 			box_str = "images/buttons/buttons_selected/levels.png"
 		}
-		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 120), newV2(1190, 180)))
+		prefetchGraphics()					// TODO proveeeri granice 1190 je bilo
+		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 120), newV2(1180, 180)))
 	}
 }
 
 func create_first_menu_button() {
-	if is_main_menu {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+	if is_main_menu && is_menu_oppened{// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
 		if is_1_menu_button_sellected {
 			box_str = "images/buttons/buttons_selected/controls.png"
 		} else {
 			box_str = "images/buttons/buttons_unselected/controls.png"
 		}
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 60), newV2(1190, 120)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 60), newV2(1180, 120)))
 	}
 }
 
 func create_third_menu_button() {
-	if is_main_menu {	// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
+	if is_main_menu && is_menu_oppened{// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
 		if is_menu_button_3_sellected == false && is_menu_oppened{
 			box_str = "images/buttons/buttons_unselected/options.png"
 		} else {
 			box_str = "images/buttons/buttons_selected/options.png"
 		}
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 180), newV2(1190, 240)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 180), newV2(1180, 240)))
 	}
 }
 
 func create_forth_menu_button() {
-	if is_main_menu {
+	if is_main_menu && is_menu_oppened{
 		if is_menu_button_4_sellected == false && is_menu_oppened{
 			box_str = "images/buttons/buttons_unselected/quit.png"
 		} else {
 			box_str = "images/buttons/buttons_selected/quit.png"
 		}
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 240), newV2(1190, 300)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 240), newV2(1180, 300)))
 	}
 }
 
 
 func set_second_page() {
 	lvl.Instantiate("lala")
-	all_levels = true
+	//all_levels = true
 	is_main_menu = false
 
-	page_num = 1
+	//page_num = 1
 
 	backgroung_str = "images/main_menu/purple.png"
 	prefetchGraphics()
 
-	if is_main_menu == false {	// TODO
+	//if is_main_menu == false {	// TODO
 		box_str = "images/main_menu/grid.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
 
+		box_str = "images/balls/nivoi.png"
+		prefetchGraphics()
+		lvl.add_uninteractable_image(newSpecialBox(newV2(50, 200), newV2(1150, 400)))
 
-		first_photo()
-		previous_photo()
-		next_photo()
+		//first_photo()
+		//previous_photo()
+		//next_photo()
 
-	}
+	//}
 }
 
 func set_first_page() {
 	lvl.Instantiate("lala")
 	is_main_menu = false
+	//if cont == true {
 
 	backgroung_str = "images/main_menu/controls.png"
 	prefetchGraphics()
 
-	if is_main_menu == false {
+	//if is_main_menu == false {
 		box_str = "images/main_menu/grid.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
-	}
+	//}
+	//opt = false
+	//lev = false
+	//}
 }
 
 func set_third_page() {
 	lvl.Instantiate("lala")
 	is_main_menu = false
 
+	//if opt == true {
 	backgroung_str = "images/main_menu/purple.png"
 	prefetchGraphics()
 
-	if is_main_menu == false {
+	//if is_main_menu == false {
 		box_str = "images/main_menu/grid.png"
+		box_str = "images/balls/2.png"
 		prefetchGraphics()
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1150, 20), newV2(1180, 50)))
-	}
+		//lvl.add_uninteractable_image(newSpecialBox(newV2(150, 100), newV2(550, 500)))
+	//}
 
-	ball_pick()
-	full_screen()
+	cont = false
+	lev = false
+
+	//ball_pick()
+	//full_screen()
 	speaker_on()
-	speaker_off()
+	//speaker_off()
+	//}
 }
 
 func speaker_on() {
 	if is_main_menu == false {
 		mute = false
-		box_str = "images/main_menu/speaker_on.png"
+		box_str = "images/balls/sound.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(570, 200), newV2(600, 400)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(650, 100), newV2(1050, 500)))
 	}
 }
 
@@ -191,12 +205,20 @@ func full_screen() {
 	}
 }
 
+func create_balls() {
+	box_str = "images/balls/all_balls.png"
+	prefetchGraphics()
+	lvl.add_uninteractable_image(newSpecialBox(newV2(350, 100), newV2(500, 200)))
+
+
+}
+
 func ball_pick() {
 	if is_main_menu == false {
 		mute = true
-		box_str = "images/main_menu/golf.png"
+		box_str = "images/balls/two_balls_big.png"
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(370, 200), newV2(400, 400)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(100, 100), newV2(400, 400)))
 	}
 }
 

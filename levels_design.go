@@ -2,9 +2,10 @@ package main
 
 import (
 	//"image"
-	//"fmt"
+	"fmt"
 	//"github.com/hajimehoshi/ebiten"
 	//"github.com/hajimehoshi/ebiten/ebitenutil"
+	
 )
 
 
@@ -15,7 +16,12 @@ func set_first_level() {
 	is_main_menu = false
 	level_num = 1
 
+  	/*if ebiten.IsKeyPressed(ebiten.Key1) {
+		fmt.Println("exiting 1 level...")
+		set_main_menu()
+	}
 
+*/
 	//triangle_str = "images/level_1/snow_triangle.png"
 	box_str = "images/level_1/ice.png"
 	backgroung_str = "images/level_1/first_level_background.png"
@@ -51,11 +57,6 @@ func set_first_level() {
         lvl.addBox(newBox(newV2(1000, 400), newV2(1100, 500)))
         lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
 
-	// next level
-	box_str = "images/main_menu/next.png"
-	prefetchGraphics()
-	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1120, 110)))
-
 	lvl.hole = newHole(newV2(500, 200), newV2(600, 300))
 
 }
@@ -66,6 +67,11 @@ func set_second_level() {
 	all_levels = false
 	is_main_menu = false
 	level_num = 2
+/*
+  	if ebiten.IsKeyPressed(ebiten.Key1) {
+		fmt.Println("exiting 2 level...")
+		set_main_menu()
+	}*/
 
 	backgroung_str = "images/level_2/second_level_background.png"
 
@@ -118,11 +124,6 @@ func set_second_level() {
 	lvl.addBox(newBox(newV2(750, 400), newV2(850, 500)))
 	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
 
-	// next level
-	box_str = "images/main_menu/next.png"
-	prefetchGraphics()
-	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
-
 	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
 
@@ -162,11 +163,6 @@ func set_third_level() {
         lvl.addBox(newBox(newV2(900, 150), newV2(1000, 250)))
         lvl.addBox(newBox(newV2(700, 0), newV2(800, 100)))
         lvl.addBox(newBox(newV2(1000, 100), newV2(1100, 200)))
-
-	// next level
-	box_str = "images/main_menu/next.png"
-	prefetchGraphics()
-	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 
 	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
@@ -209,17 +205,12 @@ func set_forth_level() {
 	lvl.addBox(newBox(newV2(750, 400), newV2(850, 500)))
 	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
 
-	// next level
-	box_str = "images/main_menu/next.png"
-	prefetchGraphics()
-	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
-
 	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
 
 
 func set_fifth_level() {
-
+	fmt.Println("usao u 5. nivo")
         lvl.Instantiate("lalaa")
 	all_levels = false
 	is_main_menu = false
@@ -263,11 +254,6 @@ func set_fifth_level() {
 
 	lvl.addBox(newBox(newV2(500, 0), newV2(600, 100)))
 	lvl.addBox(newBox(newV2(600, 100), newV2(700, 200)))
-
-	// next level
-	box_str = "images/main_menu/next.png"
-	prefetchGraphics()
-	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1200, 110)))
 
 	lvl.hole = newHole(newV2(980, 450), newV2(1120, 500))
 }
