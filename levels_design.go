@@ -11,17 +11,12 @@ import (
 
 
 func set_first_level() {
-        lvl.Instantiate("lalaa")
+	level_num = 1
+	lvl.Instantiate("lalaa")
 	all_levels = false
 	is_main_menu = false
-	level_num = 1
 
-  	/*if ebiten.IsKeyPressed(ebiten.Key1) {
-		fmt.Println("exiting 1 level...")
-		set_main_menu()
-	}
 
-*/
 	//triangle_str = "images/level_1/snow_triangle.png"
 	box_str = "images/level_1/ice.png"
 	backgroung_str = "images/level_1/first_level_background.png"
@@ -29,35 +24,23 @@ func set_first_level() {
 	prefetchGraphics()
 
 
-	lvl.addTriangle(newTriangle(vector2{screenWidth/2,screenHeight/3},
-		vector2{screenWidth/2+200,screenHeight/3+200},
+	lvl.addTriangle(newTriangle(vector2{screenWidth-screenHeight/3,0},
+		vector2{screenWidth,screenHeight/3},
 		"bottom-left"))
-                
-    	// levo
-        //lvl.addTriangle(newTriangle(vector2{400,500}, vector2{700,700}, "top-right"))
-        //lvl.addTriangle(newTriangle(vector2{200,400}, vector2{700,700}, "top-right"))
-                
-        lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-        lvl.addBox(newBox(newV2(screenWidth / 12, 5 * screenHeight / 6), newV2(200, 600)))
-        lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))                
-        lvl.addBox(newBox(newV2(300, 500), newV2(400, 600)))
-        lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
-        lvl.addBox(newBox(newV2(100, 400), newV2(200, 500)))
-                
-        // desno
-	//triangle_str = "images/level_1/snow_triangle_rotate.png"
-	//prefetchGraphics()
-        //lvl.addTriangle(newTriangle(vector2{900,500}, vector2{1200,700}, "top-left"))
-        //lvl.addTriangle(newTriangle(vector2{700,600}, vector2{1200,900}, "top-left"))
-                
-        lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
-        lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
-        lvl.addBox(newBox(newV2(1000, 500), newV2(1100, 600)))
-        lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
-        lvl.addBox(newBox(newV2(1000, 400), newV2(1100, 500)))
-        lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
+	lvl.addTriangle(newTriangle(vector2{0,0},
+		vector2{screenHeight/3,screenHeight/3},
+		"bottom-left"))
+	lvl.addTriangle(newTriangle(vector2{0,2*screenHeight/3},
+		vector2{screenHeight/3,screenHeight},
+		"top-right"))
+	lvl.addTriangle(newTriangle(vector2{screenWidth-screenHeight/3,2*screenHeight/3},
+		vector2{screenWidth,screenHeight},
+		"top-left"))
+	lvl.addTriangle(newTriangle(vector2{400,400},
+		vector2{600,600},
+		"top-left"))
 
-	lvl.hole = newHole(newV2(500, 200), newV2(600, 300))
+	lvl.hole=newHole(vector2{0,0},vector2{100,100})
 
 }
 
@@ -166,7 +149,6 @@ func set_third_level() {
 
 	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
-
 
 func set_forth_level() {
     

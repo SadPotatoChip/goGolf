@@ -107,7 +107,6 @@ func create_forth_menu_button() {
 	}
 }
 
-
 func set_second_page() {
 	lvl.Instantiate("lala")
 	//all_levels = true
@@ -239,7 +238,6 @@ func second_photo() {
 		lvl.add_uninteractable_image(newSpecialBox(newV2(300, 100), newV2(600, 200)))
 	}
 }
-
 
 func third_photo() {
 	photo_num = 3

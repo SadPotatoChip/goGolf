@@ -33,7 +33,7 @@ type level struct {
 
 func (l *level) Instantiate(filePath string) {
 	l.ShapeTypes=""
-	if levelIsInstantiating==false {
+	if levelIsInstantiating==false && level_num!=0{
 		player = makeBall(300, 300, false, str_2)
 	}else{
 		player = makeBall(-1000, -1000, false, str_2)
@@ -300,7 +300,7 @@ func newTriangle(min, max vector2, side string) *triangle {
 
 
 	//debug
-	drawDebugSquares(tmp)
+	//drawDebugSquares(tmp)
 
 	return tmp
 }

@@ -20,45 +20,13 @@ func (c triangleCollider) isTriangleCollidingWithBall(b *ball) string{
 	if (b.position.X+b.size > c.Min.X && b.position.X < c.Max.X) && (b.position.Y+b.size> c.Min.Y && b.position.Y < c.Max.Y){
 		switch c.Missing_part {
 		case "bottom-left":
-			switch b.getMoveDirection() {
-			case "downleft":
-				if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
-					s = "up"
-				}else{
-					s = "right"
-				}
-			case "downright":
-				if b.position.Y < c.Min.Y && b.collisonGhost.position.Y+b.size > c.Min.Y {
-					s = "up"
-				}else{
-					d1 := calcSide(vector2{b.position.X + ballSize, b.position.Y}, c.Min, c.Max)
-					d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-					if d1!=d2 {
-						b.angledBounce(c)
-						s+="angled"
-					}
-				}
-			case "upleft": //problematic
-				/*
-				if b.position.X+ b.size > c.Min.X && b.collisonGhost.position.X < c.Max.X{
-					s="right"
-				}else{
-					d1 := calcSide(vector2{b.position.X , b.position.Y+ballSize}, c.Min, c.Max)
-					d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-					if d1!=d2 {
-						b.angledBounce(c)
-						s+="angled"
-					}
-				}
-				*/
-			case "upright":
-				d1 := calcSide(vector2{b.position.X , b.position.Y+ballSize}, c.Min, c.Max)
-				d2 := calcSide(vector2{b.collisonGhost.position.X + ballSize, b.collisonGhost.position.Y}, c.Min, c.Max)
-				if d1!=d2 {
-					b.angledBounce(c)
-					s+="angled"
-				}
-			}
+			s = c.bottomLeftTriangleCollision(b)
+		case "bottom-right":
+			s = c.bottomRightTriangleCollision(b)
+		case "top-left":
+			s = c.topLeftTriangleCollision(b)
+		case "top-right":
+			s = c.topRightTriangleCollision(b)
 		}
 	}
 
@@ -211,11 +179,4 @@ func debugCollisionFilter(candidates []*shape){
 	}
 }
 
-func calcSide(p,a,b vector2) bool{
-	d:=(p.X-a.X)*(b.Y-a.Y)-(p.Y-a.Y)*(b.X-a.X)
-	if d>0{
-		return true
-	}else{
-		return false
-	}
-}
+

@@ -3,7 +3,6 @@ package main
 import (
 	//"time"
 	"fmt"
-	"image/color"
 	"math"
 	"strings"
 	"os"
@@ -57,7 +56,7 @@ func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 		tmp.controls = makeControler(tmp)
 		tmp.setIndicators()
 	}else{
-		tmp.graphic.Fill(color.RGBA{0, 0, 255, 120})
+		//tmp.graphic.Fill(color.RGBA{0, 0, 255, 120})
 	}
 	tmp.opts = &ebiten.DrawImageOptions{}
 	//fmt.Println("%d", time.Now().Second())
@@ -175,6 +174,8 @@ func (b *ball) move() {
 	b.opts.GeoM.Translate(b.horisonatalSpeed, 0)
 	b.position.X += b.horisonatalSpeed
 	b.position.Y -= b.verticalSpeed
+
+
 }
 
 func processBounces(collisionDirection string, b *ball){
@@ -221,20 +222,38 @@ func (b *ball) horizontalBounce() {
 
 func (b *ball) angledBounce(c triangleCollider){
 	totalSpeed:=b.horisonatalSpeed+b.verticalSpeed
-	var c1 float64=(c.Max.Y-c.Min.Y)/(c.Max.X-c.Min.X)
+	var c1 float64
+	switch c.Missing_part{
+	case "bottom-left":
+		c1=-((c.Max.Y-c.Min.Y)/(c.Max.X-c.Min.X))
+	case "top-left":
+		xa:=c.Max.X
+		xb:=c.Min.X
+		ya:=c.Max.Y
+		yb:=c.Min.Y
+		c1=-((yb-ya)/(xa-xb))
+	}
 	var c2 float64=b.verticalSpeed/b.horisonatalSpeed
 
-	relativeDeflectionAngle:=math.Atan2(c1-c2 , 1+(c1*c2))
-	surfaceAngle:=math.Tan(c1)
-	absoluteReflectionAngle:=-(relativeDeflectionAngle+surfaceAngle)
+	fmt.Println(c2)
+	surfaceAngle:=math.Atan(c1)
+	inAngle:=math.Atan(c2)
 
-	b.horisonatalSpeed =  math.Cos(absoluteReflectionAngle)
-	b.verticalSpeed =  math.Sin(absoluteReflectionAngle)
-	fmt.Println(b.horisonatalSpeed)
-	fmt.Println(b.verticalSpeed)
+	fmt.Printf("surfece:%f\ninAngle:%f\n",surfaceAngle*180/math.Pi, inAngle*180/math.Pi)
 
-	b.horisonatalSpeed *=totalSpeed
-	b.verticalSpeed *=totalSpeed
+	absoluteReflectionAngle := 2*surfaceAngle - math.Abs(inAngle)
+
+	fmt.Printf("reflection:%f\n",absoluteReflectionAngle*180/math.Pi)
+
+
+	hPart :=  math.Cos(absoluteReflectionAngle) *totalSpeed/2
+	vPart :=  math.Sin(absoluteReflectionAngle) *totalSpeed/2
+
+
+	b.verticalSpeed=vPart
+	b.horisonatalSpeed=hPart
+
+
 }
 
 func (b *ball) setIndicators() {
@@ -242,11 +261,8 @@ func (b *ball) setIndicators() {
 		fmt.Println("tried to set indicators for ghost")
 	}else{
 		x,y:=b.position.X,b.position.Y
-		//if other_ball == false {
-			b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
-		//} else {
-		//	b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
-			//}
+		b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
+
 		b.indicatorGhost[0].hit(b.controls.angle, b.controls.power)
 		for i:=0;i< len(b.indicatorGhost);i++ {
 			for j := 0; j < ghostDistance; j++ {
@@ -256,11 +272,7 @@ func (b *ball) setIndicators() {
 			}
 			if i<len(b.indicatorGhost)-1{
 				x, y = b.indicatorGhost[i].position.X, b.indicatorGhost[i].position.Y
-				//if other_ball == false {
-					b.indicatorGhost[i+1] = makeBall(x, y, true, "images/main_menu/tennis-ball.png")
-				/*} else {
-					b.indicatorGhost[i+1] = makeBall(x,y,true, "images/main_menu/tennis-ball.png")
-				}*/
+				b.indicatorGhost[i+1] = makeBall(x, y, true, "images/main_menu/tennis-ball.png")
 				b.indicatorGhost[i+1].isGrounded=false
 				b.indicatorGhost[i+1].verticalSpeed = b.indicatorGhost[i].verticalSpeed
 				b.indicatorGhost[i+1].horisonatalSpeed = b.indicatorGhost[i].horisonatalSpeed

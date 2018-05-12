@@ -128,7 +128,6 @@ func drawLevel(screen *ebiten.Image) {
 	}
 }
 
-
 func drawPlayer(screen *ebiten.Image) {
 	screen.DrawImage(player.graphic, player.opts)
 	if player.isGrounded && player.horisonatalSpeed==0{
@@ -138,7 +137,6 @@ func drawPlayer(screen *ebiten.Image) {
 	}
 	//screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
-
 
 func handleInput() {
 	if player.isGrounded && player.horisonatalSpeed==0{
