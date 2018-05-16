@@ -1,5 +1,10 @@
 package main
 
+/*
+	go get github.com/pkg/errors
+	go get github.com/faiface/beep
+ */
+
 import (
 	"fmt"
 	"math"
@@ -7,6 +12,7 @@ import (
 	"image"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/faiface/beep"
 )
 
 type vector2 struct {
@@ -26,11 +32,13 @@ const screenHeight float64 = 600
 var lvl level
 var player *ball
 
+var hitSound beep.Streamer
+
+
 
 func main() {
 	//preprocess testing textures import
 	prefetchGraphics()
-
 	var w, h int = int(screenWidth), int(screenHeight)
 	if err := ebiten.Run(update, w, h, 1, "puff puff"); err != nil {
 		panic(err)
@@ -57,16 +65,14 @@ func prefetchGraphics() {
 	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
 }
 
+
 func update(screen *ebiten.Image) error {
 	backgroundImage.draw(screen)
-
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
 		lvl.Instantiate("testlvl1.json")
-
 		set_main_menu()
-                
                 /* don't touch this!
                 you're a potato :p
 
@@ -76,15 +82,10 @@ func update(screen *ebiten.Image) error {
 			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
 
 		}*/
-
-
 		levelIsInstantiating = false
 	}
-	
 	checkButtonClicks()
 	check_pressed_keys()
-
-
 
 	handleInput()
         
@@ -97,7 +98,9 @@ func update(screen *ebiten.Image) error {
 			case 2: set_third_level()
 			case 3: set_forth_level()
 			case 4: set_fifth_level()
-			case 5: set_main_menu()
+			case 5:
+				level_num=0
+				set_main_menu()
 		}
 		fmt.Println("GG")		// kad loptica upadne u rupu
 	}	// player.horizontalSpeed = 0 da stane
@@ -135,7 +138,7 @@ func drawPlayer(screen *ebiten.Image) {
 			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
 		}
 	}
-	//screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
+	screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
 
 func handleInput() {

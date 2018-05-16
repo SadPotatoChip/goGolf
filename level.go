@@ -38,11 +38,6 @@ func (l *level) Instantiate(filePath string) {
 	}else{
 		player = makeBall(-1000, -1000, false, str_2)
 	}
-
-	//fmt.Println(jsonData)
-
-
-	//clear level
 	l.NumOfShapes = 0
 	l.MaxSortedShapes = [maxLevelObjects]shape{}
 	l.MinSortedShapes =	[maxLevelObjects]shape{}
@@ -56,31 +51,9 @@ func (l *level) Instantiate(filePath string) {
 	l.addBox(ceiling)
 	l.addBox(wallLeft)
 	l.addBox(wallRight)
-
-	//debug
-
-
-	//l.hole=newHole(vector2{340,260},vector2{600,600})
-
-
+	l.hole=nil
 }
-/*
-func parseJsonFromPath(filePath string) level{
-	rawData, err := ioutil.ReadFile("levels/"+filePath)
-	if err != nil {
-		fmt.Println("failed to load data from json")
-		panic("rip")
-	}
-	jsonData :=level{nil,[maxLevelObjects]shape{},
-	[maxLevelObjects]shape{},
-	0,""}
-	if err = json.Unmarshal(rawData, jsonData); err==nil{
-		fmt.Println("failed to unmarshal")
-		panic("rip")
-	}
-	return jsonData
-}
-*/
+
 func (l *level) add_uninteractable_image (u uninteractableImage) {
     l.uninteractable_image_array[l.num_of_uninteractable_image] = u
     l.num_of_uninteractable_image++

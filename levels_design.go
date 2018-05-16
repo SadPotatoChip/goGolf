@@ -16,6 +16,9 @@ func set_first_level() {
 	all_levels = false
 	is_main_menu = false
 
+	gravityStrenght  = 0.1
+	airFrictionStrenght  = 0.002
+	groundFrictionStrenght = 0.05
 
 	//triangle_str = "images/level_1/snow_triangle.png"
 	box_str = "images/level_1/ice.png"
@@ -26,10 +29,10 @@ func set_first_level() {
 
 	lvl.addTriangle(newTriangle(vector2{screenWidth-screenHeight/3,0},
 		vector2{screenWidth,screenHeight/3},
-		"bottom-left"))
+		"bottom-right"))
 	lvl.addTriangle(newTriangle(vector2{0,0},
 		vector2{screenHeight/3,screenHeight/3},
-		"bottom-left"))
+		"bottom-right"))
 	lvl.addTriangle(newTriangle(vector2{0,2*screenHeight/3},
 		vector2{screenHeight/3,screenHeight},
 		"top-right"))
@@ -40,16 +43,20 @@ func set_first_level() {
 		vector2{600,600},
 		"top-left"))
 
-	lvl.hole=newHole(vector2{0,0},vector2{100,100})
+	//lvl.hole=newHole(vector2{1000,0},vector2{100,100})
 
 }
 
 func set_second_level() {
 
-        lvl.Instantiate("lalaa")
+	lvl.Instantiate("lalaa")
 	all_levels = false
 	is_main_menu = false
 	level_num = 2
+
+	gravityStrenght  = 0.1
+	airFrictionStrenght  = 0.002
+	groundFrictionStrenght = 0.05
 /*
   	if ebiten.IsKeyPressed(ebiten.Key1) {
 		fmt.Println("exiting 2 level...")
@@ -112,10 +119,13 @@ func set_second_level() {
 
 func set_third_level() {
     
-        lvl.Instantiate("lala")
+	lvl.Instantiate("lala")
 	all_levels = false
 	is_main_menu = false
 	level_num = 3
+	gravityStrenght  = 0.1
+	airFrictionStrenght  = 0.002
+	groundFrictionStrenght = 0.05
 
 	backgroung_str = "images/level_3/third_level_background.png"
 
@@ -156,6 +166,9 @@ func set_forth_level() {
 	all_levels = false
 	is_main_menu = false
 	level_num = 4
+	gravityStrenght  = 0.04
+	airFrictionStrenght  = 0.002
+	groundFrictionStrenght = 0.05
 
 	backgroung_str = "images/level_4/forth_level_background.png"
 
@@ -190,13 +203,16 @@ func set_forth_level() {
 	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
 
-
 func set_fifth_level() {
 	fmt.Println("usao u 5. nivo")
-        lvl.Instantiate("lalaa")
+	lvl.Instantiate("lalaa")
 	all_levels = false
 	is_main_menu = false
 	level_num = 5
+
+	gravityStrenght  = 0.1
+	airFrictionStrenght  = 0.002
+	groundFrictionStrenght = 0.05
 
 	backgroung_str = "images/level_5/fifth_level_background.png"
 

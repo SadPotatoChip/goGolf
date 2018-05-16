@@ -7,7 +7,7 @@ import (
 )
 
 const controlerStartAngle, controlerStartPower float64 = 0, 1
-const defaultAngleLerp, defaultPowerLerp float64 = math.Pi / 48, 0.1
+const defaultAngleLerp, defaultPowerLerp float64 = math.Pi / 96, 0.1
 const defaultMaxPower float64 = 20
 const defaultIndicatorDistanceFromBall float64 = 10
 
@@ -60,8 +60,8 @@ func makeControler(b *ball) *controler {
 func (c *controler) changeAngle(dir float64) {
 	c.angle += c._angleLerp * dir
 
-	if c.angle == 2*math.Pi || c.angle == -2*math.Pi{
-		c.angle = 0
+	if c.angle > 2*math.Pi || c.angle < -2*math.Pi{
+		c.angle = math.Abs(c.angle)-2*math.Pi
 	}
 }
 

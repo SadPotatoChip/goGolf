@@ -11,9 +11,9 @@ import (
 )
 
 const maxSpeed float64 = 40
-const gravityStrenght float64 = 0.05
-const airFrictionStrenght float64 = 0.002
-const groundFrictionStrenght float64 = 0.05
+var gravityStrenght float64 = 0.1				//default 0.1
+var airFrictionStrenght float64 = 0.002			//default 0.002
+var groundFrictionStrenght float64 = 0.05		//default 0.05
 const inputAngleLerp float64 = math.Pi / 6
 
 const bounceSpeedReductionFactor float64=0.5
@@ -21,7 +21,7 @@ const bounceSpeedReductionFactor float64=0.5
 const numOfIndicatorGhosts=4
 const ghostDistance=10
 
-const ballSize float64 = 32
+const ballSize float64 = 28
 
 var useGroundFriction=false
 
@@ -145,6 +145,10 @@ func (b *ball) applyNaturalForces() {
 }
 
 func (b *ball) hit(angle, power float64) {
+
+
+
+
 	useGroundFriction=false
 	if b.isGhost==false {
 		player.collisonGhost.hit(angle, power)
@@ -152,7 +156,9 @@ func (b *ball) hit(angle, power float64) {
 	b.isGrounded = false
 	b.horisonatalSpeed += power * math.Cos(angle)
 	b.verticalSpeed += power * math.Sin(angle)
+
 }
+
 
 func (b *ball) move() {
 	if b.horisonatalSpeed < 0.1 && b.horisonatalSpeed > -0.1 {
@@ -232,16 +238,24 @@ func (b *ball) angledBounce(c triangleCollider){
 		ya:=c.Max.Y
 		yb:=c.Min.Y
 		c1=-((yb-ya)/(xa-xb))
+	case "bottom-right":
+		xa:=c.Max.X
+		xb:=c.Min.X
+		ya:=c.Max.Y
+		yb:=c.Min.Y
+		c1=-((yb-ya)/(xa-xb))
 	}
 	var c2 float64=b.verticalSpeed/b.horisonatalSpeed
 
-	fmt.Println(c2)
 	surfaceAngle:=math.Atan(c1)
 	inAngle:=math.Atan(c2)
 
 	fmt.Printf("surfece:%f\ninAngle:%f\n",surfaceAngle*180/math.Pi, inAngle*180/math.Pi)
 
-	absoluteReflectionAngle := 2*surfaceAngle - math.Abs(inAngle)
+	var absoluteReflectionAngle float64
+
+		absoluteReflectionAngle = 2*surfaceAngle - math.Abs(inAngle)
+
 
 	fmt.Printf("reflection:%f\n",absoluteReflectionAngle*180/math.Pi)
 
