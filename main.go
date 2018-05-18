@@ -10,7 +10,7 @@ import (
 	"os"
 	"image"
 	"github.com/hajimehoshi/ebiten"
-	"github.com/faiface/beep"
+	//"github.com/faiface/beep"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
@@ -32,12 +32,14 @@ var lvl level
 var player *ball
 var shotsTaken int
 
-var hitSound beep.Streamer
+//var hitSound beep.Streamer
 
 
 
 func main() {
 	//preprocess testing textures import
+
+
 	prefetchGraphics()
 	var w, h int = int(screenWidth), int(screenHeight)
 	if err := ebiten.Run(update, w, h, 1, "puff puff"); err != nil {

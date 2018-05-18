@@ -54,7 +54,7 @@ func set_first_level() {
 
 func set_second_level() {
 
-	lvl.Instantiate(100,100)
+	lvl.Instantiate(150,470)	// pocetna poz loptice
 	all_levels = false
 	is_main_menu = false
 	level_num = 2
@@ -123,8 +123,8 @@ func set_second_level() {
 }
 
 func set_third_level() {
-    
-	lvl.Instantiate(100,100)
+    	var w,h float64=float64(screenWidth),float64(screenHeight)
+	lvl.Instantiate(w/32,h/2)
 	all_levels = false
 	is_main_menu = false
 	level_num = 3
@@ -149,9 +149,9 @@ func set_third_level() {
 
 	box_str = "images/level_3/city_box_3.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(0, 300), newV2(100, 400)))
-        lvl.addBox(newBox(newV2(100, 300), newV2(200, 400)))
-        lvl.addBox(newBox(newV2(200, 300), newV2(300, 400)))
+        lvl.addBox(newBox(newV2(0, 330), newV2(100, 400)))
+        lvl.addBox(newBox(newV2(100, 330), newV2(200, 400)))
+        lvl.addBox(newBox(newV2(200, 330), newV2(300, 400)))
 
 	box_str = "images/level_3/city_box_2.png"
 	prefetchGraphics()
@@ -206,7 +206,7 @@ func set_forth_level() {
 
 func set_fifth_level() {
 	fmt.Println("usao u 5. nivo")
-	lvl.Instantiate(100,100)
+	lvl.Instantiate(50,470)
 	all_levels = false
 	is_main_menu = false
 	level_num = 5

@@ -82,7 +82,7 @@ func create_first_menu_button() {
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 60), newV2(1180, 120)))
 	}
 }
-
+/*
 func create_third_menu_button() {
 	if is_main_menu && is_menu_oppened{// ako nema ovog uslova --> play i levels dugme se pojavljuju svuda (na svakom nivou)
 		if is_menu_button_3_sellected == false && is_menu_oppened{
@@ -94,16 +94,16 @@ func create_third_menu_button() {
 		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 180), newV2(1180, 240)))
 	}
 }
-
-func create_forth_menu_button() {
+*/
+func create_third_menu_button() {
 	if is_main_menu && is_menu_oppened{
-		if is_menu_button_4_sellected == false && is_menu_oppened{
+		if is_menu_button_3_sellected == false && is_menu_oppened{
 			box_str = "images/buttons/buttons_unselected/quit.png"
 		} else {
 			box_str = "images/buttons/buttons_selected/quit.png"
 		}
 		prefetchGraphics()
-		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 240), newV2(1180, 300)))
+		lvl.add_uninteractable_image(newSpecialBox(newV2(1000, 180), newV2(1180, 240)))
 	}
 }
 

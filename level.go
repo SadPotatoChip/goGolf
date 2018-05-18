@@ -16,7 +16,7 @@ import (
 
 var str_2 = "images/main_menu/golf-ball.png"
 
-const maxLevelObjects int = 200
+const maxLevelObjects int = 2000
 
 ///Keeping arrays for clarity, each represents the boxes in the level sorted by their
 ///min-max x coordinate, a different array is used for collision detection depending on
