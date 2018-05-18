@@ -31,10 +31,10 @@ type level struct {
 	ShapeTypes	string
 }
 
-func (l *level) Instantiate(filePath string) {
+func (l *level) Instantiate(ballx,bally float64) {
 	l.ShapeTypes=""
 	if levelIsInstantiating==false && level_num!=0{
-		player = makeBall(300, 300, false, str_2)
+		player = makeBall(ballx, bally, false, str_2)
 	}else{
 		player = makeBall(-1000, -1000, false, str_2)
 	}

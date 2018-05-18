@@ -71,7 +71,7 @@ func update(screen *ebiten.Image) error {
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
-		lvl.Instantiate("testlvl1.json")
+		lvl.Instantiate(100,100)
 		set_main_menu()
                 /* don't touch this!
                 you're a potato :p

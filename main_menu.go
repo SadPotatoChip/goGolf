@@ -108,7 +108,7 @@ func create_forth_menu_button() {
 }
 
 func set_second_page() {
-	lvl.Instantiate("lala")
+	lvl.Instantiate(100,100)
 	//all_levels = true
 	is_main_menu = false
 
@@ -134,7 +134,7 @@ func set_second_page() {
 }
 
 func set_first_page() {
-	lvl.Instantiate("lala")
+	lvl.Instantiate(100,100)
 	is_main_menu = false
 	//if cont == true {
 
@@ -152,7 +152,7 @@ func set_first_page() {
 }
 
 func set_third_page() {
-	lvl.Instantiate("lala")
+	lvl.Instantiate(100,100)
 	is_main_menu = false
 
 	//if opt == true {
@@ -301,7 +301,7 @@ func change_next_button() {
 }
 
 func set_main_menu() {
-	lvl.Instantiate("lala")
+	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = true		// nepotrebno, moze preko level_num
 	level_num = 0

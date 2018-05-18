@@ -244,6 +244,8 @@ func (b *ball) angledBounce(c triangleCollider){
 		ya:=c.Max.Y
 		yb:=c.Min.Y
 		c1=-((yb-ya)/(xa-xb))
+	case "top-right":
+		c1=-((c.Max.Y-c.Min.Y)/(c.Max.X-c.Min.X))
 	}
 	var c2 float64=b.verticalSpeed/b.horisonatalSpeed
 

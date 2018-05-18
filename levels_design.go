@@ -11,45 +11,50 @@ import (
 
 
 func set_first_level() {
+	var w,h float64=float64(screenWidth),float64(screenHeight)
 	level_num = 1
-	lvl.Instantiate("lalaa")
+	lvl.Instantiate(1*w/12.0,1*h/6-ballSize)
 	all_levels = false
 	is_main_menu = false
 
 	gravityStrenght  = 0.1
 	airFrictionStrenght  = 0.002
-	groundFrictionStrenght = 0.05
+	groundFrictionStrenght = 0.03
 
-	//triangle_str = "images/level_1/snow_triangle.png"
 	box_str = "images/level_1/ice.png"
 	backgroung_str = "images/level_1/first_level_background.png"
 	triangle_str = "images/level_1/snow_triangle.png"
 	prefetchGraphics()
 
 
-	lvl.addTriangle(newTriangle(vector2{screenWidth-screenHeight/3,0},
-		vector2{screenWidth,screenHeight/3},
-		"bottom-right"))
-	lvl.addTriangle(newTriangle(vector2{0,0},
-		vector2{screenHeight/3,screenHeight/3},
-		"bottom-right"))
-	lvl.addTriangle(newTriangle(vector2{0,2*screenHeight/3},
-		vector2{screenHeight/3,screenHeight},
-		"top-right"))
-	lvl.addTriangle(newTriangle(vector2{screenWidth-screenHeight/3,2*screenHeight/3},
-		vector2{screenWidth,screenHeight},
-		"top-left"))
-	lvl.addTriangle(newTriangle(vector2{400,400},
-		vector2{600,600},
-		"top-left"))
+	for i:=0;i<11;i++{
+		lvl.addBox(newBox(vector2{float64(i)*w/12.0,1*h/6},
+			vector2{float64(i+1)*w/12,2*h/6}))
+	}
+	lvl.addTriangle(newTriangle(vector2{11*w/12.0,3*h/6},
+		vector2{w,4*h/6},"top-left"))
+	for i:=2;i<12;i++{
+		if i!=7 {
+			lvl.addBox(newBox(vector2{float64(i) * w / 12.0, 4 * h / 6},
+				vector2{float64(i+1) * w / 12, 5 * h / 6}))
+		}
+	}
+	for i:=0;i<12;i++{
+		lvl.addBox(newBox(vector2{float64(i)*w/12.0,5*h/6},
+			vector2{float64(i+1)*w/12,6*h/6}))
+	}
+	lvl.addTriangle(newTriangle(vector2{11*w/12.0,0},
+		vector2{w,1*w/12},"bottom-left"))
 
-	//lvl.hole=newHole(vector2{1000,0},vector2{100,100})
+
+	lvl.hole=newHole(vector2{3*w/32,(5*h/6)-10},
+		vector2{2*w/12,5*h/6})
 
 }
 
 func set_second_level() {
 
-	lvl.Instantiate("lalaa")
+	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = false
 	level_num = 2
@@ -119,7 +124,7 @@ func set_second_level() {
 
 func set_third_level() {
     
-	lvl.Instantiate("lala")
+	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = false
 	level_num = 3
@@ -161,8 +166,8 @@ func set_third_level() {
 }
 
 func set_forth_level() {
-    
-        lvl.Instantiate("lala")
+
+	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = false
 	level_num = 4
@@ -205,7 +210,7 @@ func set_forth_level() {
 
 func set_fifth_level() {
 	fmt.Println("usao u 5. nivo")
-	lvl.Instantiate("lalaa")
+	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = false
 	level_num = 5

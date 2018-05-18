@@ -150,7 +150,46 @@ func (c triangleCollider) bottomRightTriangleCollision(b *ball) string{
 }
 
 func (c triangleCollider) topRightTriangleCollision(b *ball) string{
-	return ""
+	s:=""
+	switch b.getMoveDirection() {
+	case "downleft":
+		d1 := calcSide(vector2{b.position.X + ballSize, b.position.Y}, c)
+		d2 := calcSide(vector2{b.collisonGhost.position.X, b.collisonGhost.position.Y+ballSize}, c)
+		if d1!=d2 {
+			b.angledBounce(c)
+			s+="angled"
+		}
+	case "downright":
+		if b.position.X< c.Min.X && b.collisonGhost.position.X+b.size>c.Min.X{
+			s="left"
+		}else{
+			d1 := calcSide(vector2{b.position.X + ballSize, b.position.Y}, c)
+			d2 := calcSide(vector2{b.collisonGhost.position.X, b.collisonGhost.position.Y+ballSize}, c)
+			if d1!=d2 {
+				b.angledBounce(c)
+				s+="angled"
+			}
+		}
+	case "upleft":
+		if b.position.Y+b.size > c.Max.Y && b.collisonGhost.position.Y < c.Max.Y {
+			s = "down"
+		}else{
+			d1 := calcSide(vector2{b.position.X + ballSize, b.position.Y}, c)
+			d2 := calcSide(vector2{b.collisonGhost.position.X, b.collisonGhost.position.Y+ballSize}, c)
+			if d1!=d2 {
+				b.angledBounce(c)
+				s+="angled"
+			}
+		}
+	case "upright":
+		if b.position.X< c.Min.X && b.collisonGhost.position.X+b.size>c.Min.X{
+			s="left"
+		}
+		if b.position.Y+b.size > c.Max.Y && b.collisonGhost.position.Y < c.Max.Y {
+			s = "down"
+		}
+	}
+	return s
 }
 
 func calcSide(p vector2, c triangleCollider) bool{
@@ -171,6 +210,11 @@ func calcSide(p vector2, c triangleCollider) bool{
 		xb=c.Max.X
 		ya=c.Max.Y
 		yb=c.Min.Y
+	case "top-right":
+		xa=c.Min.X
+		xb=c.Max.X
+		ya=c.Min.Y
+		yb=c.Max.Y
 	}
 
 	d:=(p.X-xa)*(yb-ya)-(p.Y-ya)*(xb-xa)
