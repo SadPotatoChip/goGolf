@@ -166,8 +166,8 @@ func set_third_level() {
 }
 
 func set_forth_level() {
-
-	lvl.Instantiate(100,100)
+	var w,h float64=float64(screenWidth),float64(screenHeight)
+	lvl.Instantiate(w/32,h-ballSize)
 	all_levels = false
 	is_main_menu = false
 	level_num = 4
@@ -176,36 +176,32 @@ func set_forth_level() {
 	groundFrictionStrenght = 0.05
 
 	backgroung_str = "images/level_4/forth_level_background.png"
-
 	box_str = "images/level_4/moon_box_1.png"
+	triangle_str = "images/level_1/snow_triangle.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(500, 500), newV2(600, 600)))
-        lvl.addBox(newBox(newV2(600, 500), newV2(700, 600)))
-        lvl.addBox(newBox(newV2(600, 400), newV2(700, 500)))
+	for i:=0;i<5;i++{
+		for j:=0;j<i;j++{
+			if !((i==4 && j==1) || (i==2 && j==1) || (i==4 && j==2) || (i==3 && j==0)){
+				lvl.addBox(newBox(vector2{float64(i+1) * w / 12.0, (5 - float64(j)) * h / 6},
+					vector2{float64(i+2) * w / 12.0, (5 - float64(j-1)) * h / 6}))
+			}
+		}
+		lvl.addTriangle(newTriangle(vector2{float64(i+1)*w/12.0,(5-float64(i))*h/6},
+			vector2{float64(i+2)*w/12.0,(6-float64(i))*h/6},"top-left"))
+	}
 
-        lvl.addBox(newBox(newV2(200, 400), newV2(300, 500)))
+	lvl.addBox(newBox(vector2{13 * w / 24.0, 7 * h / 12},
+		vector2{15 * w / 24.0, 9 * h / 12}))
+	lvl.addBox(newBox(vector2{17 * w / 24.0, 11 * h / 12},
+		vector2{19 * w / 24.0, 13 * h / 12}))
+	lvl.addBox(newBox(vector2{21 * w / 24.0, 9 * h / 12},
+		vector2{23 * w / 24.0, 11 * h / 12}))
+	lvl.addBox(newBox(vector2{18.5 * w / 24.0, 3.5 * h / 12},
+		vector2{20.5 * w / 24.0, 5.5 * h / 12}))
 
+	lvl.hole=newHole(vector2{5.2 * w / 12.0, (5 * h -15)/ 6},
+		vector2{5.8 * w / 12.0, 6 * h / 6})
 
-
-	box_str = "images/level_4/moon_box_1.png"
-	prefetchGraphics()
-        lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-        lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
-        lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))
-
-	lvl.addBox(newBox(newV2(700, 500), newV2(800, 600)))
-        lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
-	lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
-
-	lvl.addBox(newBox(newV2(1100, 300), newV2(1200, 400)))
-	lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
-	lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
-
-	lvl.addBox(newBox(newV2(800, 300), newV2(900, 400)))
-	lvl.addBox(newBox(newV2(750, 400), newV2(850, 500)))
-	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
-
-	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
 }
 
 func set_fifth_level() {

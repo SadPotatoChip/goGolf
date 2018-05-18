@@ -7,12 +7,11 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"image"
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/faiface/beep"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 type vector2 struct {
@@ -31,6 +30,7 @@ const screenHeight float64 = 600
 
 var lvl level
 var player *ball
+var shotsTaken int
 
 var hitSound beep.Streamer
 
@@ -71,9 +71,9 @@ func update(screen *ebiten.Image) error {
 	x_pos, y_pos = ebiten.CursorPosition()
 
 	if levelIsInstantiating {
-		lvl.Instantiate(100,100)
+		lvl.Instantiate(100, 100)
 		set_main_menu()
-                /* don't touch this!
+		/* don't touch this!
                 you're a potato :p
 
 		rand.Seed(time.Now().UTC().UnixNano())
@@ -88,30 +88,37 @@ func update(screen *ebiten.Image) error {
 	check_pressed_keys()
 
 	handleInput()
-        
+
 	player.applyNaturalForces()
 	player.move()
 
-	if checkIfBallIsInHole(){
-		switch (level_num){
-			case 1: set_second_level()
-			case 2: set_third_level()
-			case 3: set_forth_level()
-			case 4: set_fifth_level()
-			case 5:
-				level_num=0
-				set_main_menu()
+	if checkIfBallIsInHole() {
+		switch (level_num) {
+		case 1:
+			set_second_level()
+		case 2:
+			set_third_level()
+		case 3:
+			set_forth_level()
+		case 4:
+			set_fifth_level()
+		case 5:
+			level_num = 0
+			set_main_menu()
 		}
-		fmt.Println("GG")		// kad loptica upadne u rupu
-	}	// player.horizontalSpeed = 0 da stane
-		// ....verticalSpeed = 0
+		fmt.Println("GG") // kad loptica upadne u rupu
+	} // player.horizontalSpeed = 0 da stane
+	// ....verticalSpeed = 0
 	drawLevel(screen)
 	drawPlayer(screen)
 
 	//DEBUG
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t",
-				ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, 					player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
+	//ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t",
+	//			ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, 					player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
 
+	if (shotsTaken != -1) {
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("Shots Taken %d", shotsTaken))
+	}
 	return nil
 }
 
@@ -160,6 +167,7 @@ func handleInput() {
 			player.setIndicators()
 		}
 		if hitKeyDown(player.controls.hitKey) {
+			shotsTaken++
 			player.hit(player.controls.angle, player.controls.power)
 
 		}

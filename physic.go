@@ -62,38 +62,6 @@ func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 	//fmt.Println("%d", time.Now().Second())
 	//tmp.opts.GeoM.Rotate(float64(time.Now().Second()) * float64(math.Pi/6.0))
 
-	/*
-
-	ne moze ovako, jer okrece lopticu, ali ne i sliku koja prekriva lopticu
-
-	+ okrece i indikator!!!
-
-package main
- 
-import (    
-    "os"
-    "math" 
-    "image"
-    "image/jpeg"
-    "code.google.com/p/graphics-go/graphics"				// ne znam kako da skinem ovu biblio?!
-)
- 
-func main() {
-    imagePath, _ := os.Open("jellyfish.jpg")
-    defer imagePath.Close()
-    srcImage, _, _ := image.Decode(imagePath)
- 
-    srcDim := srcImage.Bounds()
-    dstImage := image.NewRGBA(image.Rect(0, 0, srcDim.Dy(), srcDim.Dx()))
-    graphics.Rotate(dstImage, srcImage, &graphics.RotateOptions{math.Pi / 2.0})
-     
-    newImage, _ := os.Create("newjellyfish.jpg")
-    defer newImage.Close()
-    jpeg.Encode(newImage, dstImage, &jpeg.Options{jpeg.DefaultQuality}) 
-}
-
-	*/
-
 	tmp.opts.GeoM.Translate(x, y)
 	tmp.verticalSpeed, tmp.horisonatalSpeed = 0, 0
 	tmp.isGrounded = true
@@ -146,9 +114,6 @@ func (b *ball) applyNaturalForces() {
 
 func (b *ball) hit(angle, power float64) {
 
-
-
-
 	useGroundFriction=false
 	if b.isGhost==false {
 		player.collisonGhost.hit(angle, power)
@@ -158,7 +123,6 @@ func (b *ball) hit(angle, power float64) {
 	b.verticalSpeed += power * math.Sin(angle)
 
 }
-
 
 func (b *ball) move() {
 	if b.horisonatalSpeed < 0.1 && b.horisonatalSpeed > -0.1 {
@@ -197,7 +161,6 @@ func processBounces(collisionDirection string, b *ball){
 			b.horizontalBounce()
 		}
 		if b.isGhost==false{
-			fmt.Println(collisionDirection)
 			b.resetGhostPosition()
 		}
 	} else {
@@ -255,20 +218,25 @@ func (b *ball) angledBounce(c triangleCollider){
 	fmt.Printf("surfece:%f\ninAngle:%f\n",surfaceAngle*180/math.Pi, inAngle*180/math.Pi)
 
 	var absoluteReflectionAngle float64
-
-		absoluteReflectionAngle = 2*surfaceAngle - math.Abs(inAngle)
+	absoluteReflectionAngle = 2*surfaceAngle - math.Abs(inAngle)
 
 
 	fmt.Printf("reflection:%f\n",absoluteReflectionAngle*180/math.Pi)
 
 
-	hPart :=  math.Cos(absoluteReflectionAngle) *totalSpeed/2
-	vPart :=  math.Sin(absoluteReflectionAngle) *totalSpeed/2
+	hPart :=  math.Cos(absoluteReflectionAngle) * totalSpeed
+	vPart :=  math.Sin(absoluteReflectionAngle) * totalSpeed
 
-
-	b.verticalSpeed=vPart
-	b.horisonatalSpeed=hPart
-
+	if math.Abs(vPart)>2 {
+		b.verticalSpeed = vPart * 0.5
+	}else{
+		b.verticalSpeed = vPart * 2
+	}
+	if math.Abs(hPart)>2 {
+		b.horisonatalSpeed = hPart * 0.5
+	}else{
+		b.horisonatalSpeed = vPart * 2
+	}
 
 }
 

@@ -34,8 +34,10 @@ type level struct {
 func (l *level) Instantiate(ballx,bally float64) {
 	l.ShapeTypes=""
 	if levelIsInstantiating==false && level_num!=0{
+		shotsTaken=0
 		player = makeBall(ballx, bally, false, str_2)
 	}else{
+		shotsTaken=-1
 		player = makeBall(-1000, -1000, false, str_2)
 	}
 	l.NumOfShapes = 0
@@ -43,6 +45,8 @@ func (l *level) Instantiate(ballx,bally float64) {
 	l.MinSortedShapes =	[maxLevelObjects]shape{}
 	l.uninteractable_image_array = [maxLevelObjects]uninteractableImage{}
 	l.num_of_uninteractable_image = 0
+	box_str=""
+	prefetchGraphics()
 	ground := newBox(newV2(0, screenHeight), newV2(screenWidth, screenHeight+90))
 	ceiling:= newBox(newV2(0,-80), newV2(screenWidth-1, 0))
 	wallLeft:= newBox(newV2(0,-80), newV2(0, screenHeight))
@@ -170,7 +174,6 @@ func newBox(min, max vector2) *box {
 	if boxGraphic!=nil {
 		graphicTmp, err := ebiten.NewImageFromImage(boxGraphic, ebiten.FilterNearest)
 		if err!=nil {
-			fmt.Println("failed to load graphic for box, using white instead")
 			tmp.Graphic.Fill(color.White)
 		}else {
 			tmp.Graphic = graphicTmp
@@ -197,28 +200,10 @@ func newSpecialBox(min, max vector2) uninteractableImage {
         
         graphicTmp, err := ebiten.NewImageFromImage(special_box_graphic, ebiten.FilterNearest)
 		if err!=nil {
-			fmt.Println("failed to load graphic for box, using white instead")
 			tmp.Graphic.Fill(color.White)
 		}else {
 			tmp.Graphic = graphicTmp
 		}
-		
-        /*
-	if special_box_graphic!=nil {
-		graphicTmp, err := ebiten.NewImageFromImage(special_box_graphic, ebiten.FilterNearest)
-		if err!=nil {
-			fmt.Println("failed to load graphic for box, using white instead")
-			tmp.Graphic.Fill(color.White)
-		}else {
-			tmp.Graphic = graphicTmp
-		}
-	}else{
-		fmt.Println("boxGraphic not set, using white instead")
-		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
-			int(math.Abs(max.Y-min.Y))+1,
-			ebiten.FilterDefault)
-		tmp.Graphic.Fill(color.White)
-	}*/
         
 	tmp.Opts = &ebiten.DrawImageOptions{}
 	tmp.Opts.GeoM.Translate(min.X, min.Y)
