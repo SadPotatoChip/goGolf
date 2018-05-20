@@ -161,6 +161,7 @@ func drawPlayer(screen *ebiten.Image) {
 }
 
 func handleInput() {
+
 	if player.isGrounded && player.horisonatalSpeed==0{
 		if ebiten.IsKeyPressed(player.controls.angleUpKey) {
 			player.controls.changeAngle(+1)
@@ -178,7 +179,7 @@ func handleInput() {
 			player.controls.changePower(-1)
 			player.setIndicators()
 		}
-		if hitKeyDown(player.controls.hitKey) {
+		if hitKeyDown(player.controls.hitKey, player) {
 			audioPlayerHit.Play()
 			audioPlayerHit.Rewind()
 			shotsTaken++
@@ -187,8 +188,16 @@ func handleInput() {
 		}
 	}
 	//alternate songs
-	if hitKeyDown(ebiten.KeyBackslash){
+	if hitKeyDown(ebiten.KeyBackslash, player){
 		audioNextSong()
+	}
+	if hitKeyDown(ebiten.KeyF, player){
+		if ebiten.IsFullscreen() {
+			ebiten.SetFullscreen(false)
+			ebiten.SetScreenSize(1200,600)
+		}else{
+			ebiten.SetFullscreen(true)
+		}
 	}
 }
 

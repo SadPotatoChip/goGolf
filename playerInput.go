@@ -11,7 +11,14 @@ const defaultAngleLerp, defaultPowerLerp float64 = math.Pi / 96, 0.1
 const defaultMaxPower float64 = 20
 const defaultIndicatorDistanceFromBall float64 = 10
 
-var hitKeyIsDown = false
+const keyFullscreenToggle=ebiten.KeyF
+const keyMainMenu=ebiten.Key1
+const keyNextTrack=ebiten.KeyBackslash
+
+var mouseBtnIsDown=false
+
+
+
 
 type controler struct {
 	angle float64
@@ -25,6 +32,8 @@ type controler struct {
 	angleUpKey, angleDownKey ebiten.Key
 	hitKey                   ebiten.Key
 	indicator                *angleIndicator
+
+	keyDownMap map[ebiten.Key]bool
 
 	//makes fentching position of ball cleaner in some places
 	parent *ball
@@ -49,9 +58,12 @@ func makeControler(b *ball) *controler {
 	c.angleUpKey = ebiten.KeyLeft
 	c.angleDownKey = ebiten.KeyRight
 	c.hitKey = ebiten.KeySpace
-
 	c.parent = b
 
+	c.keyDownMap=make(map[ebiten.Key]bool)
+	c.keyDownMap[keyFullscreenToggle]=false
+	c.keyDownMap[keyMainMenu]=false
+	c.keyDownMap[keyNextTrack]=false
 
 	return c
 }
@@ -74,26 +86,26 @@ func (c *controler) changePower(dir float64) {
 	}
 }
 
-func hitKeyDown(hitKey ebiten.Key) bool {
+func hitKeyDown(hitKey ebiten.Key,b *ball) bool {
 	if ebiten.IsKeyPressed(hitKey) {
-		if hitKeyIsDown == false {
-			hitKeyIsDown = true
+		if b.controls.keyDownMap[hitKey] == false{
+			b.controls.keyDownMap[hitKey] = true
 			return true
 		}
 		return false
 	}
-	hitKeyIsDown = false
+	b.controls.keyDownMap[hitKey] = false
 	return false
 }
 
 func mouseButtonDown(button ebiten.MouseButton) bool {
 	if ebiten.IsMouseButtonPressed(button) {
-		if hitKeyIsDown == false {
-			hitKeyIsDown = true
+		if mouseBtnIsDown == false {
+			mouseBtnIsDown = true
 			return true
 		}
 		return false
 	}
-	hitKeyIsDown = false
+	mouseBtnIsDown = false
 	return false
 }
