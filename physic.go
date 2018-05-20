@@ -51,7 +51,6 @@ func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 	tmp.graphic, _ = ebiten.NewImageFromImage(image1, ebiten.FilterNearest)
 	tmp.isGhost=isGhost
 	if isGhost==false {
-		//tmp.graphic.Fill(color.RGBA{255,165,0, 255})
 		tmp.collisonGhost = makeBall(x,y,true, image_path)
 		tmp.controls = makeControler(tmp)
 		tmp.setIndicators()
@@ -59,8 +58,6 @@ func makeBall(x, y float64,isGhost bool, image_path string) *ball {
 		//tmp.graphic.Fill(color.RGBA{0, 0, 255, 120})
 	}
 	tmp.opts = &ebiten.DrawImageOptions{}
-	//fmt.Println("%d", time.Now().Second())
-	//tmp.opts.GeoM.Rotate(float64(time.Now().Second()) * float64(math.Pi/6.0))
 
 	tmp.opts.GeoM.Translate(x, y)
 	tmp.verticalSpeed, tmp.horisonatalSpeed = 0, 0
@@ -150,6 +147,8 @@ func (b *ball) move() {
 
 func processBounces(collisionDirection string, b *ball){
 	if collisionDirection != "" {
+		audioPlayerClick.Play()
+		audioPlayerClick.Rewind()
 		if strings.Contains(collisionDirection, "up") {
 			b.verticalBounce()
 		}
@@ -227,17 +226,13 @@ func (b *ball) angledBounce(c triangleCollider){
 	hPart :=  math.Cos(absoluteReflectionAngle) * totalSpeed
 	vPart :=  math.Sin(absoluteReflectionAngle) * totalSpeed
 
-	if math.Abs(vPart)>2 {
-		b.verticalSpeed = vPart * 0.5
-	}else{
-		b.verticalSpeed = vPart * 2
-	}
-	if math.Abs(hPart)>2 {
-		b.horisonatalSpeed = hPart * 0.5
-	}else{
-		b.horisonatalSpeed = vPart * 2
-	}
+	b.verticalSpeed = vPart * 0.5
+	b.horisonatalSpeed = hPart * 0.5
 
+	//unglitch
+	if absoluteReflectionAngle==0{
+		b.horisonatalSpeed=-2
+	}
 }
 
 func (b *ball) setIndicators() {
@@ -245,7 +240,7 @@ func (b *ball) setIndicators() {
 		fmt.Println("tried to set indicators for ghost")
 	}else{
 		x,y:=b.position.X,b.position.Y
-		b.indicatorGhost[0]=makeBall(x,y,true, "images/main_menu/tennis-ball.png")
+		b.indicatorGhost[0]=makeBall(x,y,true, "balls/tennis-ball.png")
 
 		b.indicatorGhost[0].hit(b.controls.angle, b.controls.power)
 		for i:=0;i< len(b.indicatorGhost);i++ {
@@ -256,7 +251,7 @@ func (b *ball) setIndicators() {
 			}
 			if i<len(b.indicatorGhost)-1{
 				x, y = b.indicatorGhost[i].position.X, b.indicatorGhost[i].position.Y
-				b.indicatorGhost[i+1] = makeBall(x, y, true, "images/main_menu/tennis-ball.png")
+				b.indicatorGhost[i+1] = makeBall(x, y, true, "balls/tennis-ball.png")
 				b.indicatorGhost[i+1].isGrounded=false
 				b.indicatorGhost[i+1].verticalSpeed = b.indicatorGhost[i].verticalSpeed
 				b.indicatorGhost[i+1].horisonatalSpeed = b.indicatorGhost[i].horisonatalSpeed

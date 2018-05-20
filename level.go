@@ -179,7 +179,6 @@ func newBox(min, max vector2) *box {
 			tmp.Graphic = graphicTmp
 		}
 	}else{
-		fmt.Println("boxGraphic not set, using white instead")
 		tmp.Graphic, _=ebiten.NewImage(int(math.Abs(max.X-min.X))+1,
 			int(math.Abs(max.Y-min.Y))+1,
 			ebiten.FilterDefault)

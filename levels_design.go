@@ -16,6 +16,10 @@ func set_first_level() {
 	lvl.Instantiate(1*w/12.0,1*h/6-ballSize)
 	all_levels = false
 	is_main_menu = false
+	songPaths[0]="music_2.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
 
 	gravityStrenght  = 0.1
 	airFrictionStrenght  = 0.002
@@ -53,62 +57,59 @@ func set_first_level() {
 }
 
 func set_second_level() {
-
 	lvl.Instantiate(150,470)	// pocetna poz loptice
 	all_levels = false
 	is_main_menu = false
 	level_num = 2
+	songPaths[0]="music_3.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
 
 	gravityStrenght  = 0.1
 	airFrictionStrenght  = 0.002
 	groundFrictionStrenght = 0.05
-/*
-  	if ebiten.IsKeyPressed(ebiten.Key1) {
-		fmt.Println("exiting 2 level...")
-		set_main_menu()
-	}*/
 
 	backgroung_str = "images/level_2/second_level_background.png"
 
 	box_str = "images/level_2/rock.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(500, 500), newV2(600, 600)))
-        lvl.addBox(newBox(newV2(600, 500), newV2(700, 600)))
-        lvl.addBox(newBox(newV2(600, 400), newV2(700, 500)))
+	lvl.addBox(newBox(newV2(500, 500), newV2(600, 600)))
+	lvl.addBox(newBox(newV2(600, 500), newV2(700, 600)))
+	lvl.addBox(newBox(newV2(600, 400), newV2(700, 500)))
 
-        lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
+	lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
+
+	box_str = "images/level_2/bottom_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(350, 200), newV2(450, 300)))
+
+	box_str = "images/level_2/top_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(350, 100), newV2(450, 200)))
+
+	box_str = "images/level_2/top_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(350, 0), newV2(450, 100)))
 
 
 	box_str = "images/level_2/bottom_pipe.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(350, 200), newV2(450, 300)))
+	lvl.addBox(newBox(newV2(500, 100), newV2(600, 200)))
 
 	box_str = "images/level_2/top_pipe.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(350, 100), newV2(450, 200)))
-
-	box_str = "images/level_2/top_pipe.png"
-	prefetchGraphics()
-        lvl.addBox(newBox(newV2(350, 0), newV2(450, 100)))
-
-
-	box_str = "images/level_2/bottom_pipe.png"
-	prefetchGraphics()
-        lvl.addBox(newBox(newV2(500, 100), newV2(600, 200)))
-
-	box_str = "images/level_2/top_pipe.png"
-	prefetchGraphics()
-        lvl.addBox(newBox(newV2(500, 0), newV2(600, 100)))
+	lvl.addBox(newBox(newV2(500, 0), newV2(600, 100)))
 
 
 	box_str = "images/level_2/wood1.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-        lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
-        lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))
+	lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
+	lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
+	lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))
 
 	lvl.addBox(newBox(newV2(700, 500), newV2(800, 600)))
-        lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
+	lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
 	lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
 
 	lvl.addBox(newBox(newV2(1100, 300), newV2(1200, 400)))
@@ -123,11 +124,16 @@ func set_second_level() {
 }
 
 func set_third_level() {
-    	var w,h float64=float64(screenWidth),float64(screenHeight)
+	var w,h float64=float64(screenWidth),float64(screenHeight)
 	lvl.Instantiate(w/32,h/2)
 	all_levels = false
 	is_main_menu = false
 	level_num = 3
+	songPaths[0]="music_4.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
+
 	gravityStrenght  = 0.1
 	airFrictionStrenght  = 0.002
 	groundFrictionStrenght = 0.05
@@ -136,10 +142,10 @@ func set_third_level() {
 
 	box_str = "images/level_3/city_bucket_1.png"
 	prefetchGraphics()
-        lvl.addBox(newBox(newV2(400, 500), newV2(600, 600)))
-        lvl.addBox(newBox(newV2(400, 400), newV2(600, 500)))
-        lvl.addBox(newBox(newV2(400, 300), newV2(600, 400)))
-        lvl.addBox(newBox(newV2(400, 200), newV2(600, 300)))
+        lvl.addBox(newBox(newV2(400, 500), newV2(500, 600)))
+        lvl.addBox(newBox(newV2(400, 400), newV2(500, 500)))
+        lvl.addBox(newBox(newV2(400, 300), newV2(500, 400)))
+        lvl.addBox(newBox(newV2(400, 200), newV2(500, 300)))
 
 	box_str = "images/level_3/city_bucket_4.png"
 	prefetchGraphics()
@@ -170,6 +176,11 @@ func set_forth_level() {
 	lvl.Instantiate(w/32,h-ballSize)
 	all_levels = false
 	is_main_menu = false
+	songPaths[0]="music_5.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
+
 	level_num = 4
 	gravityStrenght  = 0.04
 	airFrictionStrenght  = 0.002
@@ -210,6 +221,10 @@ func set_fifth_level() {
 	all_levels = false
 	is_main_menu = false
 	level_num = 5
+	songPaths[0]="music_6.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
 
 	gravityStrenght  = 0.1
 	airFrictionStrenght  = 0.002

@@ -305,6 +305,10 @@ func set_main_menu() {
 	all_levels = false
 	is_main_menu = true		// nepotrebno, moze preko level_num
 	level_num = 0
+	songPaths[0]="music_1.mp3"
+	if selectedSong==0{
+		audioPlayMainTrack()
+	}
 
 	backgroung_str = "images/main_menu/menu_background.png"
 	prefetchGraphics()

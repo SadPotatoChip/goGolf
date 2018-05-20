@@ -1,17 +1,14 @@
 package main
 
-/*
-	go get github.com/pkg/errors
-	go get github.com/faiface/beep
- */
-
 import (
 	"fmt"
 	"os"
 	"image"
 	"github.com/hajimehoshi/ebiten"
-	//"github.com/faiface/beep"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/audio"
+	"github.com/hajimehoshi/ebiten/audio/mp3"
+	"log"
 )
 
 type vector2 struct {
@@ -32,15 +29,33 @@ var lvl level
 var player *ball
 var shotsTaken int
 
-//var hitSound beep.Streamer
+var audioContext *audio.Context
+var audioPlayerMusic *audio.Player
+var audioPlayerClick *audio.Player
+var audioPlayerHit *audio.Player
+var audioPlayerWin *audio.Player
 
-
+var songPaths []string
+var selectedSong=0
 
 func main() {
+
+
+	ac, err1:=audio.NewContext(44100)
+	if err1!=nil{
+		log.Fatal(err1)
+	}
+	audioContext=ac
+	songPaths=[]string{"music_1.mp3","mainSong2.mp3","mainSong3.mp3"}
+	audioPlayerMusic=newAudioPlayer("sounds/"+songPaths[0])
+	audioPlayerClick=newAudioPlayer("sounds/click.mp3")
+	audioPlayerHit=newAudioPlayer("sounds/strike.mp3")
+	audioPlayerWin=newAudioPlayer("sounds/win.mp3")
+	audioPlayMainTrack()
+
 	//preprocess testing textures import
-
-
 	prefetchGraphics()
+
 	var w, h int = int(screenWidth), int(screenHeight)
 	if err := ebiten.Run(update, w, h, 1, "puff puff"); err != nil {
 		panic(err)
@@ -67,7 +82,6 @@ func prefetchGraphics() {
 	backgroundImage = uninteractableImage{testBackground,&ebiten.DrawImageOptions{}}
 }
 
-
 func update(screen *ebiten.Image) error {
 	backgroundImage.draw(screen)
 	x_pos, y_pos = ebiten.CursorPosition()
@@ -75,27 +89,24 @@ func update(screen *ebiten.Image) error {
 	if levelIsInstantiating {
 		lvl.Instantiate(100, 100)
 		set_main_menu()
-		/* don't touch this!
-                you're a potato :p
-
-		rand.Seed(time.Now().UTC().UnixNano())
-		for i := 0; i < 0; i++ {
-			x, y := rand.Float64()*screenWidth, rand.Float64()*screenHeight
-			lvl.addBox(newBox(newV2(x, y), newV2(x+20, y+30)))
-
-		}*/
 		levelIsInstantiating = false
 	}
 	checkButtonClicks()
 	check_pressed_keys()
 
 	handleInput()
+	if !audioPlayerMusic.IsPlaying(){
+		audioPlayerMusic.Rewind()
+		audioPlayerMusic.Play()
+	}
 
 	player.applyNaturalForces()
 	player.move()
 
 	if checkIfBallIsInHole() {
-		switch (level_num) {
+		audioPlayerWin.Play()
+		audioPlayerWin.Rewind()
+		switch level_num {
 		case 1:
 			set_second_level()
 		case 2:
@@ -109,8 +120,7 @@ func update(screen *ebiten.Image) error {
 			set_main_menu()
 		}
 		fmt.Println("GG") // kad loptica upadne u rupu
-	} // player.horizontalSpeed = 0 da stane
-	// ....verticalSpeed = 0
+	}
 	drawLevel(screen)
 	drawPlayer(screen)
 
@@ -118,7 +128,7 @@ func update(screen *ebiten.Image) error {
 	//ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS:%f \nx:%f y:%f\nh:%f v:%f\npow:%f, angle:%f, hitHeld:%t",
 	//			ebiten.CurrentFPS(), player.position.X, player.position.Y, player.horisonatalSpeed, 					player.verticalSpeed, player.controls.power, player.controls.angle/math.Pi, hitKeyIsDown))
 
-	if (shotsTaken != -1) {
+	if shotsTaken != -1 {
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("Shots Taken %d", shotsTaken))
 	}
 	return nil
@@ -147,7 +157,7 @@ func drawPlayer(screen *ebiten.Image) {
 			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
 		}
 	}
-	screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
+	//screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
 
 func handleInput() {
@@ -169,10 +179,16 @@ func handleInput() {
 			player.setIndicators()
 		}
 		if hitKeyDown(player.controls.hitKey) {
+			audioPlayerHit.Play()
+			audioPlayerHit.Rewind()
 			shotsTaken++
 			player.hit(player.controls.angle, player.controls.power)
 
 		}
+	}
+	//alternate songs
+	if hitKeyDown(ebiten.KeyBackslash){
+		audioNextSong()
 	}
 }
 
@@ -185,4 +201,39 @@ func checkIfBallIsInHole() bool{
 		return false
 	}
 	return false
+}
+
+func audioNextSong(){
+	selectedSong++
+	if selectedSong >= len(songPaths){
+		selectedSong=0
+	}
+	audioPlayMainTrack()
+}
+
+func audioPlayMainTrack(){
+	audioPlayerMusic.Close()
+	audioPlayerMusic=newAudioPlayer("sounds/"+songPaths[selectedSong])
+	audioPlayerMusic.Rewind()
+	go func(){
+		audioPlayerMusic.Play()
+	}()
+}
+
+func newAudioPlayer(path string) (*audio.Player){
+
+	f, err2 := ebitenutil.OpenFile(path)
+	if err2!=nil{
+		log.Fatal(err2)
+	}
+	d, err3 := mp3.Decode(audioContext, f)
+	if err3!=nil{
+		log.Fatal(err3)
+	}
+	ap, err4 := audio.NewPlayer(audioContext, d)
+	if err3!=nil{
+		log.Fatal(err4)
+	}
+	return ap
+
 }
