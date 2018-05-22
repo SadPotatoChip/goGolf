@@ -1,3 +1,9 @@
+/*
+ * u ovom fajlu su funkcije za kreiranje nivoa
+ * (5 nivoa)
+ *
+*/
+
 package main
 
 func set_first_level() {

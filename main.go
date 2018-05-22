@@ -157,7 +157,6 @@ func drawPlayer(screen *ebiten.Image) {
 			screen.DrawImage(player.indicatorGhost[i].graphic,player.indicatorGhost[i].opts)
 		}
 	}
-	//screen.DrawImage(player.collisonGhost.graphic,player.collisonGhost.opts)
 }
 
 func handleInput() {
@@ -187,6 +186,7 @@ func handleInput() {
 
 		}
 	}
+
 	//alternate songs
 	if hitKeyDown(ebiten.KeyBackslash, player){
 		audioNextSong()
