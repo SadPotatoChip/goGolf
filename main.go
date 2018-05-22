@@ -91,7 +91,7 @@ func update(screen *ebiten.Image) error {
 		set_main_menu()
 		levelIsInstantiating = false
 	}
-	checkButtonClicks()
+	check_button_clicks()
 	check_pressed_keys()
 
 	handleInput()

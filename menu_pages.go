@@ -6,9 +6,6 @@
 
 package main
 
-import (
-	"image"
-)
 
 func set_first_page() {
 	lvl.Instantiate(100,100)
@@ -66,6 +63,8 @@ func set_third_page() {
 }
 
 /* izmenjeno zbog problema sa klikom */
+
+/*
 
 func create_balls() {
 	box_str = "images/balls/all_balls.png"
@@ -162,5 +161,6 @@ func change_next_button() {
 		lvl.add_uninteractable_image(newSpecialBox(newV2(605, 420), newV2(730, 600)))
 	}
 }
+*/
 
 /* --------------- */

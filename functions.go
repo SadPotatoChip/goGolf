@@ -8,8 +8,6 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -25,10 +23,11 @@ var radius_coord = 110
  *
  */
 func play_button_is_clicked() {
-	if ((x_pos - x_center_coord) * (x_pos - x_center_coord) + (y_pos - y_center_coord) * (y_pos - y_center_coord)) <= (radius_coord * radius_coord)
-	if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && is_main_menu {
-		if mouseButtonDown(ebiten.MouseButtonLeft) {
-			set_first_level()
+	if ((x_pos-x_center_coord)*(x_pos-x_center_coord) + (y_pos-y_center_coord)*(y_pos-y_center_coord)) <= (radius_coord * radius_coord){
+		if x_pos > 500 && x_pos < 720 && y_pos > 200 && y_pos < 260 && is_main_menu {
+			if mouseButtonDown(ebiten.MouseButtonLeft) {
+				set_first_level()
+			}
 		}
 	}
 }

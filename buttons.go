@@ -73,7 +73,7 @@ func check_button_clicks() {
 		create_third_menu_button()
 		main_menu_already_set = false
 	} else {
-		 {	// TODO vidi je l ovde fali nesto
+		if main_menu_already_set == false && !(x_pos > 1000 && x_pos < 1190 && y_pos > 60 && y_pos < 300) && is_main_menu == true {
 			set_main_menu()
 			is_menu_oppened = false
 			main_menu_already_set = true
@@ -137,7 +137,6 @@ func check_button_clicks() {
 		}
 	}
 
-
 	/*
 	 * kad se klikne na grid, vraca se u meni
 	 *
@@ -171,7 +170,6 @@ func check_button_clicks() {
 		}
 	}
 	*/
-
 
 	/*
 	 * predji na prvi nivo
@@ -213,12 +211,11 @@ func check_button_clicks() {
 		set_fifth_level()
 	}
 
-
-	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		fmt.Println("pointer is on the NEXT button")
+	/*if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && mouseButtonDown(ebiten.MouseButtonLeft) {
+		level_num=0
 		set_main_menu()
 		}
-	}
+	}*/
 
 }
 
