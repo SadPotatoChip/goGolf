@@ -213,6 +213,13 @@ func check_button_clicks() {
 		set_fifth_level()
 	}
 
+
+	if ((x_pos - x_center) * (x_pos - x_center) + (y_pos - y_center) * (y_pos - y_center)) <= (radius * radius) && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+		fmt.Println("pointer is on the NEXT button")
+		set_main_menu()
+		}
+	}
+
 }
 
 /*

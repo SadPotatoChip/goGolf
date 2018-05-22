@@ -6,6 +6,12 @@
 
 package main
 
+func back_to_mm() {
+	box_str = "images/main_menu/next.png"
+	prefetchGraphics()
+	lvl.add_uninteractable_image(newSpecialBox(newV2(1100, 10), newV2(1120, 110)))
+}
+
 func set_first_level() {
 	var w, h float64 = float64(screenWidth), float64(screenHeight)
 	level_num = 1
@@ -48,6 +54,8 @@ func set_first_level() {
 	lvl.hole = newHole(vector2{3 * w / 32, (5 * h / 6) - 10},
 		vector2{2 * w / 12, 5 * h / 6})
 
+	back_to_mm()
+
 }
 
 func set_second_level() {
@@ -68,51 +76,53 @@ func set_second_level() {
 
 	box_str = "images/level_2/rock.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(500, 500), newV2(600, 600)))
-	lvl.addBox(newBox(newV2(600, 500), newV2(700, 600)))
-	lvl.addBox(newBox(newV2(600, 400), newV2(700, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 5, h / 6 * 5), newV2(w / 12 * 600, h / 6 * 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 600, h / 6 * 500), newV2(w / 12 *700, h / 6 * 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 600, h / 6 * 400), newV2(w / 12 *700, h / 6 * 500)))
 
-	lvl.addBox(newBox(newV2(0, 400), newV2(100, 500)))
-
-	box_str = "images/level_2/bottom_pipe.png"
-	prefetchGraphics()
-	lvl.addBox(newBox(newV2(350, 200), newV2(450, 300)))
-
-	box_str = "images/level_2/top_pipe.png"
-	prefetchGraphics()
-	lvl.addBox(newBox(newV2(350, 100), newV2(450, 200)))
-
-	box_str = "images/level_2/top_pipe.png"
-	prefetchGraphics()
-	lvl.addBox(newBox(newV2(350, 0), newV2(450, 100)))
+	lvl.addBox(newBox(newV2(w / 12 * 0, h / 6 * 400), newV2(w / 12 *100, h / 6 * 500)))
 
 	box_str = "images/level_2/bottom_pipe.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(500, 100), newV2(600, 200)))
+	lvl.addBox(newBox(newV2(w / 12 *350, h / 6 * 200), newV2(w / 12 *450, h / 6 * 300)))
 
 	box_str = "images/level_2/top_pipe.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(500, 0), newV2(600, 100)))
+	lvl.addBox(newBox(newV2(w / 12 *350, h / 6 * 100), newV2(w / 12 *450, h / 6 * 200)))
+
+	box_str = "images/level_2/top_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(w / 12 *350, h / 6 * 0), newV2(w / 12 *450, h / 6 * 100)))
+
+	box_str = "images/level_2/bottom_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(w / 12 *500, h / 6 * 100), newV2(w / 12 *600, h / 6 * 200)))
+
+	box_str = "images/level_2/top_pipe.png"
+	prefetchGraphics()
+	lvl.addBox(newBox(newV2(w / 12 *500, h / 6 * 0), newV2(w / 12 *600, h / 6 * 100)))
 
 	box_str = "images/level_2/wood1.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-	lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
-	lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 0, h / 6 * 5), newV2(w / 12 *1, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 1, h / 6 * 5), newV2(w / 12 *2, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 5), newV2(w / 12 *3, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(700, 500), newV2(800, 600)))
-	lvl.addBox(newBox(newV2(800, 500), newV2(900, 600)))
-	lvl.addBox(newBox(newV2(900, 500), newV2(1000, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 7, h / 6 * 5), newV2(w / 12 *8, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 8, h / 6 * 5), newV2(w / 12 *9, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 9, h / 6 * 5), newV2(w / 12 *10, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(1100, 300), newV2(1200, 400)))
-	lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
-	lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 3), newV2(w / 12 *1200, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 4), newV2(w / 12 *1200, h / 6 * 5)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 5), newV2(w / 12 *1200, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(800, 300), newV2(900, 400)))
-	lvl.addBox(newBox(newV2(750, 400), newV2(850, 500)))
-	lvl.addBox(newBox(newV2(850, 400), newV2(950, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 8, h / 6 * 3), newV2(w / 12 *9, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 7.5, h / 6 * 4), newV2(w / 12 *8.5, h / 6 * 5)))
+	lvl.addBox(newBox(newV2(w / 12 * 8.5, h / 6 * 4), newV2(w / 12 *9.5, h / 6 * 5)))
 
-	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
+	lvl.hole = newHole(newV2(w / 12 * 10.3, 5.9), newV2(w / 12 *10.7, 6))
+
+	back_to_mm()
 }
 
 func set_third_level() {
@@ -134,32 +144,34 @@ func set_third_level() {
 
 	box_str = "images/level_3/city_bucket_1.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(400, 500), newV2(500, 600)))
-	lvl.addBox(newBox(newV2(400, 400), newV2(500, 500)))
-	lvl.addBox(newBox(newV2(400, 300), newV2(500, 400)))
-	lvl.addBox(newBox(newV2(400, 200), newV2(500, 300)))
+	lvl.addBox(newBox(newV2(w / 12 * 4, h / 6 * 5), newV2(w / 12 *5, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 4, h / 6 * 4), newV2(w / 12 *5, h / 6 * 5)))
+	lvl.addBox(newBox(newV2(w / 12 *4, h / 6 * 3), newV2(w / 12 *5, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 4, h / 6 * 2), newV2(w / 12 *5, h / 6 * 3)))
 
 	box_str = "images/level_3/city_bucket_4.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(700, 500), newV2(800, 600)))
-	lvl.addBox(newBox(newV2(700, 400), newV2(800, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 7, h / 6 * 5), newV2(w / 12 *8, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 7, h / 6 * 4), newV2(w / 12 *8, h / 6 * 5)))
 
 	box_str = "images/level_3/city_box_3.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(0, 330), newV2(100, 400)))
-	lvl.addBox(newBox(newV2(100, 330), newV2(200, 400)))
-	lvl.addBox(newBox(newV2(200, 330), newV2(300, 400)))
+	lvl.addBox(newBox(newV2(w / 12 * 0, h / 6 * 3.3), newV2(w / 12 *1, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 1, h / 6 * 3.3), newV2(w / 12 *2, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 3.3), newV2(w / 12 *3, h / 6 * 4)))
 
 	box_str = "images/level_3/city_box_2.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(800, 50), newV2(900, 150)))
-	lvl.addBox(newBox(newV2(900, 50), newV2(1000, 150)))
+	lvl.addBox(newBox(newV2(w / 12 * 8, h / 6 * 0.5), newV2(w / 12 *9, h / 6 * 15)))
+	lvl.addBox(newBox(newV2(w / 12 * 9, h / 6 * 0.5), newV2(w / 12 *10, h / 6 * 15)))
 
-	lvl.addBox(newBox(newV2(900, 150), newV2(1000, 250)))
-	lvl.addBox(newBox(newV2(700, 0), newV2(800, 100)))
-	lvl.addBox(newBox(newV2(1000, 100), newV2(1100, 200)))
+	lvl.addBox(newBox(newV2(w / 12 * 9, h / 6 * 1.5), newV2(w / 12 *10, h / 6 * 2.5)))
+	lvl.addBox(newBox(newV2(w / 12 * 7, h / 6 * 0), newV2(w / 12 *8, h / 6 * 1)))
+	lvl.addBox(newBox(newV2(w / 12 * 10, h / 6 * 1), newV2(w / 12 *11, h / 6 * 2)))
 
-	lvl.hole = newHole(newV2(1030, 590), newV2(1070, 600))
+	lvl.hole = newHole(newV2(w / 12 * 10.3, h / 6 * 5.9), newV2(w / 12 *10.7, h / 6 * 6))
+
+	back_to_mm()
 }
 
 func set_forth_level() {
@@ -204,6 +216,8 @@ func set_forth_level() {
 	lvl.hole = newHole(vector2{5.3 * w / 12.0, (5*h - 15) / 6},
 		vector2{5.8 * w / 12.0, 6 * h / 6})
 
+	back_to_mm()
+
 }
 
 func set_fifth_level() {
@@ -225,39 +239,41 @@ func set_fifth_level() {
 
 	box_str = "images/level_5/desert_box_1.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(500, 500), newV2(600, 600)))
-	lvl.addBox(newBox(newV2(600, 500), newV2(700, 600)))
-	lvl.addBox(newBox(newV2(600, 400), newV2(700, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 5, h / 6 * 5), newV2(w / 12 *6, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 6, h / 6 * 5), newV2(w / 12 *7, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 6, h / 6 * 4), newV2(w / 12 *7, h / 6 * 5)))
 
-	lvl.addBox(newBox(newV2(950, 450), newV2(1050, 550)))
+	lvl.addBox(newBox(newV2(w / 12 * 950, 450), newV2(1050, h / 6 * 550)))
 
 	box_str = "images/level_5/desert_box_1_rotate.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(200, 0), newV2(300, 100)))
-	lvl.addBox(newBox(newV2(200, 100), newV2(300, 200)))
-	lvl.addBox(newBox(newV2(200, 200), newV2(300, 300)))
-	lvl.addBox(newBox(newV2(200, 400), newV2(300, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 0), newV2(w / 12 *3, h / 6 * 1)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 1), newV2(w / 12 *3, h / 6 * 2)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 2), newV2(w / 12 *3, h / 6 * 3)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 4), newV2(w / 12 *3, h / 6 * 5)))
 
 	box_str = "images/level_5/desert_box_2.png"
 	prefetchGraphics()
-	lvl.addBox(newBox(newV2(0, 500), newV2(100, 600)))
-	lvl.addBox(newBox(newV2(100, 500), newV2(200, 600)))
-	lvl.addBox(newBox(newV2(200, 500), newV2(300, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 0, h / 6 * 5), newV2(w / 12 *1, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 1, h / 6 * 5), newV2(w / 12 *2, h / 6 * 6)))
+	lvl.addBox(newBox(newV2(w / 12 * 2, h / 6 * 5), newV2(w / 12 *3, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(700, 500), newV2(800, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 7, h / 6 * 5), newV2(w / 12 *8, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(1100, 300), newV2(1200, 400)))
-	lvl.addBox(newBox(newV2(1100, 400), newV2(1200, 500)))
-	lvl.addBox(newBox(newV2(1100, 500), newV2(1200, 600)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 3), newV2(w / 12 *12, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 4), newV2(w / 12 *12, h / 6 * 5)))
+	lvl.addBox(newBox(newV2(w / 12 * 11, h / 6 * 5), newV2(w / 12 *12, h / 6 * 6)))
 
-	lvl.addBox(newBox(newV2(800, 300), newV2(900, 400)))
-	lvl.addBox(newBox(newV2(750, 400), newV2(850, 500)))
+	lvl.addBox(newBox(newV2(w / 12 * 8, h / 6 * 3), newV2(w / 12 *9, h / 6 * 4)))
+	lvl.addBox(newBox(newV2(w / 12 * 7.5, h / 6 * 4), newV2(w / 12 *8.5, h / 6 * 5))) // TODO
 
-	lvl.addBox(newBox(newV2(900, 0), newV2(1000, 100)))
-	lvl.addBox(newBox(newV2(1000, 100), newV2(1100, 200)))
+	lvl.addBox(newBox(newV2(w / 12 * 9, h / 6 * 0), newV2(w / 12 *10, h / 6 * 1)))
+	lvl.addBox(newBox(newV2(w / 12 * 10, h / 6 * 1), newV2(w / 12 *11, h / 6 * 2)))
 
-	lvl.addBox(newBox(newV2(500, 0), newV2(600, 100)))
-	lvl.addBox(newBox(newV2(600, 100), newV2(700, 200)))
+	lvl.addBox(newBox(newV2(w / 12 * 5, h / 6 * 0), newV2(w / 12 *6, h / 6 * 1)))
+	lvl.addBox(newBox(newV2(w / 12 * 6, h / 6 * 1), newV2(w / 12 *7, h / 6 * 2)))
 
-	lvl.hole = newHole(newV2(980, 445), newV2(1030, 500))
+	lvl.hole = newHole(newV2(w / 12 * 9.8, h / 6 * 4.45), newV2(w / 12 *10.3, h / 6 * 5)) // TODO
+
+	back_to_mm()
 }
