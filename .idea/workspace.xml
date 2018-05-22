@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="341b8c86-9fcc-4752-9406-68710da57325" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screenshot from 2018-05-12 01-35-30.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Screenshot from 2018-05-12 15-44-49.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Screenshot from 2018-05-12 16-00-04.png" beforeDir="false" />
@@ -10,26 +9,16 @@
       <change beforePath="$PROJECT_DIR$/Screenshot from 2018-05-12 16-02-53.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Screenshot from 2018-05-12 16-03-06.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/balls.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/buttons.go" beforeDir="false" afterPath="$PROJECT_DIR$/buttons.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/executables/07-may-2018-3pm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/executables/12-may-2018-12pm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/executables/20-may-2018-6pm" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/goGolf-master_may11.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/level_3/city_bucket_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/level_3/city_bucket_6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/level_3/city_bucket_7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/all_levels.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/all_levels1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/all_levels2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/all_levels_old.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/menu_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/menu_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main_menu/next.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/main_menu_dodate_opcije.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/pick_the_level.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/levels_design.go" beforeDir="false" afterPath="$PROJECT_DIR$/levels_design.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_menu_dodate_opcije.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pick_the_level.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerInput.go" beforeDir="false" afterPath="$PROJECT_DIR$/playerInput.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds/click.wav" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,29 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="level.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1109">
-              <caret line="202" column="15" selection-start-line="202" selection-start-column="15" selection-end-line="202" selection-end-column="15" />
-              <folding>
-                <element signature="n#!!block;n#Instantiate#0" />
-                <element signature="n#!!block;n#add_uninteractable_image#0" />
-                <element signature="n#!!block;n#addBox#0" />
-                <element signature="n#!!block;n#addTriangle#0" />
-                <element signature="n#!!block;n#newTriangle#0" />
-                <element signature="n#!!block;n#newHole#0" />
-                <element signature="n#!!block;n#drawDebugSquares#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="physic.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/physic.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="190" column="47" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
+            <state relative-caret-position="121">
+              <caret line="190" column="47" lean-forward="true" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
               <folding>
                 <element signature="n#!!block;n#applyNaturalForces#0" />
                 <element signature="n#!!block;n#hit#0" />
@@ -81,8 +52,8 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="181" column="29" selection-start-line="181" selection-start-column="29" selection-end-line="181" selection-end-column="29" />
+            <state relative-caret-position="272">
+              <caret line="196" column="42" lean-forward="true" selection-start-line="196" selection-start-column="42" selection-end-line="196" selection-end-column="42" />
               <folding>
                 <element signature="n#!!block;n#prefetchGraphics#0" />
                 <element signature="n#!!block;n#drawLevel#0" />
@@ -94,62 +65,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="levels_design.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/levels_design.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="217" column="23" selection-start-line="217" selection-start-column="23" selection-end-line="217" selection-end-column="23" />
-              <folding>
-                <element signature="n#!!block;n#set_first_level#0" />
-                <element signature="n#!!block;n#set_second_level#0" />
-                <element signature="n#!!block;n#set_third_level#0" />
-                <element signature="n#!!block;n#set_forth_level#0" />
-                <element signature="n#!!block;n#set_fifth_level#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="buttons.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/buttons.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="138" column="13" selection-start-line="138" selection-start-column="12" selection-end-line="138" selection-end-column="17" />
+            <state relative-caret-position="2329">
+              <caret line="141" column="13" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_menu.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main_menu.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_menu.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
+            <state relative-caret-position="5100">
               <caret line="302" column="21" selection-start-line="302" selection-start-column="21" selection-end-line="302" selection-end-column="21" />
-              <folding>
-                <element signature="n#!!block;n#create_play_button#0" />
-                <element signature="n#!!block;n#create_menu_button#0" />
-                <element signature="n#!!block;n#create_second_menu_button#0" />
-                <element signature="n#!!block;n#create_first_menu_button#0" />
-                <element signature="e#2076#2541#0" />
-                <element signature="n#!!block;n#create_third_menu_button#0" />
-                <element signature="n#!!block;n#set_second_page#0" />
-                <element signature="n#!!block;n#set_first_page#0" />
-                <element signature="n#!!block;n#set_third_page#0" />
-                <element signature="n#!!block;n#speaker_on#0" />
-                <element signature="n#!!block;n#speaker_off#0" />
-                <element signature="n#!!block;n#full_screen#0" />
-                <element signature="n#!!block;n#create_balls#0" />
-                <element signature="n#!!block;n#ball_pick#0" />
-                <element signature="n#!!block;n#first_photo#0" />
-                <element signature="n#!!block;n#second_photo#0" />
-                <element signature="n#!!block;n#third_photo#0" />
-                <element signature="n#!!block;n#forth_photo#0" />
-                <element signature="n#!!block;n#fifth_photo#0" />
-                <element signature="n#!!block;n#previous_photo#0" />
-                <element signature="n#!!block;n#next_photo#0" />
-                <element signature="n#!!block;n#change_previous_button#0" />
-                <element signature="n#!!block;n#change_next_button#0" />
-                <element signature="n#!!block;n#set_main_menu#0" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -157,8 +86,8 @@
       <file leaf-file-name="collisionDetection.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/collisionDetection.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+            <state relative-caret-position="85">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
               <folding>
                 <element signature="n#!!block;n#isTriangleCollidingWithBall#0" />
                 <element signature="n#!!block;n#isBoxCollidingWithBall#0" />
@@ -171,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="playerInput.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="playerInput.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/playerInput.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
+            <state relative-caret-position="1258">
               <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
               <folding>
                 <element signature="n#!!block;n#changePower#0" />
@@ -236,10 +165,10 @@
         <option value="$PROJECT_DIR$/triangleCollisionHandlers.go" />
         <option value="$PROJECT_DIR$/level.go" />
         <option value="$PROJECT_DIR$/physic.go" />
-        <option value="$PROJECT_DIR$/levels_design.go" />
         <option value="$PROJECT_DIR$/main_menu.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/playerInput.go" />
+        <option value="$PROJECT_DIR$/levels_design.go" />
       </list>
     </option>
   </component>
@@ -495,13 +424,11 @@
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/main.go</url>
           <line>2</line>
-          <properties />
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/main.go</url>
           <line>214</line>
-          <properties />
           <option name="timeStamp" value="64" />
         </line-breakpoint>
       </breakpoints>
@@ -765,18 +692,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="216" column="18" selection-start-line="216" selection-start-column="18" selection-end-line="216" selection-end-column="18" />
-          <folding>
-            <element signature="n#!!block;n#bottomLeftTriangleCollision#0" />
-            <element signature="n#!!block;n#topLeftTriangleCollision#0" />
-            <element signature="n#!!block;n#bottomRightTriangleCollision#0" />
-            <element signature="n#!!block;n#topRightTriangleCollision#0" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/level.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1109">
+        <state relative-caret-position="1139">
           <caret line="202" column="15" selection-start-line="202" selection-start-column="15" selection-end-line="202" selection-end-column="15" />
           <folding>
             <element signature="n#!!block;n#Instantiate#0" />
@@ -792,48 +713,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/buttons.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="138" column="13" selection-start-line="138" selection-start-column="12" selection-end-line="138" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main_menu.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="302" column="21" selection-start-line="302" selection-start-column="21" selection-end-line="302" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!block;n#create_play_button#0" />
-            <element signature="n#!!block;n#create_menu_button#0" />
-            <element signature="n#!!block;n#create_second_menu_button#0" />
-            <element signature="n#!!block;n#create_first_menu_button#0" />
-            <element signature="e#2076#2541#0" />
-            <element signature="n#!!block;n#create_third_menu_button#0" />
-            <element signature="n#!!block;n#set_second_page#0" />
-            <element signature="n#!!block;n#set_first_page#0" />
-            <element signature="n#!!block;n#set_third_page#0" />
-            <element signature="n#!!block;n#speaker_on#0" />
-            <element signature="n#!!block;n#speaker_off#0" />
-            <element signature="n#!!block;n#full_screen#0" />
-            <element signature="n#!!block;n#create_balls#0" />
-            <element signature="n#!!block;n#ball_pick#0" />
-            <element signature="n#!!block;n#first_photo#0" />
-            <element signature="n#!!block;n#second_photo#0" />
-            <element signature="n#!!block;n#third_photo#0" />
-            <element signature="n#!!block;n#forth_photo#0" />
-            <element signature="n#!!block;n#fifth_photo#0" />
-            <element signature="n#!!block;n#previous_photo#0" />
-            <element signature="n#!!block;n#next_photo#0" />
-            <element signature="n#!!block;n#change_previous_button#0" />
-            <element signature="n#!!block;n#change_next_button#0" />
-            <element signature="n#!!block;n#set_main_menu#0" />
-          </folding>
+        <state relative-caret-position="2329">
+          <caret line="141" column="13" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/collisionDetection.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        <state relative-caret-position="85">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding>
             <element signature="n#!!block;n#isTriangleCollidingWithBall#0" />
             <element signature="n#!!block;n#isBoxCollidingWithBall#0" />
@@ -845,24 +733,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/levels_design.go">
+    <entry file="file://$PROJECT_DIR$/playerInput.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="217" column="23" selection-start-line="217" selection-start-column="23" selection-end-line="217" selection-end-column="23" />
+        <state relative-caret-position="1258">
+          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
           <folding>
-            <element signature="n#!!block;n#set_first_level#0" />
-            <element signature="n#!!block;n#set_second_level#0" />
-            <element signature="n#!!block;n#set_third_level#0" />
-            <element signature="n#!!block;n#set_forth_level#0" />
-            <element signature="n#!!block;n#set_fifth_level#0" />
+            <element signature="n#!!block;n#changePower#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/physic.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="190" column="47" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
+        <state relative-caret-position="121">
+          <caret line="190" column="47" lean-forward="true" selection-start-line="190" selection-start-column="47" selection-end-line="190" selection-end-column="47" />
           <folding>
             <element signature="n#!!block;n#applyNaturalForces#0" />
             <element signature="n#!!block;n#hit#0" />
@@ -877,10 +761,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/levels_design.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
+          <folding>
+            <element signature="n#!!block;n#set_first_level#0" />
+            <element signature="n#!!block;n#set_second_level#0" />
+            <element signature="n#!!block;n#set_third_level#0" />
+            <element signature="n#!!block;n#set_forth_level#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="181" column="29" selection-start-line="181" selection-start-column="29" selection-end-line="181" selection-end-column="29" />
+        <state relative-caret-position="272">
+          <caret line="196" column="42" lean-forward="true" selection-start-line="196" selection-start-column="42" selection-end-line="196" selection-end-column="42" />
           <folding>
             <element signature="n#!!block;n#prefetchGraphics#0" />
             <element signature="n#!!block;n#drawLevel#0" />
@@ -891,13 +788,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/playerInput.go">
+    <entry file="file://$PROJECT_DIR$/main_menu.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
-          <folding>
-            <element signature="n#!!block;n#changePower#0" />
-          </folding>
+        <state relative-caret-position="5100">
+          <caret line="302" column="21" selection-start-line="302" selection-start-column="21" selection-end-line="302" selection-end-column="21" />
         </state>
       </provider>
     </entry>

@@ -33,6 +33,7 @@ var holeGraphic image.Image
 
 
 var levelIsInstantiating = true
+var menuOpen=false
 
 var hole_str = "images/level_5/goal.png"	// promeni
 var triangle_str = "images/main_menu/test.png"			// nigde se ne koristi
