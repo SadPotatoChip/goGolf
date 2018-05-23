@@ -123,6 +123,7 @@ func full_screen() {
 
 
 func set_main_menu() {
+	levelsInARow=0
 	lvl.Instantiate(100,100)
 	all_levels = false
 	is_main_menu = true

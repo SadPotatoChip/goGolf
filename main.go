@@ -22,12 +22,15 @@ func newV2(x, y float64) vector2 {
 	return *tmp
 }
 
+
+
 const screenWidth float64 = 1200
 const screenHeight float64 = 600
 
 var lvl level
 var player *ball
 var shotsTaken int
+var levelsInARow =0
 
 var audioContext *audio.Context
 var audioPlayerMusic *audio.Player
